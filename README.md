@@ -1,5 +1,5 @@
 # java spring SUPUL 프로젝트
-- Server Repository: <a href="https://github.com/pshho/aws-django.git">서버 Git 주소</a>
+- Server Repository: <a href="https://github.com/tztos104/teamproject2_Supul_java_spring">서버 Git 주소</a>
 
 ## 프로젝트 소개
 * 프로젝트 명: Supul
