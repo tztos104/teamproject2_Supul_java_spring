@@ -1,0 +1,160 @@
+@charset "UTF-8";
+/*로고 글씨체*/
+@import url('https://fonts.googleapis.com/css2?family=Almendra+Display&family=Grandiflora+One&display=swap');
+
+
+/*title1 스타일*/
+.style-1 {
+  font-family: "Pacifico", sans-serif;
+  text-transform: none!important;
+  border-radius: 10px;
+}
+
+.style-1:before {
+  height: 3px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  position: absolute;
+  width: 300%;
+  top: 50%;
+  left: -100%;
+  z-index: -998;
+}
+
+/*본문 스타일*/
+.section-intro {
+    background: url('/images/home/whitepaper.jpg') center no-repeat;
+    margin: 0 auto;
+    padding: 100px 0; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+    max-width: 1200px; 
+    margin-bottom: -10px; 
+}
+
+/*본문 내용 스타일*/
+.style-2 {
+	color: #3f5856;
+	text-align: center;
+}
+
+.style-3 {
+	padding: 0 50px 0 50px;
+    line-height: 2; 
+}
+
+#title3, #subtitle1{
+   text-align: center;
+   color: #3f5856;
+}
+
+#content {
+    text-align: center; /* 텍스트를 중앙 정렬 */
+    margin: 0 auto; /* 가운데 정렬을 위해 좌우 마진을 자동으로 설정 */
+}
+
+/*title1 스타일*/
+#title-supul {
+  margin: 0 auto;
+  max-width: 520px;
+  text-align: center;
+}
+
+#title-supul h1 {
+  font-weight: bold;
+  font-size: 50px;
+  text-transform: uppercase;
+  margin: 0.3125em 0;
+  position: relative;
+  display: inline-block;
+  padding: 0 10px;
+  font-family: 'Almendra Display', cursive;
+}
+
+ul{
+   list-style: none;
+}
+
+hr {
+  border: 0;
+  border-top: solid 1px #DDD;
+}
+
+/*hr 스타일*/
+.fancy-hr {
+  border-color: #C4B5A2;
+  margin: 2em 0;
+  position: relative;
+}
+
+/*공지사항 스타일*/
+/* 이미지를 수평 가운데 정렬합니다. */
+.section-intro img {
+    display: block; /* 이미지를 블록 요소로 설정합니다. */
+    margin: 0 auto; /* 가운데 정렬을 위해 좌우 마진을 자동으로 설정합니다. */
+    max-width: 100%; /* 이미지가 부모 요소를 넘어가지 않도록 최대 너비를 설정합니다. */
+}
+
+/*.comnotice {
+    background-color: whitesmoke; 
+    padding: 30px; 
+    margin: 20px auto; 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
+    max-width: 1200px; 
+    text-align: center; 
+}
+
+.notice {
+    font-size: 28px;
+    margin-bottom: 20px; 
+}
+
+.nex {
+    font-size: 22px;
+    margin-bottom: 20px; 
+}
+
+ 공지사항 아이템 간격 제거 
+.comnotice-item:last-child {
+    margin-right: 0;
+}
+
+ 공지사항 아이템 호버 효과 
+.comnotice-item:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease; 
+}
+
+.comnotice-wrap {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.clear-b {
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;  
+    align-items: center; 
+}
+
+.ac1, .ac2, .ac3, .ac4 {
+    width: 50px;
+    height: 50px; 
+    margin: 0 auto 10px; 
+}
+
+.comnotice-item figure {
+    margin-bottom: 10px;  이미지 아래에 여백 추가 
+}
+
+.ff-bhs {
+    font-weight: bold; 
+}*/
+

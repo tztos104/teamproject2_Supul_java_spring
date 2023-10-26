@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>랭크 리스트</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null}" th:href="@{/css/admin/rankList.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	var selectedName;
+	var selectedTitle;
+
+	$(document).ready(function () {
+		$('#branchName').change(function () {
+			selectedName = $("#branchName option:selected").val();
+			// URL 이동
+			console.log(selectedName)
+			window.location.href = '/admin/rankList/' + selectedName + '/전체';
+		});
+
+		$('#title').change(function () {
+			selectedTitle = $("#title option:selected").val();
+			$("#branchName").val(selectedName).prop("selected", true);
+			// URL 이동
+			console.log(selectedTitle)
+			window.location.href = selectedTitle;
+		});
+	});
+</script>
+
+<body>
+	<header>
+		<block th:if="${userRole!=null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:unless="${userRole!=null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<input type="hidden" th:field="${title}" />
+		<input type="hidden" th:field="${branchName}" />
+		<h2>랭크 리스트</h2>
+		<label for="branchName">지점명:</label>
+		<select id="branchName" name="branchName">
+			<option th:value="전체" th:text="전체"></option>
+			<option th:each="brn : ${brnList}" th:value="${brn.name}" th:text="${brn.name}"
+				th:selected="${brn.name == #vars.branchName}" />
+		</select>
+		<select name="title" id="title">
+			<option th:value="전체" th:text="전체"></option>
+			<option th:each="thema : ${themaList}" th:value="${thema.title}" th:text="${thema.title}"
+				th:if="${branchName == '전체' || branchName == thema.branch.name}"
+				th:selected="${thema.title == #vars.title}" />
+		</select>
+
+		<table border="">
+			<tr>
+				<th>순위</th>
+				<th>날짜</th>
+				<th>지점명</th>
+				<th>테마명</td>
+				<th>아이디</th>
+				<th>남은 시간</td>
+				<th>인원수</th>
+				<th colspan="2">관리</th>
+			</tr>
+
+
+
+			<tr th:each="rd, num : ${filterRankData}"
+				th:if="${#vars.branchName == '전체' or rd.branchName == #vars.branchName}">
+				<td th:text="${num.count}" />
+				<td th:text="${rd.date}" />
+				<td th:text="${rd.branchName}" />
+				<td th:text="${rd.themaName}" />
+				<td th:text="${rd.user.userId}" />
+				<td>[[${rd.minutes}]]분 [[${rd.seconds}]]초 </td>
+
+
+				<td th:text="${rd.people}" />
+				<td>
+					<a
+						th:href="|/admin/rank/modify/${rd.branchName}/${rd.rankId}?rvId=${rd.pay.reservation.rvId}|">수정</a>
+				</td>
+				<td><a th:href="|/admin/rank/delete/${rd.rankId}/${rd.branchName}|"
+						onclick="return confirm('삭제하시겠습니까?');">삭제</a>
+				</td>
+			</tr>
+
+
+		</table>
+		<div class="redirect">
+			<a th:href="|/admin/rvList/${adminBn}|">예약내역으로</a>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

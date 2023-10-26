@@ -1,0 +1,548 @@
+@font-face {
+	font-family: 'ChosunCentennial';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* ======================================= 공지사항 목록 공통 ======================================= */
+/* 공지사항 리스트 */
+.notice #searchForm {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.notice h1 {
+	text-align: center;
+	color: #f3e7db;
+	margin: 50px 0 50px 0;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.notice .noticeList {
+	margin: 10px auto 30px;
+	text-align: center;
+}
+.notice .noticeList .title {
+	max-width: 450px;
+}
+.notice .noticeList td a{
+	display: inline-block;
+	max-width: 450px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.notice .noticeList,
+.noticeList th,
+.noticeList td {
+	border: 1px solid #a88d6e;
+	border-collapse: collapse;
+	color: #f3e7db;
+	padding: 12px 20px;
+}
+
+.noticeWriteBtn .noticeListBtn a{
+	color: #3f5856;
+}
+
+.notice .noticeList tr:first-child {
+	background-color: rgba(168, 141, 110, 0.7);
+	font-size: 17px;
+
+}
+
+
+.notice .noticeList tr td:nth-child(3) {
+	text-align: left;
+}
+
+.notice .noticeList a {
+	color: #f3e7db;
+	text-decoration: none;
+}
+
+.notice .noticeList a:hover {
+	color: #E09132;
+	font-weight: bold;
+	transform: scale(1.1);
+}
+/*글쓰기 버튼*/
+.notice .write-button {
+	text-align: right;
+	
+}
+.notice .write-button button {
+	margin: 5px 28px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 3px;
+	background-color: rgba(168, 141, 110, 0.8);
+	cursor: pointer;
+	border: none;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.notice .noticeListPaging {
+	margin: 0 auto;
+}
+
+.noticeListPaging .pagination .active a {
+	background-color: #a88d6e;
+}
+
+/* ======================================= 공지사항 상세 ======================================= */
+h2 {
+	text-align: left;
+	color: #f3e7db;
+	margin: 120px 0 20px 50px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 42px;
+}
+.detail-content {
+	color: #f3e7db;
+	margin: 50px 50px 0 50px;
+	text-align: right;
+}
+.bar {
+	margin: 5px;
+}
+.detail-hr {
+	margin: 20px;
+	border: 1px solid #a88d6e;
+}
+.noticeDetail .content {
+	margin: 50px;
+	color: #f3e7db;
+	font-size: 20px;
+	line-height: 2;
+}
+.noticeDetail .filename {
+	text-align: right;
+	margin-right: 50px;
+	color: #f3e7db;
+	font-size: 16px;
+}
+.noticeDetail .tr_btn {
+	text-align: right;
+}
+
+.noticeDetail img {
+	max-width: 1000px;
+	height: auto;
+	display: block;
+	margin: 10px auto;
+}
+
+.noticeDetail button {
+	margin: 5px 5px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #a88d6e;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+}
+
+.noticeDetail button a {
+	text-decoration: none;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.noticeDetail button:hover {
+	background-color: #a88d6e;
+}
+.notice-write .noticeWriteTable li {
+	color: red;
+	list-style: none;
+	padding: 5px 0;
+}
+
+
+/* ======================================= 공지사항 글작성 ======================================= */
+/* 공지사항 작성 테이블 */
+.noticeWrite {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	border: none;
+	background: #fff;
+	border-radius: 8px;
+}
+
+.noticeWrite tr:nth-of-type(7) td {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.noticeWrite th,
+.noticeWrite td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #eef0f3;
+}
+
+.noticeWrite th {
+	text-align: center;
+}
+
+.noticeWrite tr:nth-of-type(6) td {
+	text-align: center;
+}
+
+.noticeWrite td:first-child {
+	width: 20%;
+	font-weight: bold;
+}
+
+.noticeWrite td:nth-child(2) {
+	width: 80%;
+}
+
+.noticeWrite input[type="text"],
+.noticeWrite input[type="file"],
+.noticeWrite #branchId,
+.noticeWrite select,
+.noticeWrite textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	font-size: 16px;
+	
+}
+
+.noticeWrite textarea {
+	height: 300px;
+	resize: none;
+}
+
+/* 공지사항 작성, 목록 버튼 */
+.noticeWrite button {
+	background-color: #002914;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.noticeWrite button a {
+	text-decoration: none;
+	color: white;
+}
+
+.noticeWrite button:hover {
+	background-color: rgb(0, 64, 0);
+}
+
+
+
+/* ======================================= 공지사항 수정 ======================================= */
+/* 공지사항 수정 테이블 */
+.noticeModiTable {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	border: none;
+	background: #fff;
+	border-radius: 8px;
+}
+
+.noticeModiTable tr:nth-of-type(7) td {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.noticeModiTable th,
+.noticeModiTable td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #eef0f3;
+}
+
+.noticeModiTable th {
+	text-align: center;
+}
+
+.noticeModiTable tr:nth-of-type(6) th,
+.noticeModiTable tr:nth-of-type(6) td {
+	border-bottom: none;
+}
+
+/* 입력 필드 */
+.noticeModiTable input[type="text"],
+.noticeModiTable input[type="file"],
+.noticeModiTable textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+.noticeModiTable textarea {
+	height: 150px;
+	resize: none;
+}
+
+/* 파일 업로드 */
+.noticeModiTable input[type="file"] {
+	display: block;
+}
+
+/* 버튼 */
+.noticeModiTable button {
+	background-color: #002914;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+}
+
+.noticeModiTable button:last-child {
+	margin-right: 0;
+}
+
+.noticeModiTable button:hover {
+	background-color: rgb(0, 64, 0);
+}
+
+/* 버튼 정렬*/
+.noticeModiDelBtn {
+	display: inline-flex;
+}
+
+/* 라벨 */
+.noticeModiTable label {
+	font-weight: bold;
+}
+
+/* 선택 목록 */
+.noticeModiTable select {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+/* 수정, 삭제, 목록 버튼 영역 */
+.noticeModiBtn {
+	width: 100%;
+	text-align: right;
+	margin-top: 20px;
+}
+
+/* 수정, 삭제 버튼 그룹 */
+.noticeModiDelBtn button {
+	background-color: #002914;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+}
+
+.noticeModiDelBtn button:last-child {
+	margin-right: 0;
+}
+
+.noticeModiDelBtn button:hover {
+	background-color: rgb(0, 64, 0);
+}
+
+/* 목록 버튼 */
+.noticeModiListBtn button {
+	background-color: #002914;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+}
+
+.noticeModiListBtn button:hover {
+	background-color: rgb(0, 64, 0);
+}
+
+
+
+/* **************************************************************************** */
+/* 공지사항 검색창 */
+.notice-search-form {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.search-select {
+	height: 42px;
+	width: 120px;
+	font-size: 16px;
+	border: 1px solid #a88d6e;
+	border-radius: 4px 0 0 4px;
+	background-color: rgb(34, 36, 28);
+	color: #f3e7db;
+	padding: 0 15px;
+	line-height: 16px;
+	/* -webkit-appearance: none; */
+}
+
+.search-input {
+	background: transparent;
+	height: 42px;
+	width: 327px;
+	color: #f3e7db;
+	border: 1px solid #a88d6e;
+	border-radius: 0 4px 4px 0;
+	/* -webkit-appearance: none; */
+	font-size: 16px;
+	font-weight: 500;
+	padding: 0 15px;
+	line-height: 16px;
+}
+
+.search-all {
+	background: rgba(168, 141, 110, 0.7);
+	color: #fff;
+	font-size: 16px;
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	border: 0;
+	border-radius: 0 4px 4px 0;
+	height: 42px;
+	padding: 0 20px;
+	text-decoration: none;
+	line-height: 16px;
+}
+
+.search-all:hover {
+	background: #a88d6e;
+}
+
+/* 반응형 스타일 */
+@media only screen and (max-width: 680px) {
+
+	.search-select,
+	.search-input,
+	.search-button,
+	.search-all {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+}
+
+/* *************************************************************** */
+/* 공지사항 페이징 */
+.noticeListPaging {
+	text-align: center;
+	margin: 20px auto 0 auto;
+}
+
+.noticeListPaging .pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.noticeListPaging .pagination a {
+	margin: 0 5px 0 0;
+	padding: 6px 12px;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-color: rgb(60, 65, 44);
+	color: #fff;
+	outline: 0;
+	text-decoration: none;
+	transition: all 0.2s linear;
+
+	&:hover {
+		background-color: lighten(#2c3840, 10%);
+	}
+}
+
+/* 버튼 선택 됐을 때 */
+.noticeListPaging .pagination .active a {
+	background-color: #a88d6e;
+
+}
+
+/* 다음 페이지 */
+.noticeListPaging .pagination .pagination-next a {
+	border-radius: 10px 0 0 10px;
+	margin-right: 18px;
+
+	&:hover::after {
+		border-left: 17px solid lighten(#2c3840, 10%);
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		right: -16px;
+		width: -2px;
+		height: 0;
+		border-top: 18.5px solid transparent;
+		border-bottom: 17.3px solid transparent;
+		border-left: 15px solid rgb(60, 65, 44);
+		transition: all 0.2s linear;
+	}
+}
+
+/* 이전 페이지 */
+.noticeListPaging .pagination .pagination-previous a {
+	border-radius: 0 10px 10px 0;
+	margin-left: 18px;
+
+	&:hover::after {
+		border-right: 30px solid lighten(#2c3840, 10%);
+	}
+
+	&::before {
+		content: "";
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		left: -16px;
+		width: -2px;
+		height: 0;
+		border-bottom: 17.3px solid transparent;
+		border-top: 18.5px solid transparent;
+		border-right: 15px solid rgb(60, 65, 44);
+		transition: all 0.2s linear;
+	}
+}

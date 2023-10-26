@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Reservation List</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/reservation.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	$(document).ready(function () {
+		$('#branchName').change(function () {
+			var selectedName = $(this).val(); // select에서 선택한 값 가져오기
+			// URL 이동
+			console.log(selectedName)
+			window.location.href = '/super/rvList/' + selectedName + '?page=' + [[${page}]] + '&userName=' + [[${userName}]] + '&sortBy=' + [[${sortBy}]];
+
+		});
+	});
+
+
+</script>
+
+<body>
+	<div class="reservation_container">
+		<header>
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</header>
+
+		<h2>사용내역 </h2>
+		<form action="" method="GET" class="search">
+			<!-- 사용자 이름 입력 -->
+			<label for="userName" style="color: #f3e7db;">유저이름 </label>
+			<input type="text" id="userName" name="userName">
+			<button type="submit">검색</button>
+		</form>
+		<table id="usageTable" border="">
+			<tr>
+				<th>번호</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=rvId|">Id</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=date|">date</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=price|">price</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=userName|">userName</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=themaName|">themaName</a>
+				</th>
+				<th>예약시간</th>
+				<th>지점</th>
+				<th>취소내역</th>
+				<th>예약금결제내역</th>
+				<th>비고</th>
+
+				<th>노쇼확인</th>
+			</tr>
+
+			<tr th:each="rv, num : ${searchList}">
+				<blcok th:if="${rv.date <today}">
+					<td th:text="${searchList.number*searchList.size+num.count}"></td>
+					<td th:text="${rv.rvId}"></td>
+					<td th:text="${rv.date}"> </td>
+					<td th:text="${rv.price}"> </td>
+					<td th:text="${rv.userName}"> </td>
+					<td th:text="${rv.themaName}"> </td>
+					<td th:text="${rv.time}"> </td>
+					<td th:text="${rv.branch.name}"> </td>
+					<td>
+						<block th:if="${rv.payCancle ==True && rv.cancle==true}"> 블랙리스트</block>
+					</td>
+					<td th:text="${rv.cancle}? 예약취소:정상 "> </td>
+					<td th:text="${rv.payCancle}? 결제취소:결제완료 "> </td>
+
+					<td th:text="${rv.noShow ==True} ? 노쇼: .."></td>
+				</blcok>
+			</tr>
+			<!-- 페이지처리 -->
+
+			<div th:if="${searchList.totalPages > 1}">
+				<tr class="pagination">
+					<td colspan="12">
+						<ul>
+							<li th:if="${searchList.hasPrevious}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=0&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">처음</a>
+							</li>
+							<li th:if="${searchList.hasPrevious}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=${searchList.number - 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">이전</a>
+							</li>
+							<li th:each="page : ${#numbers.sequence(searchList.number-4 <= 0 ? 0 :  searchList.number-4, (searchList.number+4) < (searchList.totalPages)?   searchList.number+4 :searchList.totalPages-1 )}"
+								class="page-link" th:classappend="${searchList.number == page} ? 'active'">
+								<a th:href="|/super/usedList/${branchName}?page=${page}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item" th:text="${page + 1}"></a>
+							</li>
+							<li th:if="${searchList.hasNext}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=${searchList.number + 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">다음</a>
+							</li>
+							<li th:if="${searchList.hasNext}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=${searchList.totalPages - 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">마지막</a>
+							</li>
+						</ul>
+					</td>
+
+				</tr>
+			</div>
+		</table>
+
+
+
+		<h2>테마가 삭제된 사용 내역<button id="used2">펼치기/접기</button></h2>
+		<table border="" id="usageTable2">
+			<tr>
+
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=rvId|">Id</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=date|">date</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=price|">price</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=userName|">userName</a>
+				</th>
+				<th><a
+						th:href="|/super/usedList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=themaName|">themaName</a>
+				</th>
+
+				<th>지점</th>
+				<th>취소내역</th>
+				<th>예약금결제내역</th>
+
+
+			</tr>
+			<tr th:each="rv, num : ${blackList}">
+
+
+				<td th:text="${rv.rvId}"></td>
+				<td th:text="${rv.date}"> </td>
+				<td th:text="${rv.price}"> </td>
+				<td th:text="${rv.userName}"> </td>
+				<td th:text="${rv.themaName}"> </td>
+				<td th:text="${rv.branchName}"> </td>
+				<td th:text="${rv.cancle}? 취소: 정상"> </td>
+				<td th:text="${rv.payCancle}? 결제취소: 결제완료"> </td>
+
+
+
+
+
+
+				<!-- 기타 필드 추가 -->
+			</tr>
+			<div th:if="${blackList.totalPages > 1}">
+				<tr class="pagination">
+					<td colspan="12">
+						<ul>
+							<li th:if="${blackList.hasPrevious}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=0&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">처음</a>
+							</li>
+							<li th:if="${blackList.hasPrevious}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=${blackList.number - 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">이전</a>
+							</li>
+							<li th:each="page : ${#numbers.sequence(blackList.number-4 <= 0 ? 0 :  blackList.number-4, (blackList.number+4) < (blackList.totalPages)?   blackList.number+4 :blackList.totalPages-1 )}"
+								class="page-link" th:classappend="${blackList.number == page} ? 'active'">
+								<a th:href="|/super/usedList/${branchName}?page=${page}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item" th:text="${page + 1}"></a>
+							</li>
+							<li th:if="${blackList.hasNext}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=${blackList.number + 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">다음</a>
+							</li>
+							<li th:if="${blackList.hasNext}" class="page-link">
+								<a th:href="|/super/usedList/${branchName}?page=${blackList.totalPages - 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">마지막</a>
+							</li>
+						</ul>
+					</td>
+
+				</tr>
+			</div>
+		</table>
+
+
+
+	</div>
+	<script>
+		// 사용내역 접기/펼치기
+		var usageTable = document.getElementById('usageTable');
+		var toggleButton = document.getElementById('used');
+
+		toggleButton.addEventListener('click', () => {
+			if (usageTable.style.display === 'none' || usageTable.style.display === '') {
+				usageTable.style.display = 'table'; // 테이블 펼치기
+			} else {
+				usageTable.style.display = 'none'; // 테이블 접기
+			}
+		});
+		var usageTable2 = document.getElementById('usageTable2');
+		var toggleButton2 = document.getElementById('used2');
+
+		toggleButton2.addEventListener('click', () => {
+			if (usageTable2.style.display === 'none' || usageTable2.style.display === '') {
+				usageTable2.style.display = 'table'; // 테이블 펼치기
+			} else {
+				usageTable2.style.display = 'none'; // 테이블 접기
+			}
+		});
+
+	</script>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

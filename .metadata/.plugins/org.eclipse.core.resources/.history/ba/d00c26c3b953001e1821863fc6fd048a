@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>후기 상세페이지</title>
+	<link th:href="@{/css/headfoot.css}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<h2>후기 상세페이지</h2>
+	<table border="" cellspacing="">
+		<tr>
+			<td>작성자</td>
+			<td><span th:text="${rDetail.user.userId}"></span></td>
+		</tr>
+		<tr>
+			<td>조회수</td>
+			<td><span th:text="${rDetail.cnt}"></span></td>
+		</tr>
+		<tr>
+			<td>탈출여부</td>
+			<td>
+				<span th:switch="${rDetail.clear}">
+					<span th:case="true">탈출</span>
+					<span th:case="false">타임오버</span>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td>평점</td>
+			<td><span th:text="${rDetail.grade}"></span></td>
+		</tr>
+		<tr>
+			<td>매장</td>
+			<td><span th:text="${rDetail.branch.name}"></span></td>
+		</tr>
+		<tr>
+			<td>작성일</td>
+			<td><span th:text="${#temporals.format(rDetail.regDate, 'yyyy-MM-dd HH:mm')}"></span></td>
+		</tr>
+		<tr th:if="${rDetail.modiDate != null}">
+			<td>수정일</td>
+			<td><span th:text="${#temporals.format(rDetail.modiDate, 'yyyy-MM-dd HH:mm')}"></span></td>
+		</tr>
+		<tr>
+			<td>제목</td>
+			<td th:text="${rDetail.title}"></td>
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td th:text="${rDetail.content}"></td>
+		</tr>
+		<!-- 이미지 파일이 업로드되었을 때만 이미지를 표시 -->
+		<!-- 파일이 업로드되었을 때만 파일 행 표시 -->
+		<tr th:if="${rDetail.fileName != null}">
+			<td>파일</td>
+			<td th:text="${rDetail.fileName}"></td>
+		</tr>
+		<tr th:if="${rDetail.fileName != null}">
+			<td colspan="2">
+				<!-- 이미지 파일일 때만 이미지 표시 -->
+				<img th:if="${rDetail.fileName.toLowerCase().endsWith('.jpg') || rDetail.fileName.toLowerCase().endsWith('.png') || rDetail.fileName.toLowerCase().endsWith('.gif')}"
+					th:src="|/up/boardR/${rDetail.fileName}|" />
+				<!-- 이미지 파일이 아닐 때는 파일 다운로드 링크 표시 -->
+				<a th:unless="${rDetail.fileName.toLowerCase().endsWith('.jpg') || rDetail.fileName.toLowerCase().endsWith('.png') || rDetail.fileName.toLowerCase().endsWith('.gif')}"
+					th:text="${rDetail.fileName}" th:href="|/boardr/download/${rDetail.fileName}|">
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<block th:if="${admin!=null || super!=null} or ${rDetail.user == user}">
+					<a th:href="@{/board/rmodify/{id}(id=${rDetail.reviewId})}"><button value="수정">수정</button></a>
+					<a th:href="@{/board/rdelete/{id}(id=${rDetail.reviewId})}"
+						onclick="return confirm('삭제하시겠습니까?')"><button value="삭제">삭제</button></a>
+				</block>
+				<a th:href="@{/board/rList}"><button value="목록">목록</button></a>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

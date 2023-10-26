@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>SUPUL</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/main/main.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<div class="left-section">
+			<section class="section-1">
+				<div class="main-text">
+					<div class="main">
+						<h1>START</h1>
+						<h1>ESCAPING TOO?</h1>
+					</div>
+					<div class="sub">
+						<p>모험의 문을 열고 우리가 숨겨진 퍼즐들과 함께하는 특별한 경험을 즐겨보세요.</p>
+						<p>우리는 자연과의 조화를 통해 색다른 방탈출을 제공합니다.</p>
+					</div>
+					<p class="button"><a href="/thema/intro">예약하러 가기</a></p>
+				</div>
+			</section>
+
+			<section class="section-2">
+				<div class="main-board">
+					<div class="notice">
+						<h3>공지사항</h3>
+						<hr />
+						<div class="text" th:each="notice : ${notice}">
+							<a th:href="@{/board/notice/detail/{id}(id=${notice.noticeId})}"><p class="title" th:text="${notice.title}"></p></a>
+							<p class="regDate" th:text="${#temporals.format(notice.regDate, 'yyyy-MM-dd')}"></p>
+						</div>
+					</div>
+					<div class="review">
+						<h3>후기</h3>
+						<hr />
+						<div class="text" th:each="review : ${review}">
+							<a th:href="@{/board/review/detail/{id}(id=${review.reviewId})}"><p class="title" th:text="${review.title}"></p></a>
+							<p class="regDate" th:text="${#temporals.format(review.regDate, 'yyyy-MM-dd')}"></p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="right-section">
+			<section class="section-3">
+				<div class="main-slideShow">
+					<ul class="slides">
+						<li th:each="tm, num : ${thema}">
+						<a th:href="|/thema/intro#thema${tm.themaId}|"><img th:src="'up/thema/' + ${tm.poster}" alt="테마포스터" /></a>
+							<div class="slide-text">
+								<p class="title" th:text="|[${tm.branch.name}] ${tm.title}|"></p>
+								<p th:text="|장르 : ${tm.type}|"></p>
+								<p class="level">
+									<span class="title">난이도 : </span>
+									<span class="key">
+										<script>
+											var level = [[${tm.level}]];
+											var levelIcon = '';
+											for (var i = 0; i < level; i++) {
+												levelIcon += '<span class="material-symbols-outlined">vpn_key</span>';
+											}
+											document.write(levelIcon);
+										</script>
+									</span>
+								</p>
+								<hr />
+								<p class="text" th:text="|${tm.content}|"></p>
+							</div>
+						</li>
+					</ul>
+					<p class="controller">
+						<span class="prev">&lang;</span>
+						<span class="next">&rang;</span>
+					</p>
+				</div>
+			</section>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+
+	<script>
+		/* ============테마 슬라이드 (시작)============ */
+		const slides = document.querySelector('.slides');
+		const slideImg = document.querySelectorAll('.slides li');
+		const slideText = document.querySelectorAll('.slides li .slide-text');
+		let currentIdx = 0;
+		const slideCount = slideImg.length;
+		const prev = document.querySelector('.prev');
+		const next = document.querySelector('.next');
+		const slideWidth = 300;
+		const slideMargin = 100;
+
+		slides.style.width = (slideWidth + slideMargin) * slideCount + 'px';
+
+		function moveSlide(num) {
+			slides.style.left = -num * (slideWidth + slideMargin) + 'px';
+			currentIdx = num;
+		}
+
+		prev.addEventListener('click', function () {
+			if (currentIdx === 0) {
+				moveSlide(slideCount - 1);
+			} else {
+				moveSlide(currentIdx - 1);
+			}
+		});
+
+		next.addEventListener('click', function () {
+			if (currentIdx === slideCount - 1) {
+				moveSlide(0);
+			} else {
+				moveSlide(currentIdx + 1);
+			}
+		});
+		/* ============테마 슬라이드 (끝)============ */
+		// 이동 간격(밀리초) 설정
+const slideInterval = 3500; // 5초마다 슬라이드를 넘김
+
+let autoSlideInterval;
+
+// 자동 슬라이드 함수
+function startAutoSlide() {
+    autoSlideInterval = setInterval(function () {
+        if (currentIdx === slideCount - 1) {
+            moveSlide(0);
+        } else {
+            moveSlide(currentIdx + 1);
+        }
+    }, slideInterval);
+}
+
+// 자동 슬라이드 시작
+startAutoSlide();
+
+// 이전/다음 버튼 클릭 시 자동 슬라이드 멈춤
+prev.addEventListener('click', function () {
+    clearInterval(autoSlideInterval);
+    if (currentIdx === 0) {
+        moveSlide(slideCount - 1);
+    } else {
+        moveSlide(currentIdx - 1);
+    }
+    // 자동 슬라이드 다시 시작
+    startAutoSlide();
+});
+
+next.addEventListener('click', function () {
+    clearInterval(autoSlideInterval);
+    if (currentIdx === slideCount - 1) {
+        moveSlide(0);
+    } else {
+        moveSlide(currentIdx + 1);
+    }
+    // 자동 슬라이드 다시 시작
+    startAutoSlide();
+});
+	</script>
+</body>
+
+</html>

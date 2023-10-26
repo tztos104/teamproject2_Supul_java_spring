@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>회원 목록</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/memberList.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<h2>회원 목록</h2>
+		<table border="">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>ID</th>
+					<th>이름</th>
+					<th>이메일</th>
+					<th>전화번호</th>
+					<th>생일</th>
+					<th>가입일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="member, num : ${memberList}">
+					<td th:text="${memberList.totalElements - num.index - memberList.number*memberList.size}"></td>
+					<td th:text="${member.userId}"></td>
+					<td><a th:href="|/super/memberDetail/${member.id}|">[[${member.userName}]]</a></td>
+					<td th:text="${member.email}"></td>
+					<td th:text="${member.phone}"></td>
+					<td th:text="${member.birth}"></td>
+					<td th:text="${#temporals.format(member.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="page" th:if="${memberList.totalPages > 1}">
+
+			<span th:if="${memberList.hasPrevious}" class="page-item">
+				<a th:href="@{/super/memberList(page=0,userName=${userName},sortBy=${sortBy})}" class="page-link">처음</a>
+			</span>
+			<span th:if="${memberList.hasPrevious}" class="page-item">
+				<a th:href="@{/super/memberList(page=${memberList.number - 1},userName=${userName},sortBy=${sortBy})}"
+					class="page-link">이전</a>
+			</span>
+			<span th:each="page : ${#numbers.sequence(0, memberList.totalPages - 1)}"
+				th:class="${memberList.number == page} ? 'active'">
+				<a th:href="@{/super/memberList(page=${page},userName=${userName},sortBy=${sortBy})}" class="page-link"
+					th:text="${page + 1}"></a>
+			</span>
+			<span th:if="${memberList.hasNext}" class="page-item">
+				<a th:href="@{/super/memberList(page=${memberList.number + 1},userName=${userName},sortBy=${sortBy})}"
+					class="page-link">다음</a>
+			</span>
+			<span th:if="${memberList.hasNext}" class="page-item">
+				<a th:href="@{/super/memberList(page=${memberList.totalPages - 1},userName=${userName},sortBy=${sortBy})}"
+					class="page-link">마지막</a>
+			</span>
+		</div>
+	</div>
+	<h2>탈퇴회원 목록</h2>
+		<table border="" style="width: 1200px; margin: 0 auto;" >
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>ID</th>
+					<th>이름</th>
+					<th>이메일</th>
+					<th>전화번호</th>
+					<th>생일</th>
+					<th>가입일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="member, num : ${deletelist}">
+					<td th:text="${num.count}"></td>
+					<td th:text="${member.userId}"></td>
+					<td><a th:href="|/super/memberDetail/${member.id}|">[[${member.userName}]]</a></td>
+					<td th:text="${member.email}"></td>
+					<td th:text="${member.phone}"></td>
+					<td th:text="${member.birth}"></td>
+					<td th:text="${#temporals.format(member.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+			</tbody>
+		</table>
+	
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>예약내역</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/user/mypage/rvList.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<!-- 헤더-->
+		<header>
+			<div th:replace="inc/header :: headerMenu"></div>
+		</header>
+		<div class="section1">
+			</br>
+			<h2>예약내역</h2>
+			</br>
+			<table border="">
+				<thead>
+					<tr>
+						<th>예약번호</th>
+						<th>이름</th>
+						<th>테마명</th>
+						<th>날짜</th>
+						<th>시간</th>
+						<th>예약금</th>
+						<th>총금액</th>
+						<th>취소유무</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="reservation : ${reservations}" th:if="${reservation.date >= today}">
+						<td th:text="${reservation.rvNum}"></td>
+						<td th:text="${reservation.userName}"></td>
+						<td th:text="${reservation.themaName}"></td>
+						<td th:text="${#temporals.format(reservation.date, 'yyyy-MM-dd')}"></td>
+						<td th:text="${reservation.time}"></td>
+						<td th:text="${reservation.rvPrice}"></td>
+						<td th:text="${reservation.price}"></td>
+						<td th:text="${reservation.cancle} ? 취소 : 정상예약"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</br>
+		<div class="section2">
+			</br>
+			<h2>사용내역</h2>
+			</br>
+			<table border="">
+				<thead>
+					<tr>
+						<th>예약번호</th>
+						<th>이름</th>
+						<th>테마명</th>
+						<th>날짜</th>
+						<th>시간</th>
+						<th>예약금</th>
+						<th>총금액</th>
+						<th>후기쓰기</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="reservation : ${reservations}">
+						<block th:if="${reservation.date < today}">
+							<td th:text="${reservation.rvNum}"></td>
+							<td th:text="${reservation.userName}"></td>
+							<td th:text="${reservation.themaName}"></td>
+							<td th:text="${#temporals.format(reservation.date, 'yyyy-MM-dd')}"></td>
+							<td th:text="${reservation.time}"></td>
+							<td th:text="${reservation.rvPrice}"></td>
+							<td th:text="${reservation.price}"></td>
+							<block th:if="${reservation.reviewYN==false}">
+								<td>
+									<a
+										th:href="|/board/review/write?branchName=${reservation.branch}&themaId=${reservation.thema.themaId}&rvId=${reservation.rvId}|">
+										<button value="글쓰기">후기쓰기
+										</button>
+									</a>
+								</td>
+							</block>
+							<block th:if="${reservation.reviewYN==true}">
+								<td>
+									<span>리뷰작성 완료! <a href="/user/mypage/writeList">(내가작성한글목록)</a></span>
+								</td>
+							</block>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

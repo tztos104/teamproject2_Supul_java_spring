@@ -1,0 +1,65 @@
+server :
+  port : 80
+  
+imp:
+  key: 3376121385347122
+  secret: VSiaeh1NCxwICyhn099QcMtILenH6so29MsS0qygWnx6Clhf3NPnlbOTwHxZ4NIGrBc4TK8C8RHWY1Q6
+spring :
+  thymeleaf:
+    prefix : views/
+    suffix : .html
+    cache : false 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB  # 업로드 가능한 최대 파일 크기
+      max-request-size: 10MB  # 요청의 최대 크기
+        
+  datasource :
+    driver-class-name : com.mysql.cj.jdbc.Driver
+    url : jdbc:mysql://localhost:3306/room
+    username : 1234
+    password : 1234
+ #    jpa 자동 업데이트설정   
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show_sql: true
+      format_sql: true
+
+
+
+
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: roomsupul@gmail.com
+    password: esfhxyzboonkrbea
+    properties:
+      mail:
+        smtp:
+          auth: true
+          debug: true
+          starttls:
+            enable: true
+        mime:
+          charset: UTF-8
+        transport:
+          protocol: smtp
+
+
+          
+    
+    
+    
+    
+    
+# 마이바티스 설정 위치 찾아주게 하기
+mybatis :
+  type-aliases-package : supul.model
+  configuration :
+    map-underscore-to-camel-case : true
+
+        
+  

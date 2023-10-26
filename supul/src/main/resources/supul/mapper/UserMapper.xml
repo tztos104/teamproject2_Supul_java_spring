@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="supul.mapper.UserMapper">
+
+   <select id="userList" resultType="supul.model.User" parameterType="supul.model.User">
+      select * from user
+   </select>
+   
+   <select id="userId" resultType="supul.model.User" parameterType="String">
+      select * from user where user_id = #{userId}
+   </select>
+
+   <!-- 랭크 추가 -->
+   <insert id="insertRank" parameterType="supul.model.Ranking">
+       insert into `ranking` (date, branch_id, thema_id, user_id, people, minutes, seconds)
+       values
+       (#{date}, #{branchId}, #{themaId}, #{userId}, #{people}, #{minutes}, #{seconds})
+   </insert>
+
+   <!-- 랭크 전체 검색 -->
+   <select id="rankList" resultType="supul.model.Ranking" parameterType="supul.model.Ranking">
+      select * from ranking order by `minutes`, `seconds`
+   </select>
+   
+   <!-- 랭크 아이디로 검색 -->
+   <select id="rankId" resultType="supul.model.Ranking" parameterType="Integer">
+      select * from ranking where rank_id = #{rankId}
+   </select>
+   
+   <!-- 랭크 삭제 -->
+   <delete id="rankdel" parameterType="supul.model.Ranking">
+      delete from ranking where rank_id = #{rankId}
+   </delete>
+   
+   <!-- 랭크 수정 -->
+   <update id="rankModify" parameterType="supul.model.Ranking">
+      update ranking set 
+      date = #{date}, branch_id= #{branchId}, thema_id= #{themaId}, user_id= #{userId}, people = #{people}, minutes = #{minutes}, seconds = #{seconds}
+      where rank_id = #{rankId}
+   </update>
+   
+
+
+
+</mapper>

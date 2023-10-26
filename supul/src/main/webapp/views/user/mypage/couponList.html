@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>내 쿠폰 목록</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/user/mypage.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="inc/header :: headerMenu"></div>
+	</header>
+	<div id="container">
+		<h2 id="hh2h2">미사용 쿠폰 목록</h2>
+		<div id="bbooxx1">
+			<block th:if="${unusedCoupons.isEmpty}">
+				<img src="/images/텅.jpg" />
+			</block>
+		</div>
+		<div id="bbooxx2">
+			<th:block th:each="unusedcp : ${unusedCoupons}">
+				<table border="" id="ttaa">
+					<tr id="ttaaid">
+						<td id="td1">쿠폰이름</td>
+						<td id="td2">쿠폰번호</td>
+						<td id="td3">할인가격</td>
+						<td id="td4">발행날짜</td>
+					</tr>
+					<tr id="ttaaid2">
+						<td th:text="${unusedcp.couponName}"></td>
+						<td th:text="${unusedcp.couponNum}"></td>
+						<td th:text="${unusedcp.discount}"></td>
+						<td th:text="${#temporals.format(unusedcp.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					</tr>
+				</table>
+			</th:block>
+		</div>
+		<h2 id="hh2hh2">사용한 쿠폰 목록</h2>
+		<div id="bbooxx2">
+			<table border="" id="ttaa">
+				<tr id="ttaaid">
+					<td id="td1">쿠폰이름</td>
+					<td id="td2">쿠폰번호</td>
+					<td id="td3">할인가격</td>
+					<td id="td4">발행날짜</td>
+					<td id="td5" style="width: 180px;">사용날짜</td>
+				</tr>
+				<th:block th:each="usedcp : ${usedCoupons}">
+		
+					<tr id="ttaaid2">
+						<td th:text="${usedcp.couponName}"></td>
+						<td th:text="${usedcp.couponNum}"></td>
+						<td th:text="${usedcp.discount}"></td>
+						<td th:text="${#temporals.format(usedcp.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td th:text="${#temporals.format(usedcp.usedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					</tr>
+			</table>
+			</th:block>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+
+</body>
+
+</html>

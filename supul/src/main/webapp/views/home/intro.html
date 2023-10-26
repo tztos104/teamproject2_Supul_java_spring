@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>홈페이지소개</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/home/intro.css}" rel="stylesheet" type="text/css">
+	<link th:if="${userRole != null}" th:href="@{/css/home/intro2.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole == null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+
+		<br />
+
+		<div class="section-intro" th:each="intro : ${homepageIntroList}">
+			<div id="title-supul" th:each="intro : ${homepageIntroList}">
+				<h1 class="style-1" th:text="${intro.title1}"></h1>
+			</div>
+			<h2 class="style-2" th:text="${intro.title2}"></h2><br /><br />
+			<p class="style-3" th:text="${intro.content1}"></p>
+			<br />
+			<hr class="fancy-hr">
+			<br />
+			<h2 id="title3" th:text="${intro.title3}"></h2><br />
+			<h3 id="subtitle1" th:text="${intro.subtitle1}"></h3>
+			<br />
+			<br />
+			<p id="content" th:text="${intro.content2}"></p></br>
+			<p id="content" th:text="${intro.content3}"></p></br>
+			<p id="content" th:text="${intro.content4}"></p></br>
+			<p id="content" th:text="${intro.content5}"></p></br>
+			<p id="content" th:text="${intro.content6}"></p></br>
+			<br />
+			<hr class="fancy-hr">
+			<img src="/images/home/notice.png">
+		</div>
+	</div>
+
+
+	<!--   <section class="comnotice">
+      <div class="container active1">
+         <img src="/images/home/notice.png">
+      </div>-->
+	<!--         <h2 class="notice"> NOTICE </h2>
+         <br />
+         <p class="nex">노약자, 임산부, 폐쇄공포증, 보호자 미동반 어린이, <br />음주자는 입장이 제한됩니다.</p>
+         <br />
+         <ul class="comnotice-wrap d-f fw-w">
+            <li>
+               <div class="comnotice-item clear-b">
+                  <figure><img class="ac1 pax3" src="https://xn--2e0b040a4xj.com/images/main/icon1.png"
+                        alt="도착시간 엄수"></figure>
+                  <h3 class="ff-bhs pax3">도착시간 엄수</h3><br />
+                  <p class="pax3">
+                     게임 준비와 설명을 위하여
+                     게임 시작 시간 최소 10분 전에
+                     도착해주셔야 합니다.
+                  </p>
+               </div>
+            </li>
+            <li>
+               <div class="comnotice-item clear-b">
+                  <figure><img class="ac2 pax3" src="https://xn--2e0b040a4xj.com/images/main/icon2.png"
+                        alt="스포금지"></figure>
+                  <h3 class="ff-bhs pax3">스포금지</h3><br />
+                  <p class="pax3">
+                     테마 내의 모든 내용 및 문제는
+                     다른 손님들을 위해
+                     유출을 절대 금지합니다.
+                  </p>
+               </div>
+            </li>
+            <li>
+               <div class="comnotice-item clear-b">
+                  <figure><img class="ac3 pax3" src="https://xn--2e0b040a4xj.com/images/main/icon3.png"
+                        alt="촬영 금지 및 소지품 보관"></figure>
+                  <h3 class="ff-bhs pax3">촬영 금지 및 소지품 보관</h3><br />
+                  <p class="pax3">
+                     소품 및 인테리어는
+                     컨텐츠 보호를 위해 사진촬영을 금지하고있습니다.
+                     게임 입장 전 소지품을 보관함에 보관해주세요.
+                  </p>
+               </div>
+            </li>
+            <li>
+               <div class="comnotice-item clear-b">
+                  <figure><img class="ac4 pax3" src="https://xn--2e0b040a4xj.com/images/main/icon4.png"
+                        alt="CCTV 녹화 중"></figure>
+                  <h3 class="ff-bhs pax3">CCTV 녹화 중</h3><br />
+                  <p class="pax3">
+                     안전한 방탈출과 원활한
+                     게임진행을 위해,
+                     테마 내 모든 구간은
+                     CCTV를 통해 녹화되고 있습니다.
+                  </p>
+               </div>
+            </li>
+         </ul>
+      </div>
+   </section>
+   </div>-->
+	<!--푸터-->
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

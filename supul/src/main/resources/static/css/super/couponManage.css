@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+
+thead tr:first-child {
+	background-color: #f3e7db;
+	font-size: 17px;
+
+}
+h2 {
+	font-size: 35px;
+	margin: 30px 50px;
+	font-weight: normal;
+	padding-left: 40px;
+	padding-bottom: 20px;
+	color: #f3e7db;
+}
+
+table {
+	margin: 0px auto;
+	width: 85%;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+th{color: #3f5856;}
+
+th,
+td {
+	border-collapse: collapse;
+	border: 1px solid #555;
+	padding: 10px;
+}
+
+
+
+td {
+	background-color: #fff;
+}
+
+tbody a{
+	margin: 0 4px;
+}
+
+.newcoupon{
+	text-align: right;
+	margin: 40px 0;
+}
+
+.newcoupon a{
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px;
+	margin: 10px;
+	text-decoration: none;
+	border-bottom: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f3e7db;
+}
+
+.newcoupon a:hover{
+	background-color: snow;
+}
+
+.newcoupon a:last-child{
+	margin-right: 90px;
+	
+}

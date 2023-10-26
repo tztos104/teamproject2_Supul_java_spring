@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+.container {
+	margin: 0px auto;
+}
+
+
+thead tr:first-child {
+	background-color: #f3e7db;
+	font-size: 17px;
+
+}
+select,
+input {
+	
+	font-size: 16px;
+	border: 1px solid #a88d6e;
+	background-color: transparent;
+	color: #f3e7db;
+	width: 130px;
+}
+option {
+	background-color:#a88d6e;
+}
+
+table, th, td{
+	border: 1px solid #a88d6e;
+	border-collapse: collapse;
+	color: #3f5856;
+	padding: 12px 20px;
+	margin: auto;
+}
+table td{
+	color: #f3e7db;
+}
+
+tbody a{
+	margin: 0 4px;
+	color:#a88d6e ;
+}
+
+
+.button {
+	text-align: right;
+	margin-top: 20px;
+	margin-right: 40px;
+	
+}
+
+.btn {
+	width: 150px;
+	height: 50px;
+	background-color: #f3e7db;
+	border-radius: 5px;
+	border: none;
+	color: #3f5856;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+.button.btn:hover{
+	background-color: snow;
+}
+
+

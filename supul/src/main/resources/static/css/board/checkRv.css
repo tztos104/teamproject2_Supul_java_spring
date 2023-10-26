@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+/* ================================================= */
+/* ================== 예약 확인 및 취소 ================== */
+/* 예약 없을때 이미지 */
+#checkRvListImg{margin: 0 auto; text-align: center;}
+#checkRvListImg img{width: 700px;}
+#checkRvHeadH1 h1,
+#checkRvListImg h1{margin: 40px auto 30px auto; width: 1200px; text-align: center;}
+
+/* 예약 있을때 테이블 */
+#sectionCheckRvTable{display: flex;}
+.checkRvTable{margin: 0 60px 0 0; width: 350px; border-collapse: collapse; 
+	margin-bottom: 20px; border: none; background: #fff; border-radius: 8px;}	
+
+.checkRvTable th,
+.checkRvTable td{padding: 10px; text-align: left; border-bottom: 1px solid #eef0f3;}
+
+.checkRvTable tr:nth-of-type(8) th,
+.checkRvTable tr:nth-of-type(8) td{border-bottom: none;}
+
+.checkRvTable th{font-weight: bold; background: #f9fafb; width: 50px;}
+.checkRvTable th:first-child{border-top-left-radius: 8px;}
+.checkRvTable th:last-child{border-top-right-radius: 8px;}
+
+.checkRvTable td{width: 300px;}
+
+/* 결제 취소 버튼 스타일 */
+#cancelButton{width: 100%; background-color: #f44336; color: white; border: none; padding: 12px 24px; cursor: pointer;
+    border-radius: 5px; font-size: 16px; transition: background-color 0.3s ease;}
+#cancelButton:hover{background-color: #d32f2f;}

@@ -1,0 +1,337 @@
+/*로고 글씨체*/
+@import url('https://fonts.googleapis.com/css2?family=Almendra+Display&display=swap');
+
+/*Grandiflora One - 메인 h1*/
+@import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
+
+@font-face {
+    font-family: 'ChosunCentennial';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/* ============메인 전체 틀 (시작)============ */
+.container {
+	display: flex;
+}
+
+.left-section {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 66.67%;
+}
+
+.right-section {
+	/*	border-left: 0.5px solid rgb(243, 231, 219, 0.4);*/
+	border-left: 1px solid rgba(168, 141, 110, 0.4);
+	flex-basis: 33.33%;
+}
+
+.section-1 {
+	border-bottom: 1px solid rgba(168, 141, 110, 0.4);
+	box-sizing: border-box;
+	width: 100%;
+	flex: 1;
+
+}
+
+.section-2 {
+	box-sizing: border-box;
+	width: 100%;
+	height: 250px;
+	flex: 1;
+}
+
+.section-3 {
+	box-sizing: border-box;
+	width: 30%;
+	height: 780px;
+
+
+}
+
+/* ============메인 전체 틀 (끝)============ */
+
+
+
+/* ============메인 텍스트 (시작)============ */
+.main-text {
+	display: flex;
+	/* 요소를 가로로 정렬하기 위해 Flexbox 사용 */
+	justify-content: center;
+	/* 가로 중앙 정렬 */
+	height: 100%;
+	flex-direction: column;
+	/* 내부 요소들을 세로로 배치 */
+
+}
+
+.main-text .main {
+	color: #f3e7db;
+	font-size: 45px;
+	margin-bottom: 10px;
+	font-family: 'Grandiflora One', serif;
+	font-style: italic;
+	margin: 50px 0 20px 30px;
+}
+
+.main-text .main h1 {
+	font-weight: bold;
+}
+
+.main-text .sub {
+	color: #a58e74;
+	font-size: 18px;
+	margin-bottom: 40px;
+	font-family: 'Grandiflora One', serif;
+	font-weight: bold;
+	margin-left: 30px;
+}
+
+.main-text .sub p {
+	padding: 3px;
+}
+
+.main-text .button {
+	margin: 30px 0 50px 30px;
+}
+
+.main-text .button a {
+	color: #f3e7db;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 22px;
+	border: 1px solid #E09132;
+	padding: 15px 18px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	background-color: #E09132;
+}
+
+.main-text a:hover {
+	background-color: #E09132;
+	color: #f3e7db;
+}
+
+/* ============메인 텍스트 (끝)============ */
+
+
+
+/* ============서브 텍스트 (시작)============ */
+.main-board {
+	display: flex;
+	justify-content: space-between;
+}
+
+
+.main-board>div {
+	display: inline-block;
+	color: #f3e7db;
+	padding: 30px 0;
+}
+
+.main-board hr {
+	margin: 5px 0;
+	width: 99.6%;
+	border: 1px solid #f3e7db;
+}
+
+.main-board .notice {
+	min-width: 355px;
+	min-height: 190px;
+	vertical-align: top;
+	margin-left: 30px;
+}
+.main-board .notice a {
+	color: #f3e7db;
+}
+.main-board .notice a:hover {
+	color: #E09132;
+}
+
+.main-board .review {
+	min-width: 355px;
+	min-height: 190px;
+	vertical-align: top;
+	margin-right: 30px;
+}
+/*.main-board .review p{
+   padding: 1.7px 0;
+}*/
+.main-board .review a {
+	color: #f3e7db;
+}
+.main-board .review a:hover {
+	color: #E09132;
+}
+
+.main-board div h3 {
+	color: #a88d6e;
+	;
+}
+
+.main-board div .text {
+	display: flex;
+	justify-content: space-between;
+}
+
+.main-board div .text p {
+	margin: 7px 0;
+}
+
+.main-board div .text .title {
+	display: inline-block;
+	width: 250px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.main-board div .text .regDate {
+	display: inline-block;
+
+}
+
+/* ============서브 텍스트 (끝)============ */
+
+
+
+/* ============테마 슬라이드 (시작)============ */
+.main-slideShow {
+	width: 400px;
+	height: 100%;
+	/* 전체길이랑 맞추기 */
+	position: relative;
+	overflow: hidden;
+}
+
+.main-slideShow .slides>li {
+	list-style-type: none;
+	float: left;
+	margin-top: 50px;
+	position: relative;
+	width: 400px;
+}
+
+.main-slideShow .slides {
+	margin: 0;
+	position: absolute;
+	padding: 0;
+	left: 0;
+	top: 0;
+	transition: left 0.5s ease-out;
+	width: 400px;
+
+}
+
+.main-slideShow .slides li:first-child {
+	margin-left: 50px;
+	/* 첫 번째 사진 왼쪽 여백 */
+}
+
+.main-slideShow .slides li:not(:last-child) {
+	float: left;
+	margin-right: 100px;
+	/* 사진 사이 여백 */
+}
+
+.main-slideShow .controller span {
+	position: absolute;
+	color: #f3e7db;
+	text-align: center;
+	border-radius: 50%;
+	padding: 10px 20px;
+	top: 40%;
+	font-size: 1.5em;
+	cursor: pointer;
+}
+
+.main-slideShow .controller span:hover {
+	background-color: rgba(128, 128, 128, 0.11);
+}
+
+.main-slideShow .controller .prev {
+	left: 10px;
+}
+
+.main-slideShow .controller .prev:hover {
+	transform: translateX(-10px);
+}
+
+.main-slideShow .controller .next {
+	right: 10px;
+}
+
+.main-slideShow .controller .next:hover {
+	transform: translateX(10px);
+}
+
+.main-slideShow .slides li {
+	position: relative;
+	width: 300px;
+}
+
+.main-slideShow .slides li img {
+	object-fit: cover;
+	width: 100%;
+	height: 400px;
+	border: 1px solid #f3e7db;
+}
+
+.slide-text {
+	position: absolute;
+	left: 0;
+	width: 300px;
+	max-height: 300px;
+	/* 최대 높이 지정 */
+	padding: 10px;
+	margin-top: 10px;
+	color: #f3e7db;
+	box-sizing: border-box;
+	z-index: 1;
+	background-color: rgba(168, 141, 110, 0.2);
+	overflow: hidden;
+	white-space: normal;
+	line-height: 1.5;
+}
+
+.slide-text > .title {
+	color: #E09132;
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 7px;
+}
+
+.slide-text .text {
+	height: auto;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.slide-text hr {
+	margin: 10px 0;
+}
+.slide-text p {
+	padding: 2px 0;
+}
+.slide-text .level {
+	display: flex;
+	align-items: center;
+}
+.slide-text .level > .title {
+	padding-right: 3px;
+}
+
+/*난이도 아이콘*/
+.slide-text .level .material-symbols-outlined {
+	transform: rotate(225deg);
+}
+
+/* ============테마 슬라이드 (끝)============ */

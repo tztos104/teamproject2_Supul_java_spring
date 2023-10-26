@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation List</title>
+</head>
+
+<body>
+    <h1>Reservation List</h1>
+   <select id="branchSelect">
+        <option value="">전체 지점</option>
+        <!-- thymeleaf 문법 대신 일반 HTML을 사용합니다. -->
+        <block th:each="branch : ${branchList}">
+            <option th:value="${branch.branchId}" th:data-url="|/sales/list/${branch.name}|" th:text="${branch.name}"></option>
+        </block>
+    </select>
+    <script>
+        // 셀렉트 박스가 변경될 때 이벤트를 처리하는 JavaScript 함수를 정의합니다.
+        document.getElementById('branchSelect').addEventListener('change', function () {
+            // 선택된 옵션의 데이터 속성인 data-url을 가져옵니다.
+            var selectedUrl = this.options[this.selectedIndex].getAttribute('data-url');
+
+            // 선택된 값이 비어 있지 않으면 해당 URL로 페이지를 이동합니다.
+            if (selectedUrl) {
+                window.location.href = selectedUrl;
+            }
+        });
+    </script>
+    <table>
+        <tr>
+			 <th><a th:href="@{/sales/list(page=${searchList.number},userName=${userName}, sortBy='rvDate')}">Date</a></th>
+            <th><a th:href="@{/sales/list(page=${searchList.number},userName=${userName}, sortBy='userName')}">User Name</a></th>
+            <th><a th:href="@{/sales/list(page=${searchList.number},userName=${userName}, sortBy='themaName')}">thema Name</a></th>
+            <th><a th:href="@{/sales/list(page=${searchList.number},userName=${userName}, sortBy='time')}">thema Name</a></th>
+            <th><a th:href="@{/sales/list(page=${searchList.number},userName=${userName}, sortBy='thema.branch.name')}">thema Name</a></th>
+            <th>Reservation ID</th>
+            <th>User Name</th>
+            <th>Thema Name</th>
+            <th>Time</th>
+            <th>Date</th>
+            <th>People</th>
+            <th>Price</th>
+            <th>Reservation Date</th>
+        </tr>
+  
+        <button type="submit">노쇼 상태 업데이트</button>
+        </tr>
+           <tr th:each="rv : ${searchList}">
+				<td th:text="${rv.rvId}"></td>
+	
+			   <td th:text="${rv.date}"> </td>
+			   <td th:text="${rv.price}"> </td>
+			   <td th:text="${rv.userName}"> </td>
+			   <td th:text="${rv.themaName}"> </td>
+			   <td th:text="${rv.time}"> </td>
+			  
+			   <block th:each="a : ${rv.thema}" > 
+			   <td th:text="${a.title}"> </td>
+			   <td th:text="${a.content}"> </td>
+			   <block th:each="b : ${a.branch}" > 
+				   <td>
+		<block th:if="${rv.noShow ==True}"></block>
+		<block th:unless="${rv.noShow ==True}">
+		<block th:if="${rv.noShow ==false}">
+		<form th:action="|/sales/list/${b.name}/${rv.rvId}/updateNoShow|" method="post">
+    <input type="hidden" name="rvId" th:value="${rv.rvId}" />
+    <button type="submit">노쇼</button>
+</form></block>
+<block th:unless="${rv.noShow ==false}"><form th:action="|/sales/list/${b.name}/${rv.rvId}/updateNoShow|" method="post">
+    <input type="hidden" name="rvId" th:value="${rv.rvId}" />
+    <button type="submit">노쇼취소</button>
+</form></block></block>
+</td>
+<block th:if="${rv.noShow ==True}"></block>
+<block th:unless="${rv.noShow ==True}">
+<td><block th:if="${rv.paid ==false}"><form th:action="|/sales/list/${b.name}/${rv.rvId}/updatepaid|" method="post">
+    <input type="hidden" name="rvId" th:value="${rv.rvId}" />
+    <button type="submit">결제</button>
+</form> </block>
+<block th:unless="${rv.paid ==false}"><form th:action="|/sales/list/${b.name}/${rv.rvId}/updatepaid|" method="post">
+    <input type="hidden" name="rvId" th:value="${rv.rvId}" />
+    <button type="submit">결제취소</button>
+</form> </block></block>
+
+</td>
+					<td th:text="${b.name}"> </td> 
+					 </block>
+                </block>
+               
+                <!-- 기타 필드 추가 -->
+            </tr>    
+        
+    </table>
+<!-- Add this block for pagination controls -->
+<div th:if="${searchList.totalPages > 1}">
+    <ul class="pagination">
+        <li th:if="${searchList.hasPrevious}" class="page-item">
+             <a th:href="@{/sales/list(page=0,userName=${userName},sortBy=${sortBy})}"class="page-link">처음</a>
+        </li>
+        <li th:if="${searchList.hasPrevious}" class="page-item">
+            <a th:href="@{/sales/list(page=${searchList.number - 1},userName=${userName},sortBy=${sortBy})}"class="page-link">이전</a>
+        </li>
+        <li th:each="page : ${#numbers.sequence(0, searchList.totalPages - 1)}" class="page-item"
+            th:classappend="${searchList.number == page} ? 'active'">
+            <a th:href="@{/sales/list(page=${page},userName=${userName},sortBy=${sortBy})}" class="page-link" th:text="${page + 1}"></a>
+        </li>
+        <li th:if="${searchList.hasNext}" class="page-item">
+             <a th:href="@{/sales/list(page=${searchList.number + 1},userName=${userName},sortBy=${sortBy})}" class="page-link">다음</a>
+        </li>
+        <li th:if="${searchList.hasNext}" class="page-item">
+            <a th:href="@{/sales/list(page=${searchList.totalPages - 1},userName=${userName},sortBy=${sortBy})}"class="page-link">마지막</a>
+        </li>
+    </ul>
+</div>
+    <form th:action="|/sales/list/${branchName}|" method="get">
+        <input type="text" name="userName" placeholder="유저이름검색">
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>

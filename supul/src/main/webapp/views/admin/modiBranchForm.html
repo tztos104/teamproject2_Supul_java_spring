@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>전화번호 수정신청</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/super/branch/branchForm2.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script>
+		      function validatePhoneNumber(input) {
+         var phoneInput = input.value;
+         var phoneError = input.nextElementSibling; // 다음에 오는 sibling span 엘리먼트
+
+         // 숫자만 9~11자리 입력을 위한 정규표현식
+         var phonePattern = /^\d{2,4}-\d{3,4}-\d{3,4}$/;
+
+         if (!phonePattern.test(phoneInput)) {
+            phoneError.textContent = "숫자만 입력하고, 2~4자리 숫자-3~4자리 숫자-3~4자리 숫자 여야 합니다.(예: xxx-yyyy-zzzz)";
+            input.focus();
+            return false;
+         } else {
+            phoneError.textContent = ""; // 오류가 없을 때 메시지를 비웁니다.
+         }
+
+         return true;
+      }
+
+		function onSubmitForm(form) {
+			var phoneInput = form.querySelector('#phone');
+
+			if (!validatePhoneNumber(phoneInput)) {
+				// 유효성 검사 실패 시 submit을 중지하고 서버로 전송을 막음
+				return false;
+			}
+			return true;
+		}
+	</script>
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole!=null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:unless="${userRole!=null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<h2>전화번호 수정 요청</h2>
+		<form th:action="@{/admin/branch/modiBranchForm}" method="post" th:object="${branch}" onsubmit="return onSubmitForm(this);">
+			<input type="hidden" th:field="*{branchId}" required />
+			<label for="phone">전화번호:</label>
+			<input type="text" id="phone" name="phone" th:field="*{phone}" onblur="validatePhoneNumber(this)" />
+			<span class="error"></span>
+			<input type="hidden" name="originbranchId" th:value="${branchId}" />
+			<input type="hidden" name="originbranchname" th:value="${branchName}" />
+			<div class="button">
+				<button type="submit" onclick="return confirm('수정요청 하시겠습니까?')">수정요청</button>
+				<a th:href="@{/admin}"><button value="돌아가기">돌아가기</button></a>
+			</div>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

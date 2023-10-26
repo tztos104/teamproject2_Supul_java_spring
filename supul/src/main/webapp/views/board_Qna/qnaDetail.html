@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>문의게시판 상세 페이지</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+	<link th:if="${userRole != null}" th:href="@{/css/board/board_super.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/board/board_admin.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/board/board_Qna.css}" rel="stylesheet"
+		type="text/css">
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole ==null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<div class="qnaDetail">
+			<h2 th:text="|[${qnaBoard.branch.name}] ${qnaBoard.title}|"></h2>
+			<div class="detail-content">
+				<span th:text="${qnaBoard.type}"></span>
+				<span class="bar"> | </span>
+				<span th:text="|${qnaBoard.user.userName}|"></span>
+				<span class="bar"> | </span>
+				<th:block th:if="${qnaBoard.modiDate == null}">
+					<span th:text="|작성일 ${#temporals.format(qnaBoard.regDate, 'yyyy-MM-dd HH:mm')}|"></span>
+				</th:block>
+				<th:block th:if="${qnaBoard.modiDate != null}">
+					<span th:text="|작성일 ${#temporals.format(qnaBoard.modiDate, 'yyyy-MM-dd HH:mm')}|"></span>
+				</th:block>
+			</div>
+
+			<hr class="detail-hr" />
+
+			<p class="content" th:utext="${qnaBoard.content.replaceAll('\n', '<br>')}" />
+
+			<div class="tr_btn">
+				<block th:if="${user !=null && qnaBoard.user.id == user.id && qnaBoard.comment.isEmpty()}">
+					<button value="수정" onclick="return confirm('수정하시겠습니까?')">
+						<a th:href="@{/board/qna/modify/{id}(id=${qnaBoard.qnaId})}">수정</a>
+					</button>
+				</block>
+				<block
+					th:if="${user !=null && qnaBoard.user.id == user.id && qnaBoard.comment.isEmpty()} or ${userRole!=null && qnaBoard.comment.isEmpty()} or ${admin != null && qnaBoard.branch.name.equals(adminBn) && qnaBoard.comment.isEmpty()}">
+					<button value="삭제">
+						<a th:href="@{/board/qna/delete/{id}(id=${qnaBoard.qnaId})}"
+							onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+					</button>
+				</block>
+				<button value="목록"><a th:href="@{/board/qna/list}">목록</a></button>
+			</div>
+
+
+			<!-- 답글 구간 -->
+			<div class="section" id="comments">
+				<!--<h3>답글</h3>-->
+				<!-- 답글 테이블 -->
+				<div class="section" th:if="${qnaBoard.comment !=null}">
+					<table class="qnaDetailComm" th:each="comment, a : ${qnaBoard.comment}" >
+						<!--<block
+							th:if="${user !=null && qnaBoard.user.id == user.id} or ${userRole!=null} or ${admin != null && qnaBoard.branch.name.equals(adminBn)}">-->
+						<tr>
+							<!--							<th>번호</th>
+							<td><span th:text="${a.count}"></span></td>-->
+							<td class="comment-writer"><span class="material-symbols-outlined">
+									subdirectory_arrow_right
+								</span><span class="writer" th:text="|${comment.branch.name}(${comment.writer})|"></span>
+								<span class="date"
+									th:text="${#temporals.format(comment.regDate, 'yyyy-MM-dd HH:mm')}"></span></td>
+						</tr>
+						<tr class="comment-content">
+							<td><span th:utext="${comment.content.replaceAll('\n', '<br>')}"></span></td>
+						</tr>
+						<!--							<tr>
+								<td colspan="6">
+									 답글 수정 버튼 
+									<form
+										th:action="@{/board/qna/comment/{commentId}/modify(commentId=${comment.commentId})}"
+										method="get" style="display: inline;">
+										<button type="submit">수정</button>
+									</form>
+									 답글 삭제 버튼 
+									<form
+										th:action="@{/board/qna/comment/{commentId}/delete(commentId=${comment.commentId})}"
+										method="post" style="display: inline;">
+										<button type="submit"
+											onclick="return confirm('삭제하면 다시 작성하실 수 없습니다\n 정말로 삭제하시겠습니까?')">삭제</button>
+									</form>
+								</td>
+							</tr>-->
+						</block>
+					</table>
+				</div>
+			</div>
+			<!-- 답글 작성 폼 -->
+			<div class="section" id="commSection">
+				<block
+					th:if="${user !=null && qnaBoard.user.id == user.id} or ${userRole!=null} or ${admin != null && qnaBoard.branch.name.equals(adminBn)}">
+					<!--<block
+					th:if="${(admin != null or userRole != null) and qnaBoard.comment.isEmpty() and (admin != null && qnaBoard.branch.name.equals(adminBn))}">-->
+					<!--<h3>답글</h3>-->
+					<form action="/board/qna/comment" method="post">
+						<table class="commSectionTable">
+							<tr>
+								<td><input type="hidden" name="qnaId" th:value="${qnaBoard.qnaId}"></td>
+							</tr>
+							<tr>
+								<td><textarea class="comment" name="content" placeholder="답글을 입력하세요"
+										required></textarea>
+								</td>
+								<td><button type="submit"
+										onclick="return confirm('댓글 등록시 수정/삭제가 불가능합니다.\n정말로 등록하시겠습니까?')">답글<br>작성</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</block>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

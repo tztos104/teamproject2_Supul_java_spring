@@ -1,0 +1,65 @@
+@charset "UTF-8";
+@font-face {
+	font-family: 'ChosunCentennial';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+.container {
+	margin: 20px auto;
+}
+
+
+
+form {
+	
+	padding: 20px 30px;
+	border-radius: 5px;
+	width: 600px;
+	margin: 0 auto;
+}
+
+label {
+	display: block;
+	font-weight: bold;
+	margin: 5px;
+	font-size: 20px;
+	color: #3f5856;
+}
+
+input[type="text"] {
+	width: 590px;
+	height: 40px;
+	padding: 5px 0;
+	padding-left: 10px;
+	border: 1px solid #3f5856;
+	background-color: transparent;
+	
+	color: #3f5856;
+}
+
+button {
+	width: 300px;
+	height: 50px;
+	background-color: #f3e7db;
+	border:1px solid #3f5856;
+	color: #3f5856;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+button:hover {
+	background-color: #eddecf;
+}
+
+.button{
+	margin-top: 20px;
+	display: flex;
+}
+
+.error{
+	font-size: 14px;
+	font-weight: bold;
+	color: #E09132;
+}

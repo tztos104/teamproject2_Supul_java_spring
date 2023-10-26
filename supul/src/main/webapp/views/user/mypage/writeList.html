@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>내가 쓴 글목록</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/user/mypage/writeList.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<!-- 헤더-->
+		<header>
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</header>
+
+		<div class="section1">
+			<br />
+			<h2>내가 쓴 글목록</h2>
+			<br />
+		</div>
+
+		<div class="section2">
+			<table border="">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>매장명</th>
+						<th>테마명</td>
+						<th>제목</td>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="board : ${userBoardData}">
+						<td th:text="${board.reviewId}"></td>
+						<td th:text="${board.branch.name}"></td>
+						<td th:text="${board.thema.title}"></td>
+						<td><a th:href="@{'/board/review/detail/' + ${board.reviewId}}" th:text="${board.title}"></a>
+						</td>
+						<td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm')}" />
+					</tr>
+					<ul>
+						<li th:each="item : ${wishlist}" th:text="${item}"></li>
+					</ul>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--푸터-->
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>홈페이지 수정</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/homeUpdate.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+
+	<form th:action="@{/super/home/update}" method="post" th:object="${homepage}">
+		<h2>홈페이지 소개 수정</h2>
+		<table>
+			<td><label for="title1">title1</label></td>
+			<td><input type="text" id="title1" name="title1" th:field="*{title1}" required/></td>
+			</tr>
+			<tr>
+				<td><label for="title2">title2</label></td>
+				<td><input type="text" id="title2" name="title2" th:field="*{title2}" required/></td>
+			</tr>
+			<tr>
+				<td><label for="content1">content1</label></td>
+				<td><textarea id="content1" name="content1" th:field="*{content1}" required></textarea></td>
+			</tr>
+			<tr>
+				<td><label for="title3">title3</label></td>
+				<td><textarea id="title3" name="title3" th:field="*{title3}" required></textarea></td>
+			</tr>
+			<tr>
+				<td><label for="subtitle1">subtitle1</label></td>
+				<td><input type="text" id="subtitle1" name="subtitle1" th:field="*{subtitle1}" required/></td>
+			</tr>
+			<tr>
+				<td><label for="content2">content2</label></td>
+				<td><textarea id="content2" name="content2" th:field="*{content2}" required></textarea></td>
+			</tr>
+			<tr>
+				<td><label for="content3">content3</label></td>
+				<td><textarea id="content3" name="content3" th:field="*{content3}"></textarea></td>
+			</tr>
+			<tr>
+				<td><label for="content4">content4</label></td>
+				<td><textarea id="content4" name="content4" th:field="*{content4}"></textarea></td>
+			</tr>
+			<tr>
+				<td><label for="content5">content5</label></td>
+				<td><textarea id="content5" name="content5" th:field="*{content5}"></textarea></td>
+			</tr>
+			<tr>
+				<td><label for="content6">content6</label></td>
+				<td><textarea id="content6" name="content6" th:field="*{content6}"></textarea></td>
+			</tr>
+		</table>
+		<div style="text-align: right;">
+			<button type="submit">저장</button>
+		</div>
+	</form>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

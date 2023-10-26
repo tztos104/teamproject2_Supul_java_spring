@@ -1,0 +1,327 @@
+@charset "UTF-8";
+
+#container {
+	width: 1200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#hhh {
+	color: #f3e7db;
+	font-size: 30px;
+	margin-top: 50px;
+	margin-right: 750px;
+	margin-bottom: 30px;
+}
+
+#h222 {
+	color: #f3e7db;
+	margin-left: 100px;
+}
+
+#h123 {
+	margin-left: 30px;
+	text-align: center;
+	color: white;
+	font-size: 30px;
+	margin-top: 50px;
+}
+
+#aws1 {
+	color: white;
+	position: absolute;
+	margin-top: 60px;
+	margin-left: 30px;
+}
+
+#aws2 {
+	color: white;
+	position: absolute;
+	margin-top: 60px;
+	margin-left: 40px;
+}
+
+#aws3 {
+	color: white;
+	position: absolute;
+	margin-top: 60px;
+	margin-left: 40px;
+}
+
+#uuuulll {
+	margin-top: 10px;
+	list-style: none;
+	margin-left: 150px;
+}
+
+#lllliii {
+	text-align: left;
+	margin: 15px 0;
+
+}
+
+#aAa {
+	margin-right: 30px;
+	color: #f3e7db;
+	padding-bottom: 2px;
+	border-bottom: 1px solid #ccc;
+	text-decoration: none;
+}
+
+#aAa:hover {
+	color: #E09132;
+}
+
+#fff {
+	margin-top: 20px;
+	margin-right: 20px;
+	height: 382px;
+}
+
+#boxs {
+	height: 372px;
+}
+
+#box1 {
+	display: inline-block;
+	width: 300px;
+	height: 250px;
+	border: 1px solid #ddd;
+	vertical-align: top;
+	margin-right: -7px;
+}
+
+#box2 {
+	display: inline-block;
+	width: 300px;
+	height: 250px;
+	border: 1px solid #ddd;
+	vertical-align: top;
+}
+
+#box3 {
+	display: inline-block;
+	width: 300px;
+	height: 250px;
+	border: 1px solid #ddd;
+	vertical-align: top;
+	margin-left: -7px;
+}
+
+#form-group {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#userPwww {
+	color: white;
+}
+
+#userPw2 {
+	margin-left: 10px;
+	width: 250px;
+	height: 30px;
+}
+
+#btdiv {
+	text-align: center;
+	margin-left: 80px;
+}
+
+.text-danger {
+	font-size: 14px;
+	font-weight: bold;
+	color: #E09132;
+	text-align: center;
+	margin-right: 100px;
+}
+
+#btt {
+	width: 260px;
+	height: 40px;
+	margin-bottom: 10px;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#infm {
+	text-align: left;
+	margin-left: 450px;
+	display: block;
+	width: 150px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	color: white;
+}
+
+
+#userName,
+#birth,
+#userId,
+#userPw,
+#phone {
+	width: 300px;
+	height: 30px;
+	font-size: 16px;
+}
+
+#email {
+	width: 190px;
+	height: 30px;
+	font-size: 16px;
+	margin-left: 110px;
+}
+
+#emailDomain {
+	height: 35px;
+	font-size: 16px;
+}
+
+#checkEmailButton {
+	height: 35px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#signupButton {
+	width: 320px;
+	height: 50px;
+	border-radius: 10px;
+	margin-top: 20px;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+#eerr {
+	color: #E09132;
+	font-size: 14px;
+	text-align: left;
+	margin-left: 450px;
+}
+
+#email-status {
+	text-align: left;
+	font-size: 14px;
+	margin-left: 450px;
+}
+
+#h321 {
+	margin-top: 30px;
+	color: white;
+	font-size: 30px;
+	text-align: center;
+}
+
+#pppp {
+	margin-top: 10px;
+	margin-bottom: 30px;
+	text-align: center;
+	color: white;
+	font-size: 16px;
+}
+
+#frmfrm {
+	text-align: center;
+	height: 360px;
+}
+
+#papa {
+	color: white;
+}
+
+#userPww {
+	width: 295px;
+	height: 30px;
+	font-size: 18px;
+	margin-left: 5px;
+}
+
+#htht {
+	width: 305px;
+	height: 40px;
+	margin-left: 75px;
+	margin-top: 10px;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+}
+
+#hh2h2 {
+	margin-left: 100px;
+	text-align: left;
+	margin-top: 30px;
+	color: white;
+	font-size: 30px;
+}
+
+#hh2hh2 {
+	text-align: left;
+	margin-left: 100px;
+	margin-top: 30px;
+	color: white;
+	font-size: 30px;
+}
+
+#bbooxx1 {
+	margin-top: 30px;
+	margin-left: 150px;
+}
+
+#bbooxx2 {
+	margin-top: 30px;
+	margin-left: 120px;
+	min-height: 146px;
+}
+
+#ttaa {
+	border: 1px #a39485 solid;
+	margin-left: 30px;
+	background-color: white;
+	border-style: 2px solid #000;
+	font-size: .9em;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	border-collapse: collapse;
+	border-radius: 5px;
+	height: 50px;
+}
+
+#ttaaid {
+	color: whitesmoke;
+	background: #73685d;
+	font-weight: bold;
+	text-align: center;
+	height: 30px;
+}
+
+#ttaaid2 {
+	height: 30px;
+}
+
+#td1 {
+	width: 210px;
+}
+
+#td2 {
+	width: 120px;
+}
+
+#td3 {
+	width: 120px;
+}
+
+#td4 {
+	width: 180px;
+}
+
+#ffffoter {
+	position: relative;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}

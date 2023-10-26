@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 메인 페이지</title>
+</head>
+<body>
+	   <header>
+       <div th:replace="inc/header :: headerMenu"></div>
+   </header>
+    <h1>관리자 메인 페이지 </h1>
+    
+    <h2>오늘 예약 내역</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Reservation ID</th>
+                <th>User Name</th>
+                <th>Thema Name</th>
+                <th>Date</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reservation : ${todayReservations}">
+                <td th:text="${reservation.rvId}"></td>
+                <td th:text="${reservation.userName}"></td>
+                <td th:text="${reservation.themaName}"></td>
+                <td th:text="${#temporals.format(reservation.date, 'yyyy-MM-dd')}"></td>
+                <td th:text="${reservation.rvPrice}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Theme Sales</h2>
+    <table border="">
+        <thead>
+            <tr>
+                <th>Theme</th>
+                <th>Total Sales</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="entry : ${themeSales}">
+                <td th:text="${entry.key.title}"></td>
+                <td th:text="${entry.value}"></td>
+            </tr>
+               
+                <tr th:each="entry : ${branchSales}">
+                <td th:text="${entry.key.name}"></td>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr th:each="themeEntry : ${entry.value}">
+                                <td th:text="${themeEntry.key.title}"></td>
+                                <td th:text="${themeEntry.value}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

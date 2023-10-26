@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>테마 등록</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/thema/themaForm.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script>
+		//포스터 이미지 유효성
+		function validateImageFile(inputElement) {
+			var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+			var fileName = inputElement.value.toLowerCase();
+			var fileExtension = fileName.split('.').pop();
+
+			if (allowedExtensions.indexOf(fileExtension) === -1) {
+				alert("이미지 파일 (jpg, jpeg, png, gif) 만 업로드 가능합니다.");
+				inputElement.value = ''; // 파일 필드 초기화
+			}
+		}
+
+		//타이틀 유효성
+		function validateTitle(inputElement) {
+			var titleValue = inputElement.value.trim(); // 앞뒤 공백을 제거한 값
+			var titleErrorDiv = document.getElementById('title-error');
+
+			if (titleValue.length < 1) {
+				titleErrorDiv.textContent = '타이틀에 최소 1개 이상의 문자를 입력하세요.';
+				inputElement.value = ''; // 입력 필드 초기화
+			} else if (titleValue.length > 100) {
+				titleErrorDiv.textContent = '타이틀은 최대 100자까지 입력 가능합니다.';
+				inputElement.value = titleValue.substring(0, 100); // 100자를 초과한 부분을 잘라내어 입력 필드에 설정
+			} else {
+				titleErrorDiv.textContent = ''; // 에러 메시지 초기화
+			}
+		}
+
+		//내용 유효성
+		function validateContent(inputElement) {
+			var contentValue = inputElement.value.trim(); // 앞뒤 공백을 제거한 값
+			var contentErrorDiv = document.getElementById('content-error');
+
+			if (contentValue.length < 1) {
+				contentErrorDiv.textContent = '내용에 최소 1개 이상의 문자를 입력하세요.';
+				inputElement.value = ''; // 입력 필드 초기화
+			} else if (contentValue.length > 500) {
+				contentErrorDiv.textContent = '내용은 최대 500자까지 입력 가능합니다.';
+				inputElement.value = contentValue.substring(0, 500); // 500자를 초과한 부분을 잘라내어 입력 필드에 설정
+			} else {
+				contentErrorDiv.textContent = ''; // Clear the error message
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole!=null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:unless="${userRole!=null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<form th:action="@{/thema/reg}" method="post" enctype="multipart/form-data" th:object="${thema}" id="themaForm">
+			<h2>테마 등록</h2>
+			<table>
+				<tr>
+					<td>지점ID</td>
+					<td>
+						<select name="branchId" id="branchId" required>
+							<option value="">-- 선택하세요 --</option>
+							<option th:each="branch: ${branchList}" th:value="${branch.branchId}"
+								th:text="${branch.name}">
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>타이틀</td>
+					<td>
+						<input type="text" th:field="*{title}" name="title" required="required"
+							onblur="validateTitle(this)" />
+						<div id="title-error" class="text-danger"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td>
+						<textarea th:field="*{content}" name="content" required="required"
+							onblur="validateContent(this)" />
+						<div id="content-error" class="text-danger"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>포스터</td>
+					<td>
+						<th:block th:if="${thema.poster != null}">
+
+							<input type="text" th:field="*{poster}" readonly />
+							<input type="button" onclick="fileDelete()" value="파일삭제" />
+						</th:block>
+						<input type="file" th:if="${thema.poster == null}" th:field="*{mmff}" accept="image/*"
+							onchange="validateImageFile(this)" />
+					</td>
+				</tr>
+				<tr>
+					<td>장르</td>
+					<td>
+						<select th:field="*{type}" name="selectedGenres" multiple="multiple" required="required">
+							<option value="판타지">판타지</option>
+							<option value="코미디">코미디</option>
+							<option value="로맨스">로맨스</option>
+							<option value="공포">공포</option>
+							<option value="잠입">잠입</option>
+							<option value="추리">추리</option>
+							<option value="드라마">드라마</option>
+							<option value="SF">SF</option>
+						</select>
+						<!--              <span class="input-group-text"></span>-->
+						<select th:field="*{type}" name="selectedGenres" multiple="multiple">
+							<option value=""></option>
+							<option value="판타지">판타지</option>
+							<option value="코미디">코미디</option>
+							<option value="로맨스">로맨스</option>
+							<option value="공포">공포</option>
+							<option value="잠입">잠입</option>
+							<option value="추리">추리</option>
+							<option value="드라마">드라마</option>
+							<option value="SF">SF</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>가격</td>
+					<td>
+						<div class="input-group">
+							<input type="number" th:field="*{price}" required="required" class="form-control"
+								step="1000" min="20000" />
+							<span class="input-group-text">원</span>
+						</div>
+						<div th:if="${#fields.hasErrors('price')}" class="alert alert-danger">
+							<ul>
+								<li th:each="error : ${#fields.errors('price')}" th:text="${error}"></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>예약금</td>
+					<td>
+						<div class="input-group">
+							<input type="number" th:field="*{rvPrice}" required="required" class="form-control"
+								step="1000" min="10000" />
+							<span class="input-group-text">원</span>
+						</div>
+						<div th:if="${#fields.hasErrors('rvPrice')}" class="alert alert-danger">
+							<ul>
+								<li th:each="error : ${#fields.errors('rvPrice')}" th:text="${error}"></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>인원수</td>
+					<td>
+						<div class="input-group">
+							<input type="number" th:field="*{people}" min="2" max="10" required />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>난이도</td>
+					<td>
+						<input type="number" th:field="*{level}" step="1" min="1" max="5" required />
+					</td>
+				</tr>
+				<tr>
+					<td>이용시간</td>
+					<td>
+						<input type="number" th:field="*{playTime}" step="5" min="40" max="120" required="required" />
+						<span class="input-group-text">분</span>
+						<div th:if="${playTimeerror}" class="alert alert-danger">
+							<ul>
+								<li th:text="${playTimeerror.defaultMessage}"></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>공포도</td>
+					<td>
+						<input type="number" th:field="*{horror}" step="1" min="0" max="5" required />
+					</td>
+				</tr>
+				<tr>
+					<td>활동성</td>
+					<td>
+						<input type="number" th:field="*{activity}" step="1" min="1" max="5" required />
+					</td>
+				</tr>
+				<tr>
+					<td>예약가능시간</td>
+					<td>
+						<div id="timeContainer">
+							<input th:each="time: ${thema.timetable}" type="time" th:name="time" th:value="${time}"
+								required="required" />
+						</div>
+						<button type="button" onclick="addTimeField()">추가</button>
+						<button type="button" onclick="removeLastTimeField()">삭제</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button type="submit">등록</button>
+						<a th:href="@{/thema/themaList}"><button type="button">목록으로</button></a>
+					</td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
+	<script th:inline="javascript">
+		/* 시간 입력 필드 추가 함수 */
+		function addTimeField() {
+			var container = document.getElementById("timeContainer");
+			var timeInputs = container.querySelectorAll('input[type="time"]');
+
+			// 예약 가능 시간 갯수가 12개 미만인 경우에만 추가
+			if (timeInputs.length < 12) {
+				var newInput = document.createElement("input");
+				newInput.type = "time";
+				newInput.name = "time";
+				newInput.step = 600;
+
+				// 기본값 설정
+				newInput.value = "22:00"; // 원하는 기본값으로 설정할 수 있습니다.
+
+				// 중복 확인 및 자동 정렬
+				var isDuplicate = false;
+				for (var i = 0; i < timeInputs.length; i++) {
+					if (timeInputs[i].value === newInput.value) {
+						isDuplicate = true;
+						alert("중복된 시간이 있습니다.");
+						break;
+					} else if (timeInputs[i].value > newInput.value) {
+						// 새로 추가한 시간보다 큰 시간을 찾으면 그 앞에 추가
+						container.insertBefore(newInput, timeInputs[i]);
+						isDuplicate = true;
+						break;
+					}
+				}
+
+				// 중복이 아니고 가장 큰 시간인 경우에 뒤에 추가
+				if (!isDuplicate) {
+					container.appendChild(newInput);
+				}
+			}
+		}
+
+		/* 시간 입력 필드 삭제 함수 */
+		function removeLastTimeField() {
+			var container = document.getElementById("timeContainer");
+			var timeInputs = container.querySelectorAll('input[type="time"]');
+			if (timeInputs.length > 1) { // 최소 1개의 시간 입력 필드를 유지하기 위해 체크
+				container.removeChild(timeInputs[timeInputs.length - 1]);
+			}
+		}
+
+		/*시간 개수*/
+		document.getElementById("themaForm").onsubmit = function () {
+			var container = document.getElementById("timeContainer");
+			var timeInputs = container.querySelectorAll('input[type="time"]');
+
+			// 적어도 두 개의 시간 입력 필드가 있을 때만 폼을 제출하도록 합니다.
+			if (timeInputs.length >= 1) {
+				return true; // 폼 제출 허용
+			} else {
+				alert("적어도 한 개의 예약 가능한 시간을 추가하세요.");
+				return false; // 폼 제출 차단
+			}
+		};
+
+		/* 시간을 24시간 형식으로 변환하는 함수 */
+		function convertTo24HourFormat(inputElement) {
+			var timeValue = inputElement.value;
+			if (timeValue) {
+				var parts = timeValue.split(':');
+				var hours = parseInt(parts[0], 10);
+				var minutes = parts[1];
+
+				if (hours >= 1 && hours <= 11 && timeValue.includes("오후")) {
+					// 오전 시간 변환 (오후 1시 ~ 11시)
+					hours += 12;
+				} else if (hours === 12 && timeValue.includes("오전")) {
+					// 오전 12시 변환
+					hours = 0;
+				}
+
+				inputElement.value = hours.toString().padStart(2, '0') + ':' + minutes;
+			}
+		}
+
+		// 입력 필드에서 포커스를 잃었을 때 시간 형식을 변환합니다.
+		var timeInputs = document.querySelectorAll('input[type="time"]');
+		timeInputs.forEach(function (input) {
+			input.addEventListener('blur', function () {
+				convertTo24HourFormat(this);
+			});
+		});
+	</script>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

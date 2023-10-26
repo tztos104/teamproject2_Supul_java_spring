@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>내 정보 수정</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/user/mypage.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<div id="container">
+		<h2 id="h123">내정보 수정 확인</h2>
+		<form action="/user/mypage/modiPw" method="post" id="fff">
+			<div id="form-group">
+				<label for="userPw" id="userPwww">비밀번호</label>
+				<input type="password" id="userPw2" name="userPw" required>
+			</div>
+			<div id="btdiv">
+				<button type="submit" id="btt">확인</button>
+			</div>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

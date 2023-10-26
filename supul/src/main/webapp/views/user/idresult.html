@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/user/login.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>아이디 찾기 결과</title>
+	
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<div class="login-container">
+		<h2 id="hh22">아이디 찾기 결과</h2>
+		<div th:if="${foundId}" class="fuid">
+			<p>당신의 아이디는 : <span th:text="${foundId.userId}" class="id"></span> 입니다.</p>
+		</div>
+		<div th:if="${error}" id="eid">
+			<p th:text="${error}" class="fuid"></p>
+		</div>
+			<div class="fuid">
+			<a href="/user/login" id="ulog">로그인 하러가기</a>
+		</div>
+	</div>
+	
+		
+	
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

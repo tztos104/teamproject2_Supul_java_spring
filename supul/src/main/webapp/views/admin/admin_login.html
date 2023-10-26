@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Admin Login</title>
+	<link th:href="@{/css/inc/adminHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/user/login.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+	</header>
+	<div class="login-container">
+		<h2 id="hh">LOGIN</h2>
+		<form method="post" id="ff">
+			<div class="form-group">
+				<!--<label for="userid">아이디:</label>-->
+				<input type="text" id="userid" name="adminId" required placeholder="ID">
+			</div>
+			<div class="form-group">
+				<!--<label for="userpw">비밀번호:</label>-->
+				<input type="password" id="userpw" name="adminPw" required placeholder="PASSWORD">
+			</div>
+			<div class="button">
+				<button type="submit" id="bt">로그인</button>
+			</div>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

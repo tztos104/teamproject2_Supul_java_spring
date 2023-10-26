@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="supul.mapper.HomepageMapper">
+
+   <!-- 홈페이지 소개 -->
+   
+    <select id="selectHomepageIntro" resultType="supul.model.HomepageDTO">
+        SELECT * FROM homepage_intro;
+    </select>
+
+    <select id="selectHomepageByTitle" parameterType="String" resultType="supul.model.HomepageDTO">
+        SELECT * FROM homepage_intro;
+    </select>
+
+    <update id="updateHomepage" parameterType="supul.model.HomepageDTO">
+        UPDATE homepage_intro
+        SET
+            title1 = #{title1},
+            title2 = #{title2},
+            content1 = #{content1},
+            title3 = #{title3},
+            subtitle1 = #{subtitle1},
+            content2 = #{content2},
+            content3 = #{content3},
+            content4 = #{content4},
+            content5 = #{content5},
+            content6 = #{content6}
+         ;
+    </update>
+   
+</mapper>

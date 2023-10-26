@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/user/mypage.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원 탈퇴</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<h2 id="h321">회원 탈퇴</h2>
+	<p id="pppp">회원 탈퇴를 진행하려면 비밀번호를 입력하세요.</p>
+
+	<form action="/user/delete" method="post" id="frmfrm">
+		<div>
+			<label for="userPw" id="papa">비밀번호</label>
+			<input type="password" id="userPww" name="userPw" required>
+		</div>
+		<div>
+			<button type="submit" id="htht">회원 탈퇴</button>
+		</div>
+	</form>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>지점장 삭제</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<style>
+		table {
+			width: 400px;
+		}
+
+		table,
+		th,
+		td {
+			color: #f3e7db;
+			padding: 10px;
+		}
+
+
+		form {
+			color: #f3e7db;
+			padding: 30px;
+			margin: 0 auto;
+			width: 600px;
+
+			text-align: center;
+		}
+
+		label {
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		input {
+			font-size: 16px;
+			padding: 4px;
+			border: transparent;
+		}
+
+		td {
+			padding: 5px;
+		}
+
+		button {
+			margin-top: 20px;
+			width: 150px;
+			height: 50px;
+			background-color: #f3e7db;
+			border-radius: 5px;
+			border: none;
+			color: #3f5856;
+			font-weight: bold;
+			cursor: pointer;
+			font-size: 18px;
+
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<h2>지점장 삭제</h2>
+	<div class="delete">
+		<form method="post" action="/super/admindelete">
+			<table>
+				<tr>
+					<td><label for="adminIdToDelete">삭제할 관리자 ID:</label></td>
+					<td><input type="text" id="adminIdToDelete" name="adminIdToDelete" required></td>
+				</tr>
+				<tr>
+					<td><label for="superAdminPw">슈퍼 계정 비밀번호:</label></td>
+					<td><input type="password" id="superAdminPw" name="superAdminPw" required></td>
+				</tr>
+			</table>
+			<button type="submit">삭제</button>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

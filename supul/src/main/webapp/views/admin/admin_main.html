@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link th:href="@{/css/inc/adminHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/admin/main.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>메인 페이지</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	var selectedName;
+	var selectedTitle;
+
+	$(document).ready(function () {
+		$('#branchName').change(function () {
+			selectedName = $("#branchName option:selected").val();
+			// URL 이동
+			console.log(selectedName)
+			window.location.href = '?branchName=' + selectedName;
+		});
+
+		$('#title').change(function () {
+			selectedTitle = $("#title option:selected").val();
+			$("#branchName").val(selectedName).prop("selected", true);
+			// URL 이동
+			console.log(selectedTitle)
+			window.location.href = '?branchName=' + [[${branchName}]] + '&title=' + selectedTitle;
+		});
+	});
+
+
+</script>
+</head>
+
+
+<body>
+	<header>
+		<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<section class="adminMainsection1">
+			<h1>오늘 예약 내역</h1>
+			<table border="" class="custom-table">
+				<thead>
+					<tr>
+						<th>아이디</th>
+						<th>이름</th>
+						<th><a th:href="|/admin?sortBy=themaName|">테마</a></th>
+						<th>날짜</th>
+						<th><a th:href="|/admin?sortBy=time|">시간</a></th>
+						<th><a th:href="|/admin?sortBy=price|">가격</a></th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr th:each="reservation : ${todayReservations}">
+						<block th:if="${adminBn == reservation.branch.name}">
+							<td th:text="${reservation.user.userId}"></td>
+							<td th:text="${reservation.userName}"></td>
+							<td th:text="${reservation.themaName}"></td>
+							<td th:text="${#temporals.format(reservation.date, 'yyyy-MM-dd')}"></td>
+							<td th:text="${reservation.time}"></td>
+							<td th:text="${#numbers.formatInteger(reservation.rvPrice, 3, 'COMMA') + '원'}"></td>
+						</block>
+					</tr>
+
+				
+				</tbody>
+			<div class="section">
+				
+					<tr th:if="${todayReservations.totalElements > 0}">
+						<td colspan="8" class="pagination" align="center">
+							<span class="pagination-previous" th:if="${todayReservations.number > 0}">
+								<a th:href="@{/admin(page=${todayReservations.number - 1})}"> Previous </a>
+							</span>
+							<span th:each="i : ${#numbers.sequence(0, todayReservations.totalPages - 1)}"
+								th:class="${todayReservations.number == i} ? 'active'">
+								<a th:href="@{/admin(page=${i})}" th:text="${i + 1}"></a>
+							</span>
+							<span class="pagination-next" th:if="${todayReservations.number < todayReservations.totalPages - 1}">
+								<a th:href="@{/admin(page=${todayReservations.number + 1})}"> Next </a>
+							</span>
+						</td>
+					</tr>
+				
+			</div>
+			</table>
+		</section>
+		<section class="adminMainsection2">
+			<h1>요번달 1위 테마</h1>
+			<figure class="img" th:if="${topThema.poster != null}">
+				<img style="width: 213px;" th:src="@{/up/thema/{filename}(filename=${topThema.poster})}"
+					alt="테스트사진위치" />
+			</figure>
+			<p th:text="${topThema.branch.name}"></p>
+		</section>
+
+		<section class="adminMainsection3">
+
+			<h1>[[${adminBn}]]</h1>
+			<h1>[[${yesterday}]] 매출 내역</h1>
+			<table class="custom-table">
+				<thead>
+					<tr>
+						<th>Theme</th>
+						<th>Sales</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="entry : ${themaTotal}">
+						<td th:text="${entry.key}"></td> <!-- Assuming 'name' is a property of Thema class -->
+						<td th:text="${#numbers.formatInteger(entry.value, 3, 'COMMA') + '원'}" style="width: 110px;"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</section>
+
+		<section class="adminMainsection4">
+
+			<a th:href="|/reserve/tonggye/${adminBn}|"><canvas id="chart" width="500" height="300"></canvas></a>
+	<div class="btn_align">
+			<button class="btn" id="thema">테마별</button>
+			<button class="btn" id="daily">일별</button>
+			
+			<button class="btn" id="weekly">요일별</button>
+			<button class="btn" id="monthly">월별</button>
+	</div>
+		</section>
+	</div>
+	
+
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+
+</body>
+	<script th:inline="javascript">
+	var dailyStats = [[${dailyStats}]]
+	var weeklyStats = [[${weeklyStats}]]
+	var MonthlyStats = [[${MonthlyStats}]]
+	var themaTotal = [[${themaTotal}]]
+	var themaRvTotal = [[${themaRvTotal}]]
+	var chart = null;
+	function createChart(data, chartTitle, typename, chartId) {
+		if (chart) {
+			chart.destroy();
+		}
+
+		var ctx = document.getElementById(chartId).getContext('2d');
+		chart = new Chart(ctx, {
+			type: typename,
+			data: {
+				labels: Object.keys(data),
+				datasets: [{
+					label: chartTitle,
+					data: Object.values(data),
+					/*backgroundColor: 'rgba(168, 141, 110)',*/
+					backgroundColor: '#ffc109',
+					borderColor: '#ffc109',
+					borderWidth: 2
+				}]
+			},
+			options: {
+				responsive: false,
+				maintainAspectRatio: false,
+				scales: {
+					x: {
+						beginAtZero: true,
+						ticks: {
+							color: ' rgba(243, 231, 219, 0.8)' // 원하는 라벨 색상으로 설정
+
+						},
+						grid: {
+							color: 'rgba(243, 231, 219, 0.8)' // X 축 선 색상을 빨간색으로 설정
+						}
+					},
+					y: {
+						beginAtZero: true,
+						ticks: {
+							color: ' rgba(243, 231, 219,  0.8)' // 원하는 라벨 색상으로 설정
+						},
+						grid: {
+							color: 'rgba(243, 231, 219, 0.8)' // X 축 선 색상을 빨간색으로 설정
+						}
+					}
+				}
+			}
+		});
+	}
+	createChart(dailyStats, '일별 매출', 'line', 'chart')
+	var randomColor = getRandomColor();
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
+
+	// 버튼 클릭 이벤트 핸들러
+	document.getElementById('daily').addEventListener('click', function () {
+		createChart(dailyStats, '일별 매출', 'line', 'chart');
+	});
+	document.getElementById('monthly').addEventListener('click', function () {
+		createChart(MonthlyStats, '월별 매출', 'bar', 'chart');
+	});
+	document.getElementById('weekly').addEventListener('click', function () {
+		createChart(weeklyStats, '요일별 매출', 'bar', 'chart');
+	});
+	document.getElementById('thema').addEventListener('click', function () {
+		createChart(themaTotal, '테마별 매출', 'bar', 'chart');
+	});
+
+
+</script>
+
+
+</html>

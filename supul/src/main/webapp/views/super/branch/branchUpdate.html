@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>지점정보 수정</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/super/branch/branchForm.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole!=null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:unless="${userRole!=null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<h2>지점 수정</h2>
+		<form th:action="|/super/branch/update/${branchId}|" method="post" th:object="${branch}">
+			<input type="hidden" th:field="*{branchId}" />
+			<label for="name">지점명:</label><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+				class="error"></span>
+			<input type="text" th:field="*{name}"  /><br />
+			<label for="address">주소:</label><span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+				class="error" />
+			<input type="text" th:field="*{address}"  /><br />
+			<label for="phone">전화번호:</label><span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+				class="error" />
+			<input type="text" th:field="*{phone}" /><br />
+			<label for="coordinate">좌표:</label><span th:if="${#fields.hasErrors('coordinate')}"
+				th:errors="*{coordinate}" class="error" />
+			<input type="text" th:field="*{coordinate}"  /><br />
+			<div class="button">
+				<button type="submit" onclick="return confirm('수정하시겠습니까?')">수정</button>
+				<a th:href="@{/super/branchList}"><button type="button">목록으로</button></a>
+			</div>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>지점리스트</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/super/branch/branchList.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole == null} ">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+
+	</header>
+	<div class="container">
+		<h2>지점 리스트</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>no</th>
+					<th>이름</th>
+					<th>주소</th>
+					<th>전화번호</th>
+					<th>좌표</th>
+					<block th:if="${userRole != null}">
+						<th>작업</th>
+					</block>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="branch, stat : ${list}">
+					<td th:text="${stat.count}"></td> <!-- stat.index + 1로 순차적인 번호 출력 -->
+					<block th:if="${adminBranchId==branch.branchId}">
+						<td><a th:href="|/admin/branch/update/${adminBranchId}|">[[${branch.name}]]</a></td>
+					</block>
+					<block th:unless="${adminBranchId==branch.branchId}">
+						<td>[[${branch.name}]]</td>
+					</block>
+					<td th:text="${branch.address}"></td>
+					<td th:text="${branch.phone}"></td>
+					<td th:text="${branch.coordinate}"></td>
+					<block th:if="${userRole != null}">
+						<td align="center">
+							<!-- 수정 버튼 -->
+							<a th:href="|/super/branch/update/${branch.branchId}|">수정</a>
+
+							<!-- 삭제 버튼 -->
+							<a th:href="@{'/super/branch/delete/' + ${branch.branchId}}">삭제</a>
+						</td>
+					</block>
+				</tr>
+			</tbody>
+		</table>
+		<block th:if="${userRole !=null}">
+			<div class="button">
+				<a th:href="@{/super/branch/form}"><button class="btn" type="button">지점 등록</button></a>
+				<a th:href="@{/super}"><button class="btn" type="button">총괄메인으로</button></a>
+		</block>
+		<block th:if="${userRole ==null}">
+			<a th:href="@{/admin}"><button class="btn" type="button">관리자메인으로</button></a>
+
+		</block>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

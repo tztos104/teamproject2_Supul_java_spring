@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>관리자 수정</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/super/admin/signUp2.css}" rel="stylesheet" type="text/css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script>
+		$(document).ready(function () {
+			// 비밀번호 필드 입력을 감시하고 값을 비밀번호 확인 필드에 복사
+			$("#adminPw").on("input", function () {
+				$("#adminPw1").val($(this).val());
+			});
+		});
+
+		$(document).ready(function () {
+			$("#phoneField").on("input", function () {
+				var phoneNumber = $(this).val();
+				var errorMessage = $("#phoneErrorMessage");
+				var signupButton = $("#signupButton");
+
+				// 입력된 연락처가 11자리 미만인 경우 메시지를 표시
+				if (phoneNumber.length < 11) {
+					errorMessage.text("올바른 연락처를 입력하세요.");
+					signupButton.prop("disabled", true);
+				} else {
+					errorMessage.text(""); // 에러 메시지를 지우기
+					signupButton.prop("disabled", false);
+				}
+			});
+		});
+
+		$(document).ready(function () {
+			var emailField = $("#emailField");
+			var emailError = $("#emailError");
+			var signupButton = $("#signupButton");
+			var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // 이메일 정규식
+
+			emailField.on("input", function () {
+				var email = $(this).val();
+
+				// 입력된 이메일 주소가 유효한 형식인지 확인
+				if (!emailRegex.test(email)) {
+					emailError.text("올바른 이메일 주소를 입력하세요.");
+					signupButton.prop("disabled", true);
+				} else {
+					emailError.text(""); // 에러 메시지를 지우기
+					signupButton.prop("disabled", false); // 버튼 활성화
+				}
+			});
+		});
+
+
+
+
+	</script>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<h2>관리자 수정</h2>
+		<form method="post" th:object="${admin}">
+			<table>
+				<tr style="display: none;">
+					<td>지점:</td>
+					<td>
+						<select id="branchName" name="branchName" required >
+							<option value="" required>지점선택</option>
+							<option th:each="branch : ${branchlist}" th:value="${branch.name}" th:text="${branch.name}"
+								th:selected="${branch.name == admin.branchName}">
+							</option>
+						</select>
+					</td>
+				<tr>
+				<tr>
+					<td>이름:</td>
+					<td>
+						<input type="text" th:field="*{name}" readonly>
+						<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" id="erer" />
+					</td>
+				</tr>
+				<tr>
+					<td>생년월일:</td>
+					<td>
+						<input type="text" th:field="*{birth}" readonly />
+						<div th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" />
+					</td>
+				</tr>
+				<tr>
+					<td>아이디:</td>
+					<td>
+						<input type="text" th:field="*{adminId}" readonly/>
+						<div th:if="${#fields.hasErrors('adminId')}" th:errors="*{adminId}" id="erer" />
+					</td>
+				</tr>
+				<tr>
+					<td>비밀번호:</td>
+					<td>
+						<input type="password" th:field="*{adminPw}" />
+						<div th:if="${#fields.hasErrors('adminPw')}" th:errors="*{adminPw}" id="erer" />
+					</td>
+				</tr>
+				<tr style="display: none;">
+					<td>비밀번호 확인</td>
+					<td>
+						<input type="password" th:field="*{adminPw1}">
+						<div th:if="${#fields.hasErrors('adminPw1')}" th:errors="*{adminPw1}" />
+					</td>
+				</tr>
+				<tr>
+					<td>이메일:</td>
+					<td>
+						<input type="text" th:field="*{email}" id="emailField">
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="erer" />
+						<div id="emailError"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>연락처:</td>
+					<td>
+						<input type="text" th:field="*{phone}" id="phoneField" maxlength="11">
+						<div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" id="erer" />
+						<div id="phoneErrorMessage"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-right: 50px;">
+						<button type="submit" id="signupButton">수정하기</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

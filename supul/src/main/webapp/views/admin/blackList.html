@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Reservation List</title>
+	<link th:href="@{/css/inc/adminHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/reservation2.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	$(document).ready(function () {
+		$('#branchName').change(function () {
+			var selectedName = $(this).val(); // select에서 선택한 값 가져오기
+			// URL 이동
+			console.log(selectedName)
+			window.location.href = '/admin/blackList/' + selectedName + '?page=' + [[${page}]] + '&userName=' + [[${userName}]] + '&sortBy=' + [[${sortBy}]];
+
+		});
+	});
+
+</script>
+
+<body>
+	<header>
+		<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<h2>블랙리스트</h2>
+
+		<block th:if="${userRole !=null}">
+
+			<select id="branchName" name="branchName">
+				<option th:value="전체" th:text="전체"></option>
+
+				<option th:each="branch : ${branchList}" th:value="${branch.name}" th:text="${branch.name}"
+					th:selected="${branch.name == #vars.branchName}">
+				</option>
+
+			</select>
+		</block>
+		<table>
+			<tr>
+
+				<th>유저아이디</th>
+				<th>이름</th>
+				<th>전화번호</th>
+			</tr>
+			<tr th:each="us, num : ${userList}">
+
+				<td th:text="${us.userId}"></td>
+
+				<td><a th:href="|?userName=${us.userName}|">[[${us.userName}]]</td>
+
+				<td th:text="${us.phone}"> </td>
+
+
+			</tr>
+			<table id="reservation_table">
+				<tr>
+					<th>번호</th>
+					<th><button onclick="toggleSortDirection('rvNum')">예약번호</button></th>
+					<th><button onclick="toggleSortDirection('date')">예약날짜</button></th>
+					<th><button onclick="toggleSortDirection('price')">가격</button>
+					</th>
+					<th><button onclick="toggleSortDirection('userName')">이름</button></th>
+					<th><button onclick="toggleSortDirection('themaName')">테마명</button></th>
+
+					<th>지점</th>
+				</tr>
+
+				<tr th:each="rv, num : ${searchList}">
+
+					<td th:text="${searchList.number*searchList.size+num.count}"></td>
+					<td th:text="${rv.rvNum}"></td>
+					<td th:text="${rv.date}+' '+${rv.time}"> </td>
+					<td th:text="${rv.price}"> </td>
+					<td th:text="${rv.userName}"> </td>
+					<td th:text="${rv.themaName}"> </td>
+
+					<td th:text="${rv.branch.name}"> </td>
+					<!-- 기타 필드 추가 -->
+
+				</tr>
+			</table>
+		</table>
+
+		<!-- 페이지처리 -->
+		<div class="page" th:if="${searchList.totalPages > 1}">
+			<span th:if="${searchList.hasPrevious}" class="page-item">
+				<a th:href="|/admin/blackList/${branchName}?page=0&userName=${userName}&sortBy=${sortBy}|"
+					class="page-link">처음</a>
+			</span>
+			<span th:if="${searchList.hasPrevious}" class="page-item">
+				<a th:href="|/admin/blackList/${branchName}?page=${searchList.number - 1}&userName=${userName}&sortBy=${sortBy}|"
+					class="page-link">이전</a>
+			</span>
+			<span
+				th:each="page : ${#numbers.sequence(searchList.number-4 <= 0 ? 0 :  searchList.number-4, (searchList.number+4) < (searchList.totalPages)?   searchList.number+4 :searchList.totalPages-1 )}"
+				class="page-item" th:classappend="${searchList.number == page} ? 'active'">
+				<a th:href="|/admin/blackList/${branchName}?page=${page}&userName=${userName}&sortBy=${sortBy}|"
+					class="page-link" th:text="${page + 1}"></a>
+			</span>
+
+
+			<span th:if="${searchList.hasNext}" class="page-item">
+				<a th:href="|/admin/blackList/${branchName}?page=${searchList.number + 1}&userName=${userName}&sortBy=${sortBy}|"
+					class="page-link">다음</a>
+			</span>
+			<span th:if="${searchList.hasNext}" class="page-item">
+				<a th:href="|/admin/blackList/${branchName}?page=${searchList.totalPages - 1}&userName=${userName}&sortBy=${sortBy}|"
+					class="page-link">마지막</a>
+			</span>
+		</div>
+		<form action="" method="GET" class="search">
+			<!-- 사용자 이름 입력 -->
+			<label for="userName">유저 이름</label>
+			<input type="text" id="userName" name="userName">
+			<button type="submit">검색</button>
+			<br>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+<script th:inline="javascript">
+	var currentSortDirection = [[${sortDirection}]]; // 초기 정렬 방향 (오름차순)
+
+	function toggleSortDirection(sortBy) {
+		if (currentSortDirection === 'ASC') {
+			currentSortDirection = 'DESC'; // 내림차순으로 변경
+		} else {
+			currentSortDirection = 'ASC'; // 오름차순으로 변경
+		}
+
+		// 정렬 방향과 정렬 기준을 사용하여 URL을 생성하고 페이지를 이동
+		var url = '/admin/blackList/' + [[${branchName}]] +
+
+			'?userName=' + [[${userName}]] +
+			'&sortBy=' + sortBy +
+			'&sortDirection=' + currentSortDirection;
+		window.location.href = url;
+	}
+
+
+	function toggleUserDetails(cell) {
+		console.log('와타시가 킷다')
+		var table = document.getElementById("reservation_table");
+		if (table.style.display === "none") {
+			table.style.display = "table";
+		} else {
+			table.style.display = "none";
+		}
+
+
+	}
+
+</script>
+
+</html>

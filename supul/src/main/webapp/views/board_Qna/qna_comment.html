@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>댓글 수정</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/board/board_Qna.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole ==null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<!-- 답글 수정 -->
+	<div class="container">
+		<h1>답글 수정</h1>
+		<div class="section" id="qnaCommentModi">
+			<form th:action="@{/board/qna/comment/{commentId}/modify(commentId=${qnaComment.commentId})}" method="post">
+				<table>
+					<tr>
+						<td><input type="hidden" name="commentId" th:value="${qnaComment.commentId}"></td>
+					</tr>
+					<tr>
+						<td><textarea name="content" placeholder="답글을 수정하세요" required
+								th:text="${qnaComment.content}"></textarea></td>
+					</tr>
+					<tr>
+						<td>
+							<button type="submit">답글수정</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

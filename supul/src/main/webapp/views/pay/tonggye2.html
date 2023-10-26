@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/pay/tonggye.css}">
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+
+	<script th:inline="javascript">
+		var selectedName;
+		var selectedTitle;
+
+		$(document).ready(function () {
+			$('#branchName').change(function () {
+				selectedName = $("#branchName option:selected").val();
+				// URL 이동
+				console.log(selectedName)
+				location.href = '?branchName=' + selectedName;
+			});
+
+			$('#title').change(function () {
+				selectedTitle = $("#title option:selected").val();
+				$("#branchName").val(selectedName).prop("selected", true);
+				// URL 이동
+				console.log(selectedTitle)
+				location.href = '?branchName=' + [[${branchName}]] + '&title=' + selectedTitle;
+			});
+		});
+
+
+
+		document.addEventListener('DOMContentLoaded', function () {
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView: 'dayGridMonth',
+				events: function (fetchInfo, successCallback, failureCallback) {
+					// fetchInfo의 start와 end로 달력의 기간을 확인할 수 있음
+					var startDate = fetchInfo.start;
+					var endDate = fetchInfo.end;
+
+					// 컨트롤러에서 전달한 dailyStats 데이터를 사용하여 이벤트 생성
+					var events = [];
+					var dailyStats = [[${dailyStats}]]
+					var ReservationsByDate = [[${ReservationsByDate}]]
+					var CanceledReservationsByDate = [[${CanceledReservationsByDate}]]
+
+					for (var date in dailyStats) {
+						var totalSales = dailyStats[date];
+						var formatted = new Intl.NumberFormat('en-US').format(totalSales)
+						events.push({
+							title: '매출: ' + formatted + '원',
+							start: date,
+							backgroundColor: '#f3e7db', // 배경색 설정
+							textColor: 'black', // 텍스트 색상 설정
+							url: '/reserve/popup?start=' + date + '&branchName=' + [[${branchName}]] + '&title=' + [[${title}]]
+						});
+					}
+					for (var date2 in ReservationsByDate) {
+						var rvcount = ReservationsByDate[date2];
+						events.push({
+							title: '예약건수' + rvcount,
+							start: date2,
+							backgroundColor: 'rgb(168, 141, 110)', // 배경색 설정
+							textColor: 'white', // 텍스트 색상 설정
+							url: '/reserve/popup?start=' + date2 + '&branchName=' + [[${branchName}]] + '&title=' + [[${title}]]
+
+						});
+					}
+					for (var date3 in CanceledReservationsByDate) {
+						var rvcount = CanceledReservationsByDate[date3];
+						events.push({
+							title: '취소건수' + rvcount, // 두 번째 이벤트의 매출은 예시로 2배로 설정
+							start: date3,
+							backgroundColor: '#E09132', // 배경색 설정
+							textColor: 'white', // 텍스트 색상 설정
+							url: '/reserve/popup?start=' + date3 + '&branchName=' + [[${branchName}]] + '&title=' + [[${title}]]
+						});
+					}
+					// 생성된 이벤트를 FullCalendar에 반환
+					successCallback(events);
+				}
+			});
+			calendar.render();
+		});
+
+
+
+	</script>
+
+
+
+</head>
+
+
+<body>
+	<header>
+		<block th:if="${userRole!=null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:unless="${userRole!=null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<section class="mechul">
+			<h1>매출 통계</h1>
+			<div class="form-container">
+				<form th:action="|/reserve/tonggye|" method="get">
+					<table class="themaselect">
+						<tr>
+							<td>테마선택:</td>
+							<td> <select id="branchName" name="branchName">
+									<option th:value="전체" th:text="전체"></option>
+									<option th:each="brn : ${brnList}" th:value="${brn.name}" th:text="${brn.name}"
+										th:selected="${brn.name == #vars.branchName}" />
+								</select>
+
+
+								<select name="title" id="title">
+									<option th:value="전체" th:text="전체"></option>
+									<option th:each="thema : ${themaList}" th:value="${thema.title}"
+										th:text="${thema.title}"
+										th:if="${branchName == '전체' || branchName == thema.branch.name}"
+										th:selected="${thema.title == #vars.title}" />
+								</select>
+							</td>
+
+							<td>기간선택:</td>
+							<td> <label for="start">Start:</label>
+								<input type="date" id="startDate" name="start" required>
+
+								<label for="end">End:</label>
+								<input type="date" id="endDate" name="end" required>
+
+							</td>
+
+
+							<td colspan="2"><button class="btn1" type="submit">날짜변경</button></td>
+						</tr>
+
+
+					</table>
+				</form>
+			</div>
+
+			<div class="chart_branch">
+				<block th:if="${start}!=null ">
+					<h3 th:if="${TotalSales != 0}"
+						th:text="|${start}~${end}까지 총 매출 : ${#numbers.formatInteger(TotalSales, 3, 'COMMA') + '원'}">
+					</h3>
+				</block>
+				<canvas id="chart" width="800px"></canvas>
+			</div>
+			<div class="btn_align">
+				<button class="btn2" id="thema">테마별</button>
+				<button class="btn2" id="daily">일별</button>
+				<button class="btn2" id="weekly">요일별</button>
+				<button class="btn2" id="monthly">월별</button>
+
+			</div>
+		</section>
+
+		<section class="mechul2">
+
+			<h1 th:if="${start} ==null">일별 매출 달력 </h1>
+			<h1 th:if="${start} !=null" th:text="|${start}~${end} 일별 매출 달력|"></h1>
+
+			<div id='calendar'></div>
+
+
+		</section>
+
+
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+
+</body>
+
+<script th:inline="javascript">
+
+	var dailyStats = [[${dailyStats}]]
+	var weeklyStats = [[${weeklyStats}]]
+	var MonthlyStats = [[${MonthlyStats}]]
+	var themaTotal = [[${themaTotal}]]
+	var chart = null;
+	function createChart(data, chartTitle, typename) {
+		if (chart) {
+			chart.destroy();
+		}
+
+		var ctx = document.getElementById('chart').getContext('2d');
+		chart = new Chart(ctx, {
+			type: typename,
+			data: {
+				labels: Object.keys(data),
+				datasets: [{
+					label: chartTitle,
+					data: Object.values(data),
+					backgroundColor: '#E09132',
+					borderColor: '#E09132',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: false,
+				maintainAspectRatio: false,
+				scales: {
+					x: {
+						beginAtZero: true,
+						ticks: {
+							color: ' rgba(243, 231, 219, 0.8)' // 원하는 라벨 색상으로 설정
+
+						},
+						grid: {
+							color: 'rgba(243, 231, 219, 0.4)' // X 축 선 색상을 빨간색으로 설정
+						}
+					},
+					y: {
+						beginAtZero: true,
+						ticks: {
+							color: ' rgba(243, 231, 219,  0.8)' // 원하는 라벨 색상으로 설정
+						},
+						grid: {
+							color: 'rgba(243, 231, 219, 0.4)' // X 축 선 색상을 빨간색으로 설정
+						}
+					}
+				}
+			}
+		});
+	}
+
+	var randomColor = getRandomColor();
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
+	createChart(dailyStats, '일별 매출', 'line')
+	// 버튼 클릭 이벤트 핸들러
+	document.getElementById('daily').addEventListener('click', function () {
+		createChart(dailyStats, '일별 매출', 'line');
+	});
+	document.getElementById('monthly').addEventListener('click', function () {
+		createChart(MonthlyStats, '월별 매출', 'bar');
+	});
+	document.getElementById('weekly').addEventListener('click', function () {
+		createChart(weeklyStats, '요일별 매출', 'bar');
+	});
+	document.getElementById('thema').addEventListener('click', function () {
+		createChart(themaTotal, '테마별 매출', 'bar', 'chart');
+	});
+
+</script>
+
+
+
+
+</html>

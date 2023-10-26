@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/css/headfoot.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<title>지점정보 수정요청 목록</title>
+	<style>
+		table {}
+
+		tr:first-child {
+			background-color: #f3e7db;
+			font-size: 17px;
+			color: #3f5856;
+		}
+
+		td {
+			color: #f3e7db;
+		}
+
+		a {
+			margin: 0 4px;
+			color: #a88d6e;
+		}
+
+		select,
+		input {
+
+			font-size: 16px;
+			border: 1px solid #a88d6e;
+			background-color: transparent;
+			color: #f3e7db;
+			width: 130px;
+		}
+
+		option {
+			background-color: #a88d6e;
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid #a88d6e;
+			border-collapse: collapse;
+
+			padding: 12px 20px;
+			margin: auto;
+		}
+	</style>
+</head>
+
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<h2>지점정보 수정요청 목록</h2>
+		<div th:if="${modiBranchList.isEmpty()}" style="text-align: center;">
+			<img src="/images/book_01.jpg" />
+			<h2>요청이 없습니다!</h2>
+		</div>
+		<block th:unless="${modiBranchList.isEmpty()}">
+			<table>
+
+				<tr>
+					<th>변경할 지점</th>
+					<th>변경된 전화번호</th>
+					<th colspan="2">처리여부</th>
+				</tr>
+				<tr th:each="modiBranch : ${modiBranchList}">
+
+					<td>[[${modiBranch.originbranchname}]]</td>
+					<td>[[${modiBranch.phone}]]</td>
+					<td><a th:href="@{/super/modiBranchOK(BranchId=${modiBranch.originbranchId})}"
+							onclick="return confirm('수락하시겠습니까?')">수락</a></td>
+					<td><a th:href="@{/super/modiBranchNO(BranchId=${modiBranch.originbranchId})}"
+							onclick="return confirm('거부하시겠습니까?')">거부</a></td>
+				</tr>
+
+			</table>
+		</block>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

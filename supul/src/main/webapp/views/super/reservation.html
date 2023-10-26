@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>당일예약내역</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/reservation.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	$(document).ready(function () {
+		$('#branchName').change(function () {
+			var selectedName = $(this).val(); // select에서 선택한 값 가져오기
+			// URL 이동
+			console.log(selectedName)
+			window.location.href = '/super/rvList/' + selectedName + '?page=' + [[${page}]] + '&userName=' + [[${userName}]] + '&sortBy=' + [[${sortBy}]];
+
+		});
+	});
+
+
+</script>
+
+<body>
+	<div class="reservation_container">
+		<header>
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</header>
+		<h2>예약내역</h2>
+
+		<div class="topmenu">
+			<div>
+				<select id="branchName" name="branchName">
+					<option th:value="전체" th:text="전체"></option>
+
+					<option th:each="branch : ${branchList}" th:value="${branch.name}" th:text="${branch.name}"
+						th:selected="${branch.name == #vars.branchName}">
+					</option>
+
+				</select>
+
+				<form action="" method="GET">
+					<!-- 사용자 이름 입력 -->
+					<label for="userName" style="color:#f3e7db ;">예약자 검색:</label>
+					<input type="text" id="userName" name="userName">
+					<button type="submit">검색</button>
+
+				</form>
+			</div>
+		</div>
+
+		<table border="">
+			<tr>
+				<th>번호</th>
+				<th><a
+						th:href="|/super/rvList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=rvId|">Id</a>
+				</th>
+				<th><a
+						th:href="|/super/rvList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=date|">date</a>
+				</th>
+				<th><a
+						th:href="|/super/rvList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=price|">price</a>
+				</th>
+				<th><a
+						th:href="|/super/rvList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=userName|">userName</a>
+				</th>
+				<th><a
+						th:href="|/super/rvList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=themaName|">themaName</a>
+				</th>
+				<th>예약시간</th>
+				<th>지점</th>
+				<th>취소내역</th>
+				<th><a th:href="|/super/rvList/${branchName}?page=${searchList.number}&userName=${userName}&sortBy=payCancle|">예약금결제내역</a></th>
+				<th>비고</th>
+
+				<th>노쇼확인</th>
+			</tr>
+
+
+			<tr th:each="rv, num : ${todayList}">
+
+				<td th:text="${searchList.number*searchList.size+num.count}"></td>
+				<td th:text="${rv.rvId}"></td>
+				<td th:text="${rv.date}"> </td>
+				<td th:text="${rv.price}"> </td>
+				<td th:text="${rv.userName}"> </td>
+				<td th:text="${rv.themaName}"> </td>
+				<td th:text="${rv.time}"> </td>
+				<td th:text="${rv.branch.name}"> </td>
+				<td th:text="${rv.cancle}? 예약취소:정상 "> </td>
+				<td th:text="${rv.payCancle}? 결제취소:결제완료 "> </td>
+				<td th:text="${rv.noShow ==True} ? 블랙리스트: .."></td>
+			</tr>
+			<!-- 페이지처리 -->
+			<div th:if="${todayList.totalPages > 1}">
+				<tr class="pagination">
+					<td colspan="12">
+						<ul>
+							<li th:if="${todayList.hasPrevious}" class="page-link">
+								<a th:href="|/super/rvList/${branchName}?page=0&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">처음</a>
+							</li>
+							<li th:if="${todayList.hasPrevious}" class="page-link">
+								<a th:href="|/super/rvList/${branchName}?page=${todayList.number - 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">이전</a>
+							</li>
+							<li th:each="page : ${#numbers.sequence(todayList.number-4 <= 0 ? 0 :  todayList.number-4, (todayList.number+4) < (todayList.totalPages)?   todayList.number+4 :todayList.totalPages-1 )}"
+								class="page-link" th:classappend="${todayList.number == page} ? 'active'">
+								<a th:href="|/super/rvList/${branchName}?page=${page}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item" th:text="${page + 1}"></a>
+							</li>
+							<li th:if="${todayList.hasNext}" class="page-link">
+								<a th:href="|/super/rvList/${branchName}?page=${todayList.number + 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">다음</a>
+							</li>
+							<li th:if="${todayList.hasNext}" class="page-link">
+								<a th:href="|/super/rvList/${branchName}?page=${todayList.totalPages - 1}&userName=${userName}&sortBy=${sortBy}|"
+									class="page-item">마지막</a>
+							</li>
+						</ul>
+					</td>
+				</tr>
+			</div>
+		</table>
+
+
+
+
+	
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

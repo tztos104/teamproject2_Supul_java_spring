@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원탈퇴</title>
+</head>
+<body>
+	   <header>
+       <div th:replace="inc/header :: headerMenu"></div>
+   </header>
+    <h2>회원탈퇴</h2>
+    <p>회원탈퇴를 진행하려면 비밀번호를 입력하세요.</p>
+    <form method="post" action="/admin/admindelete">
+        <div>
+            <label for="adminPw">비밀번호:</label>
+            <input type="password" id="adminPw" name="adminPw" required>
+        </div>
+        <button type="submit">탈퇴</button>
+    </form>
+
+	<!--비밀번호가 일치하지 않는 경우 오류 메시지 표시-->
+<!-- 비밀번호가 일치하지 않는 경우 오류 메시지 표시 -->
+<p th:if="${adminDeleteError != null}" style="color: red;" th:text="${adminDeleteError}">비밀번호가 일치하지 않습니다.</p>
+
+
+
+</body>
+</html>

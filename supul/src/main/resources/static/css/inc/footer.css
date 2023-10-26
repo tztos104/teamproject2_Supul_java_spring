@@ -1,0 +1,240 @@
+@charset "UTF-8";
+
+#footer {
+	background-color: rgb(18, 21, 15);
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#footer .footer_top {
+	height: 65px;
+	position: relative;
+	box-sizing: border-box;
+	border-bottom: 1px solid #494949;
+}
+
+#footer .footer_top .inner {
+	position: relative;
+	padding-left: 30px;
+	/* 좌측 여백 추가 */
+	padding-right: 30px;
+	/* 우측 여백 추가 */
+	box-sizing: border-box;
+	margin-bottom: 30px;
+}
+
+#footer .footer_top ul {
+	padding: 15px 0;
+	float: left;
+}
+
+#footer .footer_top ul li {
+	float: left;
+	position: relative;
+	padding: 0 12px;
+}
+
+#footer .footer_top ul li:before {
+	border-left: 1px solid #767676;
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 1px;
+	height: 12px;
+	margin-top: -6px
+}
+
+#footer .footer_top a {
+	color: #bdbdbd;
+	font-size: 13px;
+	line-height: 35px;
+}
+
+#footer .footer_top a:hover {
+	color: #fff;
+}
+
+#footer .footer_top ul li:first-child {
+	padding-left: 0;
+}
+
+#footer .footer_top ul li:first-child:before {
+	border: none
+}
+
+#footer .footer_top .btn_more {
+	display: none;
+	position: absolute;
+	top: 13px;
+	right: 0;
+	width: 45px;
+	height: 25px;
+	background: url('../images/common/btn_footer_more.png') center no-repeat;
+	text-indent: -9999px;
+}
+
+#footer .footer_top.active .btn_more {
+	display: block;
+}
+
+#footer .footer_top.active .inner {
+	padding-right: 55px;
+}
+
+#footer .footer_top.on {
+	height: auto;
+}
+
+#footer .footer_top .btn_top {
+	float: right;
+	height: 55px;
+	cursor: pointer;
+	border: 0;
+	color: #fff;
+	background-color: transparent;
+	padding-top: 15px;
+	font-size: 13px;
+	position: relative;
+}
+
+#footer .footer_top .btn_top:before {
+	content: '';
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	background: url('../images/common/top_arrow.png') center no-repeat;
+	width: 15px;
+	height: 8px;
+	margin-left: -7.5px;
+}
+
+
+#footer .footer_bottom {
+	padding: 5px 0;
+	color: #bdbdbd;
+}
+
+#footer .footer_bottom .inner {
+	position: relative;
+}
+
+#footer .footer_bottom .site_info {
+	margin-top: 10px;
+	position: relative;
+	padding-left: 200px;
+	box-sizing: border-box;
+	margin-bottom: 30px;
+}
+
+#footer .footer_bottom .site_info .footer_logo {
+	position: absolute;
+	top: -10px;
+	left: 0;
+	display: inline-block;
+}
+
+#footer .footer_bottom .site_info ul {
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+#footer .footer_bottom .site_info ul.site_info_1 {
+	margin-bottom: 0;
+}
+
+#footer .footer_bottom .site_info ul.site_info_2 {
+	max-width: 600px;
+}
+
+#footer .footer_bottom .site_info ul li {
+	font-size: 12px;
+	line-height: 22px;
+	color: #bdbdbd;
+	float: left;
+	margin-right: 15px;
+}
+
+#footer .footer_bottom .site_info ul li a {
+	color: #bdbdbd;
+}
+
+#footer .footer_bottom .site_info ul li span {
+	font-weight: bold;
+}
+
+#footer .footer_bottom .site_info .copyright {
+	padding-bottom: 5px;
+	font-size: 12px;
+	line-height: 17px;
+	color: #bdbdbd;
+}
+
+#footer .footer_bottom .bank_info {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#footer .footer_bottom .bank_info p {
+	font-size: 13px;
+	line-height: 20px;
+	margin-bottom: 5px;
+}
+
+#footer .footer_bottom .bank_info .acount_num {
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: bold;
+}
+
+#footer .footer_bottom .bank_info .acount_num a {
+	color: #bdbdbd;
+}
+
+#footer .footer_bottom .bank_info .acount_num img {
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+#footer .footer_bottom .sns {
+	text-align: center;
+}
+
+#footer .footer_bottom .sns li {
+	display: inline-block;
+	padding: 0 10px;
+}
+
+#footer .footer_bottom .sns li a {
+	opacity: 0.5;
+}
+
+#footer .footer_bottom .sns li a:hover {
+	opacity: 1;
+}
+
+
+#footer .footer_bottom .site_info .footer_logo img {
+	width: 150px;
+	/* 이미지의 가로 크기 설정 */
+	padding: 30px;
+	vertical-align: middle;
+	/* 좌측 여백 추가 */
+	box-sizing: content-box;
+}
+
+#footer .footer_top .btn_top:before {
+	content: '';
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	background: url('/images/common/top_arrow.png') center no-repeat;
+	width: 15px;
+	height: 8px;
+	margin-left: -7.5px;
+}
+
+#footer ul {
+	list-style: none;
+}

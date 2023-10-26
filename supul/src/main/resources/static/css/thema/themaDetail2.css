@@ -1,0 +1,155 @@
+@charset "UTF-8";
+
+.container {
+	width: 100%;
+	max-width: 800px;
+	margin: 0px auto;
+	padding: 20px 40px;
+	
+}
+
+img{
+	width: 600px;
+}
+
+h2 {
+	font-size: 2rem;
+	margin-bottom: 20px;
+	font-weight: 400;
+}
+
+table,
+td {
+	color: #3f5856;
+	border: solid 1px #ccc;
+	border-collapse: collapse;
+}
+
+table td {
+	padding: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+	width: 96%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 16px;
+}
+
+select {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 16px;
+}
+
+textarea {
+	font-size: 14px;
+	padding: 15px;
+}
+
+label {
+	margin-bottom: 5px;
+}
+
+/* "예약하기" 버튼 스타일 지정 */
+input[type="button"] {
+	background-color: #007bff;
+	color: #fff;
+	padding: 10px 20px;
+	font-size: 16px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+/* 버튼 호버 효과 */
+input[type="button"]:hover {
+	background-color: #0056b3;
+	/* 호버 시 배경색 변경 */
+	color: #fff;
+	/* 호버 시 글자색 변경 (같은 색이지만 스타일을 변경할 수 있습니다) */
+}
+
+/* 요소 사이에 간격 추가 */
+p {
+	margin-bottom: 10px;
+}
+
+/* 에러 메시지 스타일링 */
+.error-message {
+	color: red;
+	/* 다른 스타일 속성 추가 가능 */
+}
+
+/* 동의 체크박스 레이블 스타일링 */
+label[for="agree"] {
+	display: inline-block;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+input[type="checkbox"] {
+	cursor: pointer;
+	width: 15px;
+	height: 15px;
+	margin-right: 5px;
+	/* 텍스트와의 간격을 조절합니다. */
+}
+
+/* 텍스트영역에 경계선 추가 */
+textarea {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 8px;
+}
+
+/* 쿠폰 라디오 버튼 및 라벨 스타일링 */
+input[type="radio"]+label {
+	white-space: nowrap;
+	/* 텍스트가 길어도 줄 바꿈 없이 한 줄에 표시 */
+	display: inline-block;
+	/* 라디오 버튼과 라벨을 한 줄에 표시 */
+	cursor: pointer;
+}
+
+
+table tr td:first-child {
+	width: 120px;
+	text-align: right;
+	font-weight: bold;
+	font-size: 16px;
+	
+}
+
+
+td ul li {
+	line-height: 1.4em;
+	list-style: none;
+	display: inline-block;
+}
+
+.redirect {
+	margin-top: 20px;
+	text-align: right;
+}
+
+div.redirect a {
+	text-decoration: none;
+	padding: 20px 15px;
+	margin-left: 5px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	background-color: #f3e7db;
+	color: #3f5856;
+}
+
+/* readonly 상태의 input 요소 커서 스타일 변경 */
+input[readonly] {
+	cursor: default;
+	/* 기본 커서로 변경 (변경하지 않음) */
+}

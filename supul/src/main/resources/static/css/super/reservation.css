@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+
+.reservation_container{
+	width: 1200px;
+	margin: 0 auto;
+	
+}
+ 
+.reservation_container select{
+	padding: 5px;
+   font-size: 16px;
+   border: 1px solid #a88d6e;
+   background-color: transparent;
+   color: #f3e7db;
+   width: 180px;
+}
+.reservation_container option{
+	background-color:#a88d6e;
+}
+.reservation_container input{
+	padding: 5px;
+   font-size: 16px;
+   border: 1px solid #a88d6e;
+   background-color: transparent;
+   color: #f3e7db;
+   width: 180px;
+}
+
+.reservation_container .topmenu{
+	width: 100%;
+	display: inline-block;
+}
+.reservation_container .topmenu form{
+	width: 400px;
+	display: inline-block;
+}
+
+
+.reservation_container .btn{
+	width: 80px;
+	height: 30px;
+	background-color: #f3e7db ;
+	border-radius: 5px;
+	
+}
+.reservation_container a{
+	color:  #E09132;
+}
+/* 예약 내역 테이블 스타일 */
+.reservation_container table {
+    width: 100%;
+    border-collapse: collapse;
+ 
+  	 margin:20px auto;
+}
+
+.reservation_container table th {
+	background-color: #f3e7db;
+    border: 1px solid #ccc;
+}
+.reservation_container table td {
+    border: 1px solid #ccc;
+    color: #f3e7db;
+}
+
+.reservation_container th {
+    padding: 10px;
+    text-align: center;
+}
+.reservation_container td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* 페이지 처리 스타일 */
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.pagination li{
+	display: inline-block;
+}
+
+
+.page-link a{
+    text-decoration: none;
+   	padding: 0 2px;
+    border: 1px solid #f3e7db;
+    margin: 0 5px;
+    background-color: #f3e7db;
+    border-radius: 3px;
+    color: #E09132;
+}
+.page-link a:hover {
+    background-color: #E09132;
+    color: #fff;
+}
+
+.page-link a.active {
+    background-color: #E09132;
+    color: #fff;
+}
+button{
+	    margin-left: 15px;
+		border-radius: 5px;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-size: 16px;
+	background-color: #f3e7db;
+}

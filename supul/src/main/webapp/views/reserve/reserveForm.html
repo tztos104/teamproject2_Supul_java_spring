@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>예약정보입력</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/reserve/reserveForm.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script type="text/javascript">
+		function confirmrv() {
+			if (confirm('당일 예약 취소시 예약금은 환불되지 않습니다.\n동의하시면 확인 원치않으시면 취소를 눌러주세요')) {
+				document.getElementById('reservationForm').submit();
+				return true;
+			} else {
+				// 예약을 취소한 경우, 이동하지 않음
+				return false;
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<header>
+		<div th:replace="inc/header :: headerMenu"></div>
+	</header>
+	<div class="container">
+		<block th:if="${user !=null}">
+			<form action="rvReg" method="post" id="reservationForm">
+				<h2>예약 정보 입력</h2>
+				<table>
+					<tr>
+						<td><label for="userName">사용자 이름:</label></td>
+						<td><input type="text" id="userName" name="userName" th:value="${user.userName}" readonly />
+						</td>
+					</tr>
+					<tr>
+						<td><label for="phone">전화번호:</label></td>
+						<td><input type="text" id="phone" th:value="${user.phone}" readonly /></td>
+					<tr>
+						<td>테마 이름:</td>
+						<td><input type="text" id="themaName" name="themaName" th:value="${thema.title}" readonly></td>
+					</tr>
+					<tr>
+						<td>선택한 날짜:</td>
+						<td><input type="text" id="date" name="date" th:value="${date}" readonly></td>
+					</tr>
+
+					<tr>
+						<td>선택한 시간:</td>
+						<td><input type="text" id="time" name="time" th:value="${picktime}" readonly></td>
+					</tr>
+
+					<tr>
+						<td>방문할 인원:</td>
+						<td>
+							<select name="rvPeople" style="font-size: 17px; padding: 3px;">
+								<block th:each="i : ${#numbers.sequence(1, thema.people)}">
+									<option th:value="${i}" th:text="${i}">
+									</option>
+								</block>
+							</select>
+						</td>
+					</tr>
+					<td>예약 가격:</td>
+					<td><input type="number" id="rvPrice" name="rvPrice" th:value="${thema.rvPrice}" readonly></td>
+					</tr>
+					<tr>
+						<td>가격:</td>
+						<td><input type="number" id="price" name="price" th:value="${price}" readonly></td>
+					</tr>
+					<tr>
+						<td>지점:</td>
+						<td><input type="text" id="branch" name="branch_id" th:value="${thema.branch.name}" readonly>
+						</td>
+					</tr>
+					<tr>
+						<td>사용할 쿠폰:</td>
+						<td>
+							<span th:if="${coupons.size() == 0}">사용 가능한 쿠폰이 없습니다.</span>
+							<span th:unless="${coupons.size() == 0}">
+								<input type="radio" id="couponNone" name="couponNum" th:value=${null} required>
+								<label for="couponNone">사용안함</label>
+								<span th:each="coupon, cpStat : ${coupons}">
+									<div>
+										<input type="radio" th:id="'coupon' + ${cpStat.index}" name="couponNum"
+											th:value="${coupon.couponNum}" required>
+										<label th:for="'coupon' + ${cpStat.index}"
+											th:text="${coupon.couponName + '(' + coupon.discount + '원할인)'}"></label>
+									</div>
+								</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<input type="hidden" id="paid" name="paid" value="false">
+						<input type="hidden" id="noShow" name="noShow" value="false">
+						<input type="hidden" id="thema" name="themaId" th:value="${thema.themaId}" readonly>
+					</tr>
+					<tr>
+						<td colspan="2" align="center" style="padding: 15px;">
+							<p style="text-align:left; font-size: 14px;">
+								<span class="notice">&lt;예약 및 입퇴실 안내&gt;</span></br>
+								<br />
+								- 게임시작 1시간전에 확인전화 시 통화되지 않을 경우 예약시간 30분전에 자동취소 됩니다.</br>
+								- 반드시 게임 시작 전에 입실 요청드리며, 10분전에 도착하여 사전 안내를 받으시기 바랍니다.</br>
+								- 늦게 도착하시면 게임시간이 줄어들 수 있으니 양해 부탁드립니다</br>
+								- 음주하신 손님도 입장이 제한되니 양해 부탁드립니다.</br>
+								- 게임룸 내부에 휴대폰 및 기타 촬영장비/인화성 물질/음식물/음주 등을 반입할 시 퇴실조치 되오며 환불이 불가합니다.
+							</p>
+							<textarea style="width: 95%; height: 100px; text-align: 13px; padding: 10px;" readonly>
+- 개인정보취급방침 -
+개인정보 수집 및 이용에 대한 안내
+정보통신망법 규정에 따라 "SUPUL"에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.
+
+1. 수집하는 개인정보의 항목
+첫째, 회사는 회원가입, 원활한 고객상담, 각종 서비스의 제공을 위해 최초 회원가입 당시 아래와 같은 최소한의 개인정보를 필수항목으로 수집하고 있습니다. 
+[회원가입]
+- 필수항목 : 아이디, 비밀번호, 이름, 생년월일, 연락처
+
+둘째, 서비스 이용과정이나 사업처리 과정에서 아래와 같은 정보들이 자동으로 생성되어 수집될 수 있습니다. 
+- IP Address, 쿠키, 방문 일시, 서비스 이용 기록, 불량 이용 기록, 기기정보 
+
+셋째, "SUPUL" 아이디를 이용한 부가 서비스 및 맞춤식 서비스 이용 또는 이벤트 응모 과정에서 해당 서비스의 이용자에 한해서만 개인정보 추가 수집이 발생할 수 있으며, 이러한 경우 별도의 동의를 받습니다. 
+
+2. 개인정보의 수집 및 이용 목적
+가. 컨텐츠 제공, 특정 맞춤 서비스 제공, 본인인증
+
+나. 회원관리 
+회원제 서비스 제공, 개인식별, "SUPUL" 이용약관 위반 회원에 대한 이용제한 조치, 서비스의 원활한 운영에 지장을 미치는 행위 및 서비스 부정이용 행위 제재, 가입의사 확인, 가입 및 가입횟수 제한, 분쟁 조정을 위한 기록보존, 불만처리 등 민원처리, 고지사항 전달, 회원탈퇴의사의 확인
+다. 신규 서비스 개발 및 마케팅·광고에의 활용
+
+신규 서비스 개발 및 맞춤 서비스 제공, 통계학적 특성에 따른 서비스 제공 및 광고 게재, 서비스의 유효성 확인, 이벤트 정보 및 참여기회 제공, 광고성 정보 제공, 접속빈도 파악, 회원의 서비스 이용에 대한 통계
+
+3. 개인정보의 보유 및 이용기간
+이용자의 개인정보는 원칙적으로 개인정보의 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 다음의 정보에 대해서는 아래의 이유로 명시한 기간 동안 보존합니다.
+
+가. 회사 내부 방침에 의한 정보보유 사유 
+- 부정이용기록(부정가입, 징계기록 등의 비정상적 서비스 이용기록) 
+보존 항목 : 가입한 휴대폰 번호
+보존 이유 : 부정 가입 및 이용 방지
+보존 기간 : 6개월
+※ ‘부정이용기록’이란 부정 가입 및 운영원칙에 위배되는 게시글 작성 등으로 인해 회사로부터 이용제한 등을 당한 기록입니다.
+나. 관련법령에 의한 정보보유 사유 
+상법, 전자상거래 등에서의 소비자보호에 관한 법률 등 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다. 이 경우 회사는 보관하는 정보를 그 보관의 목적으로만 이용하며 보존기간은 아래와 같습니다.
+
+- 계약 또는 청약철회 등에 관한 기록 
+보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률 
+보존 기간 : 5년 
+- 소비자의 불만 또는 분쟁처리에 관한 기록 
+보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률 
+보존 기간 : 3년 
+- 웹사이트 방문기록 
+보존 이유 : 통신비밀보호법 
+보존 기간 : 3개월 
+							</textarea></br>
+							<input type="checkbox" id="agree" name="agree" value="agree" required>
+							<label for="agree"> 안내사항을 모두 확인하였으며 개인정보 처리방침에 동의합니다. </label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input type="button" onclick="confirmrv()" value="예약하기">
+						</td>
+					</tr>
+
+				</table>
+			</form>
+		</block>
+		<block class="error-message" th:unless="${user !=null}">
+			로그인세션이 만료되었습니다 <a href="/user/login">다시 로그인해주세요</a>
+		</block>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

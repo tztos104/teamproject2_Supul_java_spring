@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 목록</title>
+</head>
+<body>
+	   <header>
+       <div th:replace="inc/header :: headerMenu"></div>
+   </header>
+    <h2>회원 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>email</th>
+                <th>생년월일</th>
+                <th>연락처</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</body>
+</html>

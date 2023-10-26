@@ -1,0 +1,132 @@
+1694328383373	Copy file
+1694329054887	Rename resource 'memberdetail.html'
+1694334422321	Move compilation unit
+1694334440011	Move compilation unit
+1694334519952	Move compilation units
+1694334529355	Rename resource 'service'
+1694335479547	Copy file
+1694412681886	Delete element
+1694417233362	Rename resource 'homepage'
+1694417246806	Rename resource 'homeIntro.html'
+1694417253894	Rename resource 'editHomepage.html'
+1694417259568	Rename resource 'edihtml'
+1694417272133	Rename resource 'Intro.html'
+1694417285517	Rename resource 'storeInfo.html'
+1694419046389	Rename resource 'introduceForm.html'
+1694431180698	Rename type 'BoardQuestion'
+1694431192817	Rename type 'BoardQComment'
+1694433148539	Delete element
+1694466091791	Delete element
+1694466105466	Move 'headfoot.css' to 'css'
+1694478105876	Copy file
+1694513837950	Rename resource 'BoardController.java'
+1694513953641	Delete element
+1694529629489	Rename resource 'home'
+1694529650205	Delete element
+1694530204130	Delete element
+1694533664477	Move 'supermain.html' to 'views'
+1694533960351	Delete element
+1694539677334	Copy compilation unit
+1694707429445	Copy file
+1694720221002	Delete elements
+1694839106606	Copy file
+1694842696883	Rename resource 'themaReg.html'
+1694842710031	Rename resource 'themaFormhtml'
+1694843330994	Rename resource 'branchReg.html'
+1694843798959	Move 'branch' to 'super'
+1694843811746	Copy folder
+1694843816420	Delete element
+1694843827457	Delete elements
+1694843854972	Move 2 resources to 'super'
+1694845845649	Copy folder
+1694846240095	Rename resource 'adminsignup.html'
+1694846700442	Delete element
+1694846862025	Move 'adminlist.html' to 'admin'
+1694846874661	Move 'admindelete.html' to 'admin'
+1694847218308	Rename resource 'editHomepage.html'
+1694847220984	Move 'homeIntro.html' to 'super'
+1694847246050	Move 'homeIntro.html' to 'homepage'
+1694847248469	Move 'homeUpdate.html' to 'super'
+1694847267746	Move 'supermain.html' to 'super'
+1694847299324	Rename resource 'supermain.html'
+1694847303714	Rename resource 'superlogin.html'
+1694847746583	Delete element
+1694849208373	Copy file
+1694849238926	Delete element
+1694849487940	Rename resource 'homepage'
+1694850733417	Rename resource 'adminmain.html'
+1694850737897	Move 'admin_main.html' to 'admin'
+1694852687837	Copy files
+1694852690478	Delete element
+1694857044690	Delete element
+1694857369704	Rename compilation unit 'AdminAuthenticationInterceptor.java'
+1694857380170	Rename type 'SuperAuthenticationInterceptor'
+1694857388018	Rename type 'UserAuthenticationInterceptor'
+1694859079402	Delete element
+1694861270357	Delete element
+1694861291072	Delete element
+1694863855969	Delete element
+1694864520445	Rename compilation unit 'smsController.java'
+1694864781072	Delete element
+1694864993954	Delete element
+1694865007024	Delete element
+1694865035203	Delete element
+1694865199577	Delete element
+1694866170093	Rename type 'BoardNotice'
+1694866177153	Rename type 'BoardQna'
+1694866189213	Rename type 'BoardReview'
+1694866196685	Rename type 'Comment'
+1694866293966	Rename type 'SignUpController'
+1694867128038	Rename resource 'password-change.html'
+1694867525063	Rename resource 'edit-profile.html'
+1694867870023	Delete element
+1694868011451	Delete element
+1694868042486	Move 'mypage' to 'user'
+1694868260604	Delete element
+1694868329246	Rename type 'SaleRepository'
+1694868479127	Rename type 'BoardNRepository'
+1694868487588	Rename type 'BoardQRepository'
+1694868502836	Rename type 'BoardRRepository'
+1694868540131	Copy compilation unit
+1694868543397	Delete element
+1694868558253	Rename type 'CommQRepository'
+1694868771324	Rename resource 'adminRankList.html'
+1694868807251	Rename resource 'adminlogin.html'
+1694868814897	Delete element
+1694868825070	Rename resource 'board'
+1694868868747	Rename resource 'boardNWrite.html'
+1694868877115	Rename resource 'boardNModify.html'
+1694868883947	Rename resource 'boardNList.html'
+1694868890363	Rename resource 'boardNDetail.html'
+1694869062056	Rename resource 'notice_Detail.html'
+1694869066312	Rename resource 'notice_List.html'
+1694869069119	Rename resource 'notice_Modify.html'
+1694869072372	Rename resource 'notice_Write.html'
+1694869218150	Rename resource 'boardq'
+1694869238088	Rename resource 'qna_board'
+1694869250756	Rename resource 'notice_board'
+1694869259766	Rename resource 'boardr'
+1694869451634	Rename resource 'boardQWrite.html'
+1694869459199	Rename resource 'boardQModify.html'
+1694869466113	Rename resource 'boardQList.html'
+1694869473457	Rename resource 'boardQDetail.html'
+1694869793566	Rename resource 'boardRModify.html'
+1694869804216	Rename resource 'boardQCommentModify.html'
+1694869824713	Rename resource 'review.html'
+1694869835857	Rename resource 'boardRWrite.html'
+1694869844327	Rename resource 'boardRList.html'
+1694869849232	Rename resource 'boardRDetail.html'
+1694871520756	Delete element
+1694871549397	Rename type 'SaleController'
+1694871656311	Move 'tonggye.html' to 'pay'
+1694871682338	Move 'paytonggye.html' to 'pay'
+1694871961557	Delete element
+1694871965495	Delete element
+1694871975591	Delete element
+1694871982404	Delete element
+1694872623696	Delete element
+1694873599685	Delete element
+1694875656402	Delete element
+1694876346496	Rename resource 'homeIntro.html'
+1694876363760	Rename resource 'Intro.html'
+1694882403246	Copy compilation unit

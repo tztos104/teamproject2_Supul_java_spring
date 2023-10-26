@@ -1,0 +1,421 @@
+@font-face {
+	font-family: 'ChosunCentennial';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/* ======================================= 리뷰 목록 공통 ======================================= */
+/* 리뷰 리스트 */
+.review #searchForm {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.review h1 {
+	text-align: center;
+	color: #f3e7db;
+	margin: 50px 0 50px 0;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.review .reviewList {
+	margin: 10px auto 30px;
+	text-align: center;
+}
+.review .reviewList .title {
+	max-width: 400px;
+}
+.review .reviewList td a{
+	display: inline-block;
+	max-width: 400px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.review-write .reviewWriteTable li {
+	color: red;
+	list-style: none;
+	padding: 5px 0;
+}
+
+.review .reviewList,
+.reviewList th,
+.reviewList td {
+	border: 1px solid #a88d6e;
+	border-collapse: collapse;
+	color: #f3e7db;
+	padding: 12px 10px;
+}
+
+.review .reviewList tr:first-child {
+	background-color: rgba(168, 141, 110, 0.7);
+	font-size: 17px;
+
+}
+
+.review .reviewList tr td:nth-child(5) {
+	text-align: left;
+	padding-left: 20px;
+}
+
+.review .reviewList a {
+	color: #f3e7db;
+	text-decoration: none;
+}
+
+.review .reviewList a:hover {
+	color: #E09132;
+	font-weight: bold;
+	transform: scale(1.1);
+}
+
+.review .reviewListPaging {
+	margin: 0 auto;
+}
+
+.reviewListPaging .pagination .active a {
+	background-color: #a88d6e;
+}
+
+/*==============================================*/
+
+
+/* ======================================= 리뷰 상세 ======================================= */
+
+h3 {
+	text-align: left;
+	color: #f3e7db;
+	margin: 120px 0 10px 50px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+h2 {
+	text-align: left;
+	color: #f3e7db;
+	margin: 30px 0 0px 50px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 42px;
+}
+
+.detail-content {
+	color: #f3e7db;
+	margin: 50px 50px 0 50px;
+	text-align: right;
+}
+
+.thema-content {
+	color: #f3e7db;
+	margin: 0px 50px 0 55px;
+	font-size: 18px;
+}
+
+.bar {
+	margin: 5px;
+}
+
+.detail-hr {
+	margin: 20px;
+	border: 1px solid #a88d6e;
+}
+
+.reviewDetail .content {
+	margin: 50px;
+	color: #f3e7db;
+	font-size: 20px;
+	line-height: 2;
+}
+
+.reviewDetail .filename {
+	text-align: right;
+	margin-right: 50px;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.reviewDetail .tr_btn {
+	text-align: right;
+}
+
+.reviewDetail img {
+	max-width: 1000px;
+	height: auto;
+	display: block;
+	margin: 10px auto;
+}
+
+.reviewDetail button {
+	margin: 5px 5px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #a88d6e;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+}
+
+.reviewDetail button a {
+	text-decoration: none;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.reviewDetail button:hover {
+	background-color: #a88d6e;
+}
+
+
+
+/* ======================================= 리뷰 쓰기 ======================================= */
+.review-write h1 {
+	text-align: center;
+	color: #f3e7db;
+	margin: 50px 0 50px 0;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.review-write .reviewWriteTable {
+	margin: 0 auto;
+}
+
+.review-write .reviewWriteTable,
+.review-write .reviewWriteTable th,
+.review-write .reviewWriteTable td {
+	border: 1px solid #a88d6e;
+	border-collapse: collapse;
+	color: #f3e7db;
+	padding: 15px 20px;
+}
+
+.review-write .reviewWriteTable tr th:first-child {
+	background-color: rgba(168, 141, 110, 0.5);
+	font-size: 17px;
+}
+
+.review-write .reviewWriteTable select {
+	height: 25px;
+	width: 120px;
+	background-color: transparent;
+	color: #f3e7db;
+	border: 1px solid #a88d6e;
+	font-size: 16px;
+}
+
+.review-write .reviewWriteTable select option {
+	background-color: rgb(34, 36, 28);
+	font-size: 16px;
+}
+
+.review-write .reviewWriteTable input[type=text] {
+	background-color: transparent;
+	border: none;
+	color: #f3e7db;
+	font-size: 16px;
+	height: 25px;
+	width: 700px;
+}
+
+.review-write .reviewWriteTable textarea {
+	width: 700px;
+	height: 400px;
+	background-color: transparent;
+	border: none;
+	color: #f3e7db;
+	font-size: 16px;
+	resize: none;
+}
+
+.review-write .reviewWriteTable button {
+	margin: 5px 5px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #a88d6e;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.review-write .reviewWriteTable button a {
+	text-decoration: none;
+	color: #f3e7db;
+
+}
+.review-write .reviewWriteTable .reviewWriteBtn {
+	text-align: right;
+}
+
+
+/* **************************************************************************** */
+/* 리뷰 검색창 */
+.review-search-form {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.search-select {
+	height: 42px;
+	width: 120px;
+	font-size: 16px;
+	border: 1px solid #a88d6e;
+	border-radius: 4px 0 0 4px;
+	background-color: rgb(34, 36, 28);
+	color: #f3e7db;
+	padding: 0 15px;
+	line-height: 16px;
+	/* -webkit-appearance: none; */
+}
+
+.search-input {
+	background: transparent;
+	height: 42px;
+	width: 327px;
+	color: #f3e7db;
+	border: 1px solid #a88d6e;
+	border-radius: 0 4px 4px 0;
+	/* -webkit-appearance: none; */
+	font-size: 16px;
+	font-weight: 500;
+	padding: 0 15px;
+	line-height: 16px;
+}
+
+.search-all {
+	background: rgba(168, 141, 110, 0.7);
+	color: #fff;
+	font-size: 16px;
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	border: 0;
+	border-radius: 0 4px 4px 0;
+	height: 42px;
+	padding: 0 20px;
+	text-decoration: none;
+	line-height: 16px;
+}
+
+.search-all:hover {
+	background: #a88d6e;
+}
+
+/* 반응형 스타일 */
+@media only screen and (max-width: 680px) {
+
+	.search-select,
+	.search-input,
+	.search-button,
+	.search-all {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+}
+
+/* *************************************************************** */
+/* 리뷰 페이징 */
+.reviewListPaging {
+	text-align: center;
+	margin: 20px auto 0 auto;
+}
+
+.reviewListPaging .pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.reviewListPaging .pagination a {
+	margin: 0 5px 0 0;
+	padding: 6px 12px;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-color: rgb(60, 65, 44);
+	color: #fff;
+	outline: 0;
+	text-decoration: none;
+	transition: all 0.2s linear;
+
+	&:hover {
+		background-color: lighten(#2c3840, 10%);
+	}
+}
+
+/* 버튼 선택 됐을 때 */
+.reviewListPaging .pagination .active a {
+	background-color: #a88d6e;
+
+}
+
+/* 다음 페이지 */
+.reviewListPaging .pagination .pagination-next a {
+	border-radius: 10px 0 0 10px;
+	margin-right: 18px;
+
+	&:hover::after {
+		border-left: 17px solid lighten(#2c3840, 10%);
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		right: -16px;
+		width: -2px;
+		height: 0;
+		border-top: 18.5px solid transparent;
+		border-bottom: 17.3px solid transparent;
+		border-left: 15px solid rgb(60, 65, 44);
+		transition: all 0.2s linear;
+	}
+}
+
+/* 이전 페이지 */
+.reviewListPaging .pagination .pagination-previous a {
+	border-radius: 0 10px 10px 0;
+	margin-left: 18px;
+
+	&:hover::after {
+		border-right: 30px solid lighten(#2c3840, 10%);
+	}
+
+	&::before {
+		content: "";
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		left: -16px;
+		width: -2px;
+		height: 0;
+		border-bottom: 17.3px solid transparent;
+		border-top: 18.5px solid transparent;
+		border-right: 15px solid rgb(60, 65, 44);
+		transition: all 0.2s linear;
+	}
+}

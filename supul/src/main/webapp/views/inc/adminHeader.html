@@ -1,0 +1,46 @@
+<div th:fragment="headerMenu" id="adminHeader">
+   <div class="header-logo">
+      <div class="logo"><a href="/admin"><img src="/images/common/supul-admin.png" alt="로고" style="width: 200px;" /></a></div>
+      <div class="login">
+         <li><a href="/main" class="go">[메인페이지로 이동]</a></li>
+         <li th:unless="${admin!=null}"><a href="/admin/login">관리자 로그인 <i
+                  class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+         <li th:if="${admin!=null}" th:text="|${admin.branchName} 님|"></li>
+         <li th:if="${admin!=null}"><a href="/admin/logout">관리자로그아웃 <i
+                  class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+      </div>
+   </div>
+   <div class="menu">
+      <div class="menuTab">
+         <li>
+            BRANCH & THEMA
+            <ul class="subMenu">
+               <a th:href="|/home/branchInfo/${adminBn}|"><li>지점정보</li></a>
+               <a th:href="|/admin/branch/modiBranchForm/${adminBranchId}|"><li>전화번호수정요청</li></a>
+               <block th:if="${admin !=null}">
+                  <a th:href="|/thema/themaList?branchName=${adminBn}|"><li>테마 리스트</li></a>
+               </block>
+               <block th:unless="${admin !=null}">
+                  <a th:href="|/admin/login|"><li>테마정보수정</li></a>
+               </block>
+            </ul>
+         </li>
+         <li>
+            MEMBER & PAYMENT
+            <ul class="subMenu">
+               <a th:href="|/admin/rvList/${adminBn}|"><li>예약내역 및 사용내역</li></a>
+               <a th:href="|/admin/blackList/${adminBn}|"><li>블랙리스트</li></a>
+            </ul>
+         </li>
+         <li>
+            COMMUNITY
+            <ul class="subMenu">
+               <a th:href="@{/board/notice/list}"><li>공지게시판</li></a>
+               <a th:href="@{/board/qna/list}"><li>문의게시판</li></a>
+               <a th:href="@{/board/review/list}"><li>후기게시판</li></a>
+            </ul>
+         </li>
+         <a th:href="|/reserve/tonggye/${adminBn}|"><li>STATISTICS</li></a>
+      </div>
+   </div>
+</div>

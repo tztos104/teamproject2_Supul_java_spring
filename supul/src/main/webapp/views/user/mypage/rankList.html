@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>랭크 리스트</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/user/mypage/rankList.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script>
+		var selectedName;
+		var selectedTitle;
+
+		$(document).ready(function () {
+			$('#branchName').change(function () {
+				selectedName = $("#branchName option:selected").val();
+				// URL 이동
+				console.log(selectedName)
+				window.location.href = '/user/mypage/rankList/' + selectedName + '/전체';
+			});
+
+			$('#title').change(function () {
+				selectedTitle = $("#title option:selected").val();
+				$("#branchName").val(selectedName).prop("selected", true);
+				// URL 이동
+				console.log(selectedTitle)
+				window.location.href = selectedTitle;
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<!-- 헤더-->
+		<header>
+			<div th:replace="inc/header :: headerMenu"></div>
+		</header>
+
+		<div class="section1">
+			<input type="hidden" th:field="${title}" />
+			<input type="hidden" th:field="${branchName}" />
+			<br />
+			<h2>타임 리스트</h2>
+			<br />
+		</div>
+
+		<div class="section2">
+			<label for="branchName">지점명:</label>
+			<select id="branchName" name="branchName">
+				<option th:value="전체" th:text="전체"></option>
+				<option th:each="brn : ${brnList}" th:value="${brn.name}" th:text="${brn.name}"
+					th:selected="${brn.name == #vars.branchName}" />
+			</select>
+			<select name="title" id="title">
+				<option th:value="전체" th:text="전체"></option>
+				<option th:each="thema : ${themaList}" th:value="${thema.title}" th:text="${thema.title}"
+					th:if="${branchName == '전체' || branchName == thema.branch.name}"
+					th:selected="${thema.title == #vars.title}" />
+			</select>
+		</div>
+		<br />
+		<div class="section3">
+			<table border="">
+				<thead>
+					<tr>
+						
+						<th>날짜</th>
+						<th>지점명</th>
+						<th>테마명</th>
+						<th>아이디</tth>
+						<th>남은 시간</tj>
+						<th>인원수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<block th:each="rd, num : ${ filterRankData}"
+						th:if="${#vars.branchName == '전체' or rd.branchName == #vars.branchName}">
+						<block th:if="${rd.user.id.equals(userId)}">
+							<tr>
+							
+								<td th:text="${rd.date}" />
+								<td th:text="${rd.branchName}" />
+								<td th:text="${rd.themaName}" />
+								<td th:text="${rd.user.userId}" />
+								<td>[[${rd.minutes}]]분 [[${rd.seconds}]]초 </td>
+								<td th:text="${rd.people}" />
+							</tr>
+						</block>
+					</block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--푸터-->
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

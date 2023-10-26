@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="UTF-8">
+   <title>SUPUL</title>
+   <style>
+     * {
+        margin: 0;
+        padding: 0;
+     }
+      body {
+         overflow: hidden;
+      }
+
+      .container {
+         width: 100%;
+         height: 100vh;
+         background-image: url('images/common/닫.jpg');
+         background-size: cover;
+         position: relative;
+         background-repeat: no-repeat;
+         background-position: center;
+         transition: background-image 0.7s ease-in-out;
+
+      }
+
+      .divBox {
+         position: absolute;
+         background-size: cover;
+         background-position: center;
+         background-color: transparent;
+         top: 60%;
+         left: 50%;
+         height: 30%;
+         width: 300px;
+         transform: translate(-50%, -50%);
+
+      }
+
+      .container div img {
+         position: absolute;
+         width: 150px;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         opacity: 0;
+         /* 초기에 투명으로 설정합니다. */
+         transition: opacity 0.8s ease-in-out;
+         /* 투명도 애니메이션을 추가합니다. */
+      }
+
+      .divBox:hover div img {
+         opacity: 1;
+         /* 마우스 호버시 투명도를 1로 변경하여 나타나도록 합니다. */
+      }
+   </style>
+   <script>
+      function showImage() {
+         document.querySelector('.container div img').style.opacity = '1';
+      }
+
+      function hideImage() {
+         document.querySelector('.container div img').style.opacity = '0';
+      }
+
+      function changeImage(newImage) {
+         document.querySelector('.container').style.backgroundImage = `url('${newImage}')`;
+      }
+   </script>
+</head>
+
+<body>
+   <div class="container">
+      <a href="/main">
+         <div class="divBox" onmouseover="showImage(); changeImage('images/common/열.jpg')"
+            onmouseout="hideImage(); changeImage('images/common/닫.jpg')">
+            <div><img src="images/common/supul.png" alt="" /></div>
+         </div>
+      </a>
+   </div>
+</body>
+
+</html>

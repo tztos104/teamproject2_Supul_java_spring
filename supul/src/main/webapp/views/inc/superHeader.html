@@ -1,0 +1,52 @@
+<div th:fragment="headerMenu" id="superHeader">
+	<div class="header-logo">
+		<div class="logo"><a href="/super"><img src="/images/supul4.png" alt="로고" style="width: 200px;" /></a></div>
+		<div class="login">
+			<li><a href="/admin" class="go">[관리자페이지로 이동]</a> | <a href="/main" class="go">[메인페이지로 이동]</a></li>
+			<li th:if="${userRole!=null}"><a href="/super/superlogout">총괄로그아웃 <i
+						class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+			<li th:unless="${userRole!=null}"><a href="/super/superlogin">총괄로그인 <i
+						class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+		</div>
+	</div>
+	<div class="menu">
+		<div class="menuTab">
+			<li>
+				BRANCH & THEMA
+				<ul class="subMenu">
+
+					<a href="/super/branch/form"><li>지점 등록</li></a>
+					<a href="/super/branchList"><li>지점 리스트</li></a>
+					<a href="/super/modiBranchList"><li>지점 번호관리</li></a>
+					<a href="/super/admin/signup"><li>지점장 등록</li></a>
+					<a href="/super/adminList"><li>지점장 리스트</li></a>
+					<a href="/thema/themaList"><li>테마 리스트</li></a>
+					<a href="/super/home/update/SUPUL"><li>홈페이지 수정</li></a>
+				</ul>
+			</li>
+			<li>
+				MEMBER & PAYMENT
+				<ul class="subMenu">
+					<a href="/super/memberList"><li>회원 목록</li></a>
+					<a th:href="|/super/rvList/전체|"><li>예약내역</li></a>
+					<a th:href="|/super/usedList/전체|"><li>사용내역</li></a>
+					<a href="/super/couponManage"><li>쿠폰관리</li></a>
+				</ul>
+			</li>
+			<li>
+				COMMUNITY
+				<ul class="subMenu">
+					<a th:href="@{/board/notice/list}"><li>공지게시판</li></a>
+					<a th:href="@{/board/qna/list}"><li>문의게시판</li></a>
+					<a th:href="@{/board/review/list}"><li>후기게시판</li></a>
+				</ul>
+			</li>
+			<li>
+				STATISTICS
+				<ul class="subMenu">
+					<a th:href="|/reserve/tonggye|"><li>매출 정산</li></a>
+				</ul>
+			</li>
+		</div>
+	</div>
+</div>

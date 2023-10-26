@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>지점 등록</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+
+	<link th:href="@{/css/super/branch/branchForm.css}" rel="stylesheet" type="text/css">
+
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole == null} ">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<h2>지점 등록</h2>
+		<form th:action="@{/super/branch/form}" method="post" th:object="${branch}">
+			<input type="hidden" th:field="*{branchId}" />
+			<label for="name">지점명:</label><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+				class="error" />
+			<input type="text" id="name" name="name" th:field="*{name}" placeholder="한글 2~15자 입니다." />
+			<label for="address">주소:</label><span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+				class="error" />
+			<input type="text" id="address" name="address" th:field="*{address}" /><br />
+			<label for="phone">전화번호:</label><span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+				class="error" />
+			<input type="text" id="phone" name="phone" th:field="*{phone}" placeholder="(예: 031-1234-5678)" /><br />
+			<label for="coordinate">좌표:</label><span th:if="${#fields.hasErrors('coordinate')}"
+				th:errors="*{coordinate}" class="error" />
+			<input type="text" id="coordinate" name="coordinate" th:field="*{coordinate}"
+				placeholder="(예: 35.229573,129.087266)" /><br />
+			<div class="button">
+				<button type="submit">등록</button>
+				<a th:href="@{/super/branchList}"><button type="button">목록으로</button></a>
+			</div>
+		</form>
+
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

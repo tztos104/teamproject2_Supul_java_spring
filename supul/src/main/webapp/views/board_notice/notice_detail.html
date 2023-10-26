@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>공지사항 상세페이지</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link th:if="${userRole != null}" th:href="@{/css/board/board_super.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/board/board_admin.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/board/board_notice.css}" rel="stylesheet"
+		type="text/css">
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole == null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<!-- 전체 -->
+	<div class="container">
+		<div class="noticeDetail">
+			<h2 th:text="${nDetail.title}"></h2>
+			<div class="detail-content">
+				<span th:text="${nDetail.category}"></span>
+				<span class="bar"> | </span>
+				<span th:text="|${nDetail.branchName} (${nDetail.writer})|"></span>
+				<span class="bar"> | </span>
+				<th:block th:if="${nDetail.modiDate == null}">
+					<span th:text="|작성일 ${#temporals.format(nDetail.regDate, 'yyyy-MM-dd HH:mm')}|"></span>
+				</th:block>
+				<th:block th:if="${nDetail.modiDate != null}">
+					<span th:text="|작성일 ${#temporals.format(nDetail.modiDate, 'yyyy-MM-dd HH:mm')}|"></span>
+				</th:block>
+			</div>
+			<hr class="detail-hr" />
+			<th:block th:if="${nDetail.fileName != null and nDetail.fileName != ''}">
+				<div class="filename">
+					<i class="fa-regular fa-file"></i><span th:text="| ${nDetail.fileName}|"></span>
+				</div>
+			</th:block>
+			<p class="content" th:utext="${nDetail.content.replaceAll('\n', '<br>')}" />
+			<th:block th:if="${nDetail.fileName != null}">
+				<p>
+					<!-- 이미지 파일일 때만 이미지 표시 -->
+					<img th:if="${
+						nDetail.fileName.toLowerCase().endsWith('.jpg') || 
+						nDetail.fileName.toLowerCase().endsWith('.png') || 
+						nDetail.fileName.toLowerCase().endsWith('.gif')}" th:src="|/up/boardN/${nDetail.fileName}|" />
+					<!-- 이미지 파일이 아닐 때는 파일 다운로드 링크 표시 -->
+					<span th:unless="${
+							nDetail.fileName.toLowerCase().endsWith('.jpg') || 
+							nDetail.fileName.toLowerCase().endsWith('.png') || 
+							nDetail.fileName.toLowerCase().endsWith('.gif')}">
+						<a th:text="${nDetail.fileName}" th:href="|/board/download/${nDetail.fileName}|"
+							download="${nDetail.fileName}">파일 다운로드</a>
+					</span>
+				</p>
+
+			</th:block>
+			<div class="tr_btn">
+				<block th:if="${admin!=null && nDetail.branchName.equals(adminBn)|| userRole !=null} ">
+					<button value="수정">
+						<a th:href="@{/board/notice/modify/{id}(id=${nDetail.noticeId})}">수정</a>
+					</button>
+					<button value="삭제">
+						<a th:href="@{/board/notice/delete/{id}(id=${nDetail.noticeId})}"
+							onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+					</button>
+				</block>
+				<button type="button" value="목록"><a th:href="@{/board/notice/list}">목록</a></button>
+			</div>
+		</div>
+		<footer>
+			<div th:replace="~{inc/footer :: footer}"></div>
+		</footer>
+</body>
+
+</html>

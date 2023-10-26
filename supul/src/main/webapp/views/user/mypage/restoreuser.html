@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원 복구 옵션</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/user/mypage/restoreuser.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="container">
+		<header>
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</header>
+
+		<h1 id="hhhh1">회원 복구</h1>
+		<p>회원 복구를 원하시면 아래 버튼을 눌러주세요.</p>
+
+		<form method="post">
+			<button type="submit" id="bbton">회원 복구</button>
+		</form>
+
+
+	</div>
+
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

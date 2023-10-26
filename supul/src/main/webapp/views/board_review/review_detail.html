@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>후기 상세페이지</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link th:if="${userRole != null}" th:href="@{/css/board/board_super.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/board/board_admin.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/board/board_review.css}" rel="stylesheet"
+		type="text/css">
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole ==null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<div class="reviewDetail">
+			<h3 th:text="|[${rDetail.branch.name}] ${rDetail.thema.title}|"></h3>
+			<h2 th:text="${rDetail.title}"></h2>
+
+			<div class="thema-content">
+				<span>
+					<script>
+						// 별점 값을 가져와서 아이콘으로 변환
+						var grade = [[${rDetail.grade}]];
+						var starIcons = '';
+						for (var i = 0; i < 5; i++) {
+							if (grade >= i + 1) {
+								starIcons += '<i class="fa-solid fa-star"></i>'; // 별 아이콘
+							} else if (grade > i) {
+								starIcons += '<i class="fa-solid fa-star-half-stroke"></i>'; // 반 별 아이콘
+							} else {
+								starIcons += '<i class="fa-regular fa-star"></i>'; // 빈 별 아이콘
+							}
+						}
+						document.write(starIcons); // 아이콘을 출력
+					</script>
+				</span>
+				<span class="bar">|</span>
+				<span th:switch="${rDetail.clear}">
+					<span th:case="true">탈출</span>
+					<span th:case="false">타임오버</span>
+				</span>
+				<span class="bar">|</span>
+				<span th:text="|소요 시간  ${rDetail.escTime}|"></span>
+			</div>
+
+			<div class="detail-content">
+				<span th:text="${rDetail.user.userId}"></span>
+				<span class="bar"> | </span>
+				<th:block th:if="${rDetail.modiDate == null}">
+					<span th:text="|작성일 ${#temporals.format(rDetail.regDate, 'yyyy-MM-dd HH:mm')}|"></span>
+				</th:block>
+				<th:block th:if="${rDetail.modiDate != null}">
+					<span th:text="|작성일 ${#temporals.format(rDetail.modiDate, 'yyyy-MM-dd HH:mm')}|"></span>
+				</th:block>
+				<span class="bar"> | </span>
+				<span th:text="|조회수 ${rDetail.cnt}|"></span>
+			</div>
+
+			<!--안내선-->
+			<hr class="detail-hr" />
+			<th:block th:if="${rDetail.fileName != null and rDetail.fileName != ''}">
+				<div class="filename">
+					<i class="fa-regular fa-file"></i><span th:text="| ${rDetail.fileName}|"></span>
+				</div>
+			</th:block>
+
+			<p class="content" th:utext="${rDetail.content.replaceAll('\n', '<br>')}" />
+			<th:block th:if="${rDetail.fileName != null}">
+				<p>
+					<!-- 이미지 파일일 때만 이미지 표시 -->
+					<img th:if="${
+						rDetail.fileName.toLowerCase().endsWith('.jpg') || 
+						rDetail.fileName.toLowerCase().endsWith('.png') || 
+						rDetail.fileName.toLowerCase().endsWith('.gif')}" th:src="|/up/boardR/${rDetail.fileName}|" />
+					<!-- 이미지 파일이 아닐 때는 파일 다운로드 링크 표시 -->
+					<a th:unless="${
+						rDetail.fileName.toLowerCase().endsWith('.jpg') || 
+						rDetail.fileName.toLowerCase().endsWith('.png') || 
+						rDetail.fileName.toLowerCase().endsWith('.gif')}" th:text="${rDetail.fileName}"
+						th:href="|/board/review/download/${rDetail.fileName}|">
+					</a>
+				</p>
+			</th:block>
+
+			<!-- 수정, 삭제, 목록 버튼 -->
+			<div class="tr_btn">
+				<div colspan="2">
+					<block th:if="${rDetail.user == user}">
+						<button value="수정" onclick="return confirm('수정하시겠습니까?')">
+							<a th:href="@{/board/review/modify/{id}(id=${rDetail.reviewId})}">수정</a></button>
+					</block>
+					<block th:if="${admin!=null || userRole!=null} or ${rDetail.user == user}">
+						<button value="삭제">
+							<a th:href="@{/board/review/delete/{id}(id=${rDetail.reviewId})}"
+								onclick="return confirm('후기는 다시 작성하실 수 없습니다. \n삭제하시겠습니까? ')">삭제</a>
+						</button>
+					</block>
+					<button type="button" value="목록"><a th:href="@{/board/review/list}">목록</a></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

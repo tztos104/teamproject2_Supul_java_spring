@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 탈퇴한 사용자 목록</title>
+</head>
+<body>
+    <h1>회원 탈퇴한 사용자 목록</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <!-- 필요한 다른 필드 추가 -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${deletedUsers}">
+                <td th:text="${user.userId}"></td>
+                <td th:text="${user.userName}"></td>
+                <!-- 필요한 다른 필드 추가 -->
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

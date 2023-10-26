@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#container{
+	text-align: center;
+	margin:0 auto;
+	color: white;
+}
+
+#hhhh1{
+	margin-top:30px;
+	margin-bottom:20px;
+}
+
+#bbton{
+	width: 100px;
+	height: 30px;
+	cursor: pointer;
+	margin-top:30px;
+}

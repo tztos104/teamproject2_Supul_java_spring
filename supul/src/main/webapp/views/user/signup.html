@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/admin/signup.css}" rel="stylesheet" type="text/css">
+	<meta charset="UTF-8">
+	<title>회원가입</title>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script th:inline="javascript">
+		function showPopUp() {
+			// 다른 HTML 파일을 팝업 창으로 열기
+			window.open('signuppopup', '이용약관', 'width=770,height=800');
+		}
+		$(document).ready(function () {
+			// 생년월일 입력 필드 설정
+			$("#datepicker").datepicker({
+				dateFormat: "yy-mm-dd", // 선택한 날짜 형식
+				changeMonth: true,      // 월 선택 가능
+				changeYear: true,       // 연도 선택 가능
+				yearRange: "1930:2015", // 선택 가능한 연도 범위
+				monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				maxDate: 0,             // 오늘 이전 날짜만 선택 가능
+			});
+
+			// 연락처 입력 필드 설정
+			const phoneFields = [$("#phone1"), $("#phone2"), $("#phone3")];
+			const phoneInput = $("#phone");
+
+			// 각 연락처 입력 필드에 입력할 때 이벤트 처리
+			phoneFields.forEach((field, index) => {
+				field.on("input", function () {
+					// 입력된 값 가져오기
+					const value = field.val();
+					// 숫자만 남기기
+					const numericValue = value.replace(/\D/g, '');
+					// 해당 값 설정
+					field.val(numericValue);
+
+					// 합쳐진 전화번호 만들기
+					const phone = phoneFields.map(field => field.val()).join('');
+					// 전체 전화번호 필드에 설정
+					phoneInput.val(phone);
+				});
+			});
+
+			// 중복 확인 상태 변수 초기화
+			var isUsernameAvailable = false;
+			var isEmailAvailable = false;
+
+			// 아이디 입력 필드에 focus 이벤트 리스너 추가
+			$('#userId').on('focus', function () {
+				// 중복 확인 결과 초기화
+				$('#username-status').text('');
+				isUsernameAvailable = false;
+			});
+			$('#email').on('focus', function () {
+				// 중복 확인 결과 초기화
+				$('#email-status').text('');
+				$('#erreer').text('');
+				isEmailAvailable = false;
+			});
+
+			$('#checkUsernameButton').on('click', function () {
+				var username = $('#userId').val();
+				if (username.trim() === '') {
+					$('#username-status').text('아이디를 입력하세요.');
+					return;
+				}
+
+				// 사용자 이름이 DeleteUser 저장소에 있는지 확인합니다.
+				$.get('/user/check-username', {username: username}, function (result) {
+					if (result) {
+						// 아이디가 사용 가능하면, 이제 해당 아이디가 삭제된 사용자와 관련이 있는지 확인합니다.
+						$.get('/user/check-deleted-username', {username: username}, function (isDeleted) {
+							if (isDeleted) {
+								$('#username-status').text('회원탈퇴한 아이디입니다. 회원복구를 진행해주세요');
+								isUsernameAvailable = false;
+								checkSignupButtonState();
+								// 중복 확인 메시지를 signupMessage에 표시
+								$('#signupMessage').text('아이디, 이메일 중복 확인을 진행하세요.');
+							} else {
+								$('#username-status').text('사용 가능한 아이디입니다.');
+								isUsernameAvailable = true;
+								checkSignupButtonState();
+
+							}
+						});
+					} else {
+						$('#username-status').text('이미 사용 중인 아이디입니다.');
+						isUsernameAvailable = false;
+						checkSignupButtonState();
+						// 중복 확인 메시지를 signupMessage에 표시
+						$('#signupMessage').text('아이디, 이메일 중복 확인을 진행하세요.');
+					}
+				});
+				const phone = phoneFields.map(field => field.val()).join('');
+				phoneInput.val(phone);
+			});
+
+			const emailInput = $("#email");
+			const emailDomainSelect = $("#emailDomain");
+
+			// 중복 확인 버튼 클릭 이벤트 처리
+			$('#checkEmailButton').on('click', function () {
+				// 중복 확인 버튼 클릭 시 결과 초기화
+				$('#email-status').text('');
+				isEmailAvailable = false;
+
+				var emailFront = emailInput.val();
+				var emailDomain = emailDomainSelect.val();
+				var fullEmail = emailFront + emailDomain;
+
+				// 이메일 주소 유효성 검사를 위한 정규 표현식
+				var emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+				// 직접 입력 모드를 선택한 경우 이메일 도메인을 선택하지 않아도 허용
+				if (emailDomain === "") {
+					fullEmail = emailFront; // 도메인을 선택하지 않은 경우 이메일 주소에 도메인을 붙이지 않음
+				}
+
+				// 이메일 주소가 유효한지 확인
+				if (emailFront.trim() === '' && emailDomain !== "") {
+					// 이메일 앞부분이 비어있지만 도메인은 선택한 경우에는 유효한 이메일로 처리
+					$('#email-status').text('사용 가능한 이메일 주소입니다.');
+					isEmailAvailable = true;
+				} else if (emailFront.trim() !== '' && emailDomain === "") {
+					// 이메일 앞부분은 입력했고 도메인을 선택하지 않은 경우
+					if (!emailPattern.test(emailFront)) {
+						$('#email-status').text('유효한 이메일 주소를 입력하세요.');
+					} else {
+						$('#email-status').text('사용 가능한 이메일 주소입니다.');
+						isEmailAvailable = true;
+					}
+				} else if (emailFront.trim() === '' && emailDomain === "") {
+					// 이메일 앞부분과 도메인을 모두 입력하지 않은 경우 에러 메시지 표시
+					$('#email-status').text('이메일 주소를 입력하세요.');
+				} else if (!emailPattern.test(fullEmail)) {
+					$('#email-status').text('유효한 이메일 주소를 입력하세요.');
+				} else {
+					// 이메일 중복 확인 요청 보내기
+					$.get('/user/check-email', {email: fullEmail}, function (result) {
+						if (result) {
+							$('#email-status').text('사용 가능한 이메일 주소입니다.');
+							isEmailAvailable = true;
+						} else {
+							$('#email-status').text('이미 사용 중인 이메일 주소입니다.');
+							isEmailAvailable = false;
+						}
+						checkSignupButtonState();
+					});
+				}
+			});
+
+
+			// 가입하기 버튼 클릭 시 처리
+			$('#signupButton').on('click', function () {
+				if (isUsernameAvailable == false || isEmailAvailable == false) {
+					$('#signupMessage').text('아이디와 이메일 중복 확인을 진행하세요.'); // 중복 확인 메시지 표시
+
+					// 가입하기 버튼 초기화
+					$('#signupButton').prop('disabled', true);
+
+					return; // 가입하지 않고 함수 종료
+				}
+			});
+
+			// 중복 확인 결과에 따라 가입하기 버튼의 상태를 확인하는 함수
+			function checkSignupButtonState() {
+				if (isUsernameAvailable == true && isEmailAvailable == true) {
+					// 아이디와 이메일이 모두 사용 가능한 경우 가입하기 버튼 활성화
+					$('#signupButton').prop('disabled', false);
+				} else {
+					// 하나라도 사용 불가능한 경우 가입하기 버튼 비활성화
+					$('#signupButton').prop('disabled', true);
+				}
+			}
+
+		});
+
+		function validatePhoneNumber() {
+			let phone1 = document.getElementById('phone1').value;
+			let phone2 = document.getElementById('phone2').value;
+			let phone3 = document.getElementById('phone3').value;
+
+			if (phone1.length < 3 || phone2.length < 4 || phone3.length < 4) {
+				document.getElementById('phoneError').textContent = '연락처를 올바르게 입력하세요.';
+				$('#signupButton').prop('disabled', true);
+			} else {
+				document.getElementById('phoneError').textContent = '';
+				$('#signupButton').prop('disabled', false);
+			}
+		}
+
+
+
+	</script>
+
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<div id="boxx">
+			<div>
+				<h2 id="hhh">회원가입</h2>
+			</div>
+			<form th:object="${member}" method="post" id="ffr">
+
+				<div class="form-group">
+					<label for="userId" id="branchname2">아이디</label>
+					<input type="text" id="userId" th:field="*{userId}" placeholder="영문,숫자 3~10자">
+					<button type="button" id="checkUsernameButton" class="check-button">중복 확인</button>
+					<div th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" id="er" />
+					<div id="username-status" class="text-danger"></div> <!-- 중복 확인 결과를 표시할 영역 -->
+				</div>
+
+				<div class="form-group">
+					<label for="userpw" id="branchname2">비밀번호</label>
+					<input type="password" id="userpw" th:field="*{userPw}" placeholder="영문자+숫자+특수문자 6~12자">
+					<div th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}" id="er" />
+				</div>
+				<div class="form-group">
+					<label for="userpw1" id="branchname2">비밀번호 확인</label>
+					<input type="password" id="userpw1" th:field="*{userPw1}" placeholder="영문자+숫자+특수문자 6~12자">
+					<div th:if="${#fields.hasErrors('userPw1')}" th:errors="*{userPw1}" id="er" />
+				</div>
+				<div class="form-group">
+					<label for="username" id="branchname2">이름</label>
+					<input type="text" id="username" th:field="*{userName}" placeholder="한글 2~10자">
+					<div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" id="er" />
+				</div>
+				<div class="form-group">
+					<label for="datepicker" id="branchname2">생년월일</label>
+					<input type="text" name="date" id="datepicker" class="date" maxlength="10" th:field="*{birth}"
+						placeholder="yyyy-mm-dd" readonly />
+					<div th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" id="er" />
+				</div>
+				<div class="form-group">
+					<label for="email" id="branchname2">이메일</label>
+					<input type="text" id="email" th:field="*{email}" placeholder="이메일 주소"> <span id="gol">@</span>
+					<select id="emailDomain" name="emailDomain">
+						<option value="">직접 입력</option>
+						<option value="@gmail.com">gmail.com</option>
+						<option value="@naver.com">naver.com</option>
+						<option value="@yahoo.com">yahoo.com</option>
+						<option value="@nate.com">nate.com</option>
+						<option value="@daum.com">daum.com</option>
+					</select>
+					<button type="button" id="checkEmailButton" class="check-button">중복 확인</button>
+					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="erreer" />
+					<div id="email-status" class="text-danger"></div> <!-- 결과를 표시할 div 추가 -->
+				</div>
+				<div class="form-group">
+					<label for="phone" id="branchname2">연락처</label>
+					<input type="text" id="phone1" maxlength="3" oninput="validatePhoneNumber();"> -
+					<input type="text" id="phone2" maxlength="4" oninput="validatePhoneNumber();"> -
+					<input type="text" id="phone3" maxlength="4" oninput="validatePhoneNumber();">
+					<div id="phoneError" style="color: #E09132; font-size: 14px;"></div>
+					<input type="hidden" id="phone" th:field="*{phone}">
+					<div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" id="er"></div>
+				</div>
+				<div id="cbcb">
+					<a href="javascript:showPopUp()" id="terms">이용약관 보기</a>
+					<label id="tterm">
+						<input type="checkbox" name="agree" value="1" required>약관동의(필수)
+					</label>
+				</div>
+				<!-- ↑ 약관동의 민정 -->
+
+				<div>
+					<button type="submit" id="signupButton">가입완료</button>
+					<div id="signupMessage" class="text-danger"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

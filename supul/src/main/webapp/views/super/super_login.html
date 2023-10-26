@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>총괄 로그인</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/user/login.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<div class="login-container">
+		<h2 id="hh22">LOGIN</h2>
+		<form th:action="@{/super/superlogin}" method="post" id="frfr">
+			<div class="form-group">
+				<!--<label for="superId">아이디:</label>-->
+				<input type="text" id="superId" name="superId" required placeholder="ID">
+			</div>
+			<div class="form-group">
+				<!--<label for="superPw">비밀번호:</label>-->
+				<input type="password" id="superPw" name="superPw" required placeholder="PASSWORD">
+			</div>
+			<div class="button">
+				<button type="submit" id="bt">로그인</button>
+			</div>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

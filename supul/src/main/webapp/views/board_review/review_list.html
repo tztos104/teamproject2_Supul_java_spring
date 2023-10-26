@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>후기</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+
+	<link th:if="${userRole != null}" th:href="@{/css/board/board_super.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/board/board_admin.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/board/board_review.css}" rel="stylesheet"
+		type="text/css">
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole ==null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<div class="review">
+			<h1>후기</h1>
+
+			<!-- 후기 목록 검색 -->
+			<div class="section">
+				<form id="searchForm" action="/board/review/list" method="GET" class="review-search-form">
+					<select id="type" name="type" class="search-select">
+						<option value="title" th:selected="${type == 'title'}">제목</option>
+						<option value="content" th:selected="${type == 'content'}">내용</option>
+						<option value="user" th:selected="${type == 'user'}">작성자</option>
+						<option value="titleAndContent" th:selected="${type == 'titleAndContent'}">제목과 내용</option>
+						<option value="thema" th:selected="${type == 'thema'}">테마</option>
+					</select>
+					<input type="text" id="keyword" name="keyword" class="search-input"
+						placeholder="검색어 입력 후 Enter를 눌러주세요">
+					<button type="submit" class="search-all">전체보기</button>
+				</form>
+			</div>
+
+			<div class="section">
+				<!-- 후기 목록 테이블 -->
+				<table class="reviewList" style="width: 100%;">
+					<tr>
+						<th width="50px">No</th>
+						<th width="70px">지점</th>
+						<th width="100px">테마</th>
+						<th width="50px">평점</th>
+						<th class="title">제목</th>
+						<th width="100px">작성자</th>
+						<th width="100px">등록일</th>
+						<th width="60px">조회수</th>
+					</tr>
+					<tr th:each="board, num : ${rboard}">
+						<td th:text="${rboard.totalElements - (rboard.size * rboard.number + num.index)}"></td>
+						<td th:text="${board.branch.name}"></td>
+						<td>
+							<span th:if="${#strings.length(board.thema.title) > 5}"
+								th:text="${#strings.substring(board.thema.title, 0, 5)} + '...'"></span>
+							<span th:unless="${#strings.length(board.thema.title) > 5}"
+								th:text="${board.thema.title}"></span>
+						</td>
+						<td th:text="${board.grade}"></td>
+						<td><a th:href="@{/board/review/detail/{id}(id=${board.reviewId})}" >
+								<span th:if="${#strings.length(board.title) > 25}"
+									th:text="${#strings.substring(board.title, 0, 25)} + '...'"></span>
+								<span th:unless="${#strings.length(board.title) > 25}"
+									th:text="${board.title}"></span>
+
+							</a></td>
+						<td th:text="${board.user.userId}"></td>
+						<td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${board.cnt}"></td>
+					</tr>
+				</table>
+			</div>
+
+			<!-- 페이징 처리 -->
+			<div class="section">
+				<table class="reviewListPaging">
+					<tr th:if="${rboard.totalElements > 0}">
+						<td colspan="9" class="pagination" align="center">
+							<span class="pagination-previous" th:if="${rboard.number > 0}">
+								<a th:href="@{/board/review/list(page=${rboard.number - 1})}"> Previous </a>
+							</span>
+							<span th:each="i : ${#numbers.sequence(0, rboard.totalPages - 1)}"
+								th:class="${rboard.number == i} ? 'active'">
+								<a th:href="@{/board/review/list(page=${i})}" th:text="${i + 1}"></a>
+							</span>
+							<span class="pagination-next" th:if="${rboard.number < rboard.totalPages - 1}">
+								<a th:href="@{/board/review/list(page=${rboard.number + 1})}"> Next </a>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+<script src="/js/board/review_list.js"></script>
+
+</html>

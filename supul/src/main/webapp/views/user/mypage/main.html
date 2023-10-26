@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>마이페이지</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/user/mypage.css}" rel="stylesheet" type="text/css">
+	<script src="https://kit.fontawesome.com/2d6623418a.js" crossorigin="anonymous"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="container">
+		<header>
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</header>
+
+		<h2 id="hhh">마이페이지</h2>
+		<div id="boxs">
+			<div id="box1">
+				<div id="aws1">
+					<i class="fa-solid fa-user-lock fa-5x"></i>
+				</div>
+				<h2 id="h222">내 정보관리</h2>
+				<ul id="uuuulll">
+					<li id="lllliii"><a href="/user/mypage/modiPw" id="aAa">내 정보 수정</a></li>
+					<li id="lllliii"><a href="/user/delete" id="aAa">회원 탈퇴</a></li>
+				</ul>
+			</div>
+			<div id="box2">
+				<div id="aws2">
+					<i class="fa-solid fa-file-invoice fa-5x"></i>
+				</div>
+				<h2 id="h222">활동 내역</h2>
+				<ul id="uuuulll">
+					<li id="lllliii"><a href="/user/mypage/wishlist" id="aAa">테마 찜목록</a></li>
+					<li id="lllliii"><a href="/user/mypage/rvList" id="aAa">예약 내역</a></li>
+					<li id="lllliii"><a href="/user/mypage/writeList" id="aAa">작성한 글목록</a></li>
+					<li id="lllliii"><a href="/user/mypage/rankList/전체/전체" id="aAa">타임리스트</a></li>
+				</ul>
+			</div>
+			<div id="box3">
+				<div id="aws3">
+					<i class="fa-solid fa-star fa-5x"></i>
+				</div>
+				<h2 id="h222">이벤트</h2>
+				<ul id="uuuulll">
+					<li id="lllliii"><a href="/user/mypage/couponList" id="aAa">내 쿠폰 목록</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+
+</html>

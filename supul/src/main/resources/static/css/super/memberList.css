@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+thead tr:first-child {
+	background-color: #f3e7db;
+	font-size: 17px;
+	color: #3f5856;
+
+}
+
+/* select 스타일 */
+select {
+	padding: 5px;
+	font-size: 16px;
+}
+
+/* 테이블 스타일 */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+table,
+
+td {
+	color: #f3e7db;
+	border: 1px solid #ccc;
+}
+
+th,
+td {
+	padding: 10px;
+	text-align: center;
+}
+
+
+
+
+
+.page{text-align: center;}
+
+.page-link {
+	text-decoration: none;
+	padding: 4px 8px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	color: #333;
+	background-color: #f3e7db;;
+}
+
+.page .active a{
+	background: #E09132;
+	color: #fff;
+}
+
+.page-link:hover {
+	background-color: #E09132;
+	color: #fff;
+}
+
+
+
+.search{text-align: center; margin-top: 20px;}
+
+.search label{
+	font-size: 16px;
+	color: #3f5856;
+}
+
+.search input{
+	font-size: 16px;
+	padding: 3px;
+}
+
+.search button{height: 27px;}
+
+button{
+	font-weight: bold;
+	background-color: #3f5856;
+	color: #f3e7db;
+	border: none;
+	border-radius: 3px;
+	padding: 2px;
+	cursor: pointer;
+}
+
+button:hover{
+	background-color: #e2d0b3;
+}
+
+a{text-decoration: none; color: #E09132;}

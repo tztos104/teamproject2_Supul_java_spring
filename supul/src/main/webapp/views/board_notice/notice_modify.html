@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>공지사항 수정</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link th:if="${userRole != null}" th:href="@{/css/board/board_super.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/board/board_admin.css}" rel="stylesheet"
+		type="text/css">
+	<script>
+		// 이미지 파일 확장자 배열
+		var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+
+		// 파일 업로드 필드가 변경될 때 호출되는 함수
+		function validateImageFile(inputElement) {
+			var fileInput = inputElement.files[0]; // 선택한 파일 객체 가져오기
+
+			if (fileInput) {
+				var fileName = fileInput.name.toLowerCase();
+				var fileExtension = fileName.split('.').pop();
+
+				// 파일 확장자가 허용된 확장자 배열에 있는지 확인
+				if (allowedExtensions.indexOf(fileExtension) === -1) {
+					alert("이미지 파일 (jpg, jpeg, png, gif) 만 업로드 가능합니다.");
+					inputElement.value = ''; // 파일 필드 초기화
+				}
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole ==null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<!-- 전체 -->
+	<div class="container">
+		<div class="notice-write">
+			<h1>공지사항 수정</h1>
+
+			<!-- 공지사항 수정 테이블 -->
+			<div class="section">
+				<form th:action="@{/board/notice/modify/{id}(id=${board.noticeId})}" method="post"
+					enctype="multipart/form-data">
+					<table class="noticeWriteTable">
+						<tr>
+							<th width="150px">카테고리</th>
+							<td width="700px">
+								<select id="cate" name="category">
+									<option value="전체공지">전체공지</option>
+									<option value="매장공지">매장공지</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td><span th:text="${board.writer}"></span></td>
+						</tr>
+						<tr>
+							<th>매장</th>
+							<td><span th:text="${board.branchName}"></span></td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th><label for="title">제목</label></th>
+							<td><div th:if="${titleerror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${titleerror.defaultMessage}"></li>
+									</ul>
+								</div>
+								<input type="text" id="title" name="title" th:value="${board.title}" />
+								
+							</td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th><label for="content">내용</label></th>
+							<td>
+								<div th:if="${contenterror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${contenterror.defaultMessage}"></li>
+									</ul>
+								</div>
+								<textarea id="content" name="content" th:text="${board.content}"></textarea>
+								
+							</td>
+						</tr>
+						<tr>
+							<th><label for="file">파일</label></th>
+							<td>
+								<input type="file" id="file" name="file" accept="image/*" onchange="validateImageFile(this)">
+								<span th:if="${board.fileName != null}" th:text="${board.fileName}"></span>
+							</td>
+							[[${titleerror}]]
+						</tr>
+						<!-- 목록, 수정, 삭제 버튼 -->
+						<tr class="noticeWriteBtn">
+							<td colspan="2">
+								<form th:action="@{/board/notice/modify/{id}(id=${board.noticeId})}" method="post"
+									enctype="multipart/form-data">
+									<button type="submit" name="action" value="수정"
+										onclick="return confirm('수정하시겠습니까?')">수정</button>
+								</form>
+								<a th:href="@{/board/notice/list}"><button type="button" value="목록" name="action">뒤로</button></a>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

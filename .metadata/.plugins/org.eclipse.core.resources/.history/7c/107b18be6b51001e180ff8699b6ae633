@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보</title>
+</head>
+<body>
+	   <header>
+       <div th:replace="inc/header :: headerMenu"></div>
+   </header>
+    <h1>회원 정보</h1>
+    <table>
+      
+            <tr>
+               <td>Id</td> <td th:text="${user.userId}"></td>
+            </tr> 
+              <tr>
+               <td>이름</td> <td th:text="${user.userName}"></td>
+            </tr> 
+            
+            
+               
+                <tr><td>이메일</td> <td th:text="${user.email}"></td> </tr> 
+                <tr> <td>전화번호</td><td th:text="${user.phone}"></td> </tr> 
+                 <tr><td>생일</td><td th:text="${user.birth}"></td> </tr> 
+                <tr> <td>가입일</td><td th:text="${user.regDate}"></td> </tr> 
+                <tr> <td>랭킹</td><td th:text="${user.regDate}"></td> </tr> 
+                <tr> <td>찜목록</td><td th:text="${user.regDate}"></td> </tr> 
+                <tr> <td>예약번호</td><td>테마이름</td><td>예약날짜</td><td>예약시간</td> 
+
+                </tr> 
+                 <block th:each="rv:${reservation}">
+                <tr> 
+            
+					<td th:text="${rv.rvNum}"></td> 
+                	<td th:text="${rv.themaName}"></td> 
+                	<td th:text="${rv.date}"></td> 
+                	<td th:text="${rv.time}"></td> 
+                </tr> 
+                </block> 
+                
+                <tr> <td>사용내역</td><td th:text="${user.regDate}"></td> </tr> 
+            
+      
+        
+    </table>
+</body>
+</html>

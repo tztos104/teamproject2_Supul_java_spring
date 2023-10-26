@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>후기 수정</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/board/board_review.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script>
+		// 이미지 파일 확장자 배열
+		var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+
+		// 파일 업로드 필드가 변경될 때 호출되는 함수
+		function validateImageFile(inputElement) {
+			var fileName = inputElement.value.toLowerCase();
+			var fileExtension = fileName.split('.').pop();
+
+			// 파일 확장자가 허용된 확장자 배열에 있는지 확인
+			if (allowedExtensions.indexOf(fileExtension) === -1) {
+				alert("이미지 파일 (jpg, jpeg, png, gif) 만 업로드 가능합니다.");
+				inputElement.value = ''; // 파일 필드 초기화
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<div class="review-write">
+			<h1>후기 수정</h1>
+			<!-- 후기 수정 테이블-->
+			<div class="section">
+				<form th:action="@{/board/review/modify/{id}(id=${rModify.reviewId})}" method="post"
+					enctype="multipart/form-data">
+					<table class="reviewWriteTable" border="">
+						<tr>
+							<th width="150px">매장</th>
+							<td width="700px">
+								<span class="branchName" th:text="${rModify.branch.name}" th:name="branchName"></span>
+								<input type="hidden" th:value="${rModify.branch.branchId}" th:name="branchId" />
+							</td>
+						</tr>
+						<tr>
+							<th>테마</th>
+							<td>
+								<span class="themaName" th:text="${rModify.thema.title}" th:name="themaName"></span>
+								<input type="hidden" th:value="${rModify.thema.themaId}" th:name="themaId" />
+							</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td>
+								<span class="userName" th:text="${rModify.user.userName}" th:name="userName"></span>
+								<input type="hidden" name=id th:value="${rModify.user.Id}" />
+							</td>
+						</tr>
+						<tr>
+							<th>탈출여부</th>
+							<td>
+								<select id="clear" name="clear">
+									<option value="true" th:selected="${rModify.clear == true}">탈출</option>
+									<option value="false" th:selected="${rModify.clear == false}">타임오버</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>클리어 시간</th>
+							<td><input id="escTime" type="text" name="escTime" th:value="${rModify.escTime}" />
+							<div th:if="${escTimeerror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${escTimeerror.defaultMessage}"></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>평점</th>
+							<td>
+								<select id="grade" name="grade">
+									<option th:each="i : ${#numbers.sequence(0, 10, 1)}" th:value="${i * 0.5}"
+										th:selected="${i * 0.5 == rModify.grade}" th:text="${i * 0.5}"></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th>제목</th>
+							<td>
+								<div th:if="${titleerror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${titleerror.defaultMessage}"></li>
+									</ul>
+								</div>
+								<input type="text" id="title" name="title" th:value="${rModify.title}">
+
+							</td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th>내용</th>
+							<td>
+								<div th:if="${contenterror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${contenterror.defaultMessage}"></li>
+									</ul>
+								</div>
+								<textarea id="content" name="content" th:text="${rModify.content}"></textarea>
+
+							</td>
+						</tr>
+						<tr>
+							<th>파일</th>
+							<td><input type="file" id="file" name="file" accept="image/*" onchange="validateImageFile(this)"></td>
+						</tr>
+						<input type="hidden" name="rvId" th:value="${rvId}" />
+
+										
+
+							<!-- 후기 버튼 -->
+							<tr class="reviewWriteBtn">
+								<td colspan="2">
+									<form th:action="@{/board/review/modify/{id}(id=${rModify.reviewId})}" method="post"
+										enctype="multipart/form-data">
+										<button type="submit" name="action" value="수정"
+											onclick="return confirm('수정하시겠습니까?')">수정</button>
+									</form>
+									<a th:href="@{/board/review/list}"><button type="button" value="목록" name="action">뒤로</button></a>
+								</td>
+							</tr>
+						</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

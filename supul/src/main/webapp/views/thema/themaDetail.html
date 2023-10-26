@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>테마 상세 정보</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:if="${userRole !=null}" th:href="@{/css/thema/themaDetail.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null}" th:href="@{/css/thema/themaDetail2.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole!=null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:unless="${userRole!=null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<h2>테마 상세 정보</h2>
+		<table>
+			<tr>
+				<td>지점</td>
+				<td colspan="3" th:text="${thema.branch.name}"></td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td colspan="3" th:text="${thema.title}"></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td colspan="3" th:text="${thema.content}"></td>
+			</tr>
+			<tr th:if="${thema.poster != null}">
+				<td>포스터</td>
+				<td colspan="3">
+					<img th:if="${thema.img}" th:src="|/up/thema/${thema.poster}|" />
+					<a th:unless="${thema.img}" th:text="${thema.poster}"></a>
+				</td>
+			</tr>
+			<tr>
+				<td>장르</td>
+				<td colspan="3" th:text="${thema.type}"></td>
+			</tr>
+			<tr>
+				<td>가격</td>
+				<td colspan="3" th:text="${thema.price}">원</td>
+
+			</tr>
+			<tr>
+				<td>인원수</td>
+				<td th:text="${thema.people}"></td>
+				<td style="width: 120px;">공포도</td>
+				<td th:text="${thema.horror}"></td>
+
+			</tr>
+			<tr>
+				<td>난이도</td>
+				<td th:text="${thema.level}"></td>
+				<td>활동성</td>
+				<td th:text="${thema.activity}"></td>
+
+			</tr>
+			<tr>
+				<td>이용시간</td>
+				<td colspan="3" th:text="${thema.playTime}+' (분)'"></td>
+			</tr>
+
+			<tr>
+				<td>예약 가능 시간</td>
+				<td colspan="3">
+					<ul>
+						<li th:each="t : ${timeTable}">
+							<span th:text="${t}" style="font-size: 16px;"></span>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<div class="redirect">
+			<block th:if="${adminBn!=null}">
+				<block th:if="${adminBn.equals(thema.branch.name)}">
+					<a th:href="@{|/thema/update/${thema.themaId}|}">수정</a>
+				</block>
+			</block>
+			<block th:if="${userRole != null}">
+				<a th:href="@{|/thema/update/${thema.themaId}|}">수정</a>
+				<a th:href="@{|/thema/delete/${thema.themaId}|}">삭제</a>
+			</block>
+			<block th:if="${adminBn!=null}">
+			<a th:href="@{/thema/themaList( branchName=${thema.branch.name} )}">목록으로</a>
+			</block>
+			<block th:if="${userRole != null}">
+			<a th:href="@{|/thema/themaList|}">목록으로</a>
+			</block>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

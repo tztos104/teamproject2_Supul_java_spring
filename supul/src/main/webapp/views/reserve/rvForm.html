@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>예약정보입력</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="inc/header :: headerMenu"></div>
+	</header>
+	<h1>예약자 정보</h1>
+	<form method="post" action="reservating" th:object="${thema}">
+		<table border="">
+			<input type="hidden" name="themaId" th:value="${thema.themaId}" />
+			<tr>
+				<td>테마이름:</td>
+				<td><span>[[${thema.title}]]</span></td>
+			</tr>
+			<tr>
+				<td>선택한 시간:</td>
+				<td><span>[[${date}+' / '+${date.DayOfWeek}+' / '+${time}]]</span></td>
+			</tr>
+			<tr>
+				<td>예약자명:</td>
+				<td><input type="text" th:value="${session.username}" /></td><!--세션.이름-->
+			</tr>
+			<tr>
+				<td>전화번호:</td>
+				<td><input type="text" th:value="session.userName" /></td><!--세션.이름-->
+			</tr>
+			<tr>
+				<td>예약인원:</td>
+				<td>
+					<select name="rvPeople" style="font-size: 16px; padding: 2px;">
+						<block th:each="i : ${#numbers.sequence(1, thema.people)}">
+							<option th:value="${i}" th:text="${i}">
+							</option>
+						</block>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>주의사항:</td>
+				<td>이영준 빨리빨리빨리빨리빨리빨리빨리충 개시끄러</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<label>
+						<input type="checkbox" name="agree" value="agree">개인정보 처리방침 및 주의사항에 동의합니다.
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right">
+					<input type="submit" value="예약하기" />
+				</td>
+			</tr>
+		</table>
+
+	</form>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

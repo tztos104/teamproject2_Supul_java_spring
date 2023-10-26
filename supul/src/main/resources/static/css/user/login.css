@@ -1,0 +1,232 @@
+@charset "UTF-8";
+/*Grandiflora One - 메인 h1*/
+@import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
+
+@font-face {
+	font-family: 'ChosunCentennial';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*공통=======================*/
+body {
+	min-height: 100vh;
+	/* 화면 높이의 100%로 설정 */
+	display: flex;
+	flex-direction: column;
+}
+
+.login-container {
+	flex-grow: 1;
+	/* 컨테이너가 남은 공간을 채우도록 함 */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px auto;
+}
+
+#userid {
+	font-size: 16px;
+}
+
+#userpw {
+	font-size: 16px;
+}
+
+#superId {
+	font-size: 16px;
+}
+
+#superPw {
+	font-size: 16px;
+}
+/*=======================공통끝*/
+
+
+
+
+/*유저, 총괄 제목*/
+.login-container #hh22 {
+	font-size: 32px;
+	color: #f3e7db;
+	font-family: 'ChosunCentennial';
+	margin: 20px 0;
+	text-align: center;
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+
+/*어드민 제목*/
+.login-container #hh {
+	font-size: 32px;
+	color: #3f5856;
+	font-family: 'ChosunCentennial';
+	margin: 20px 0;
+	text-align: center;
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+/*=========================유저 내용*/
+#ffmm .form-group {
+	margin: 20px 0;
+}
+
+#ffmm .form-group input[type="text"],
+#ffmm .form-group input[type="password"] {
+	width: 300px;
+	height: 40px;
+	border: 1px solid #f3e7db;
+	background-color: transparent;
+	padding: 0 15px;
+	color: #f3e7db;
+}
+
+#ffmm .button {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#ffmm #bt {
+	width: 330px;
+	height: 50px;
+	background-color: #a88d6e;
+	border: none;
+	color: #f3e7db;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+#ffmm #srsr {
+	text-align: center;
+}
+
+#ffmm #sr {
+	font-size: 15px;
+	color: #f3e7db;
+}
+
+#ffmm #srsr span {
+	color: #f3e7db;
+}
+/*유저 내용 끝===============================*/
+
+
+
+/*=========================어드민 내용*/
+#ff .form-group {
+	margin: 20px 0;
+}
+
+#ff .form-group input[type="text"],
+#ff .form-group input[type="password"] {
+	width: 300px;
+	height: 40px;
+	border: 1px solid #3f5856;
+	background-color: transparent;
+	padding: 0 15px;
+	color: #3f5856;
+}
+
+#ff .button {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#ff #bt {
+	width: 330px;
+	height: 50px;
+	background-color: #3f5856;
+	border: none;
+	color: #f3e7db;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+#ff #srsr {
+	text-align: center;
+}
+
+#ff #sr {
+	font-size: 15px;
+	color: #3f5856;
+}
+
+#ff #srsr span {
+	color: #3f5856;
+}
+/*어드민 내용 끝===============================*/
+
+
+
+
+/*=========================총괄 내용*/
+#frfr .form-group {
+	margin: 20px 0;
+}
+
+#frfr .form-group input[type="text"],
+#frfr .form-group input[type="password"] {
+	width: 300px;
+	height: 40px;
+	border: 1px solid #f3e7db;
+	background-color: transparent;
+	padding: 0 15px;
+	color: #f3e7db;
+}
+
+#frfr .button {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#frfr #bt {
+	width: 330px;
+	height: 50px;
+	background-color: #f3e7db;
+	border: none;
+	color: #3f5856;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+#frfr #srsr {
+	text-align: center;
+}
+
+#frfr #sr {
+	font-size: 15px;
+	color: #f3e7db;
+}
+
+#frfr #srsr span {
+	color: #f3e7db;
+}
+#frfr ::placeholder {
+	color: rgba(243, 231, 219, 0.5);
+}
+/*총괄 내용 끝===============================*/
+
+
+
+/* 아이디 비번 결과 */
+.login-container .fuid {
+	color: #f3e7db;
+}
+.login-container .fuid .id {
+	color: #E09132;
+	font-weight: bold;
+	font-size: 20px;
+}
+.login-container .fuid a {
+	color: #f3e7db;
+	margin: 20px 0;
+}

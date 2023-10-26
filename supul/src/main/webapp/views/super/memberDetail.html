@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>회원 정보</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/memberDetail.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<h2>회원 정보</h2>
+	<div class="container">
+		<table>
+			<tbody id="userinfo">
+				<tr>
+					<td>Id</td>
+					<td th:text="${user.userId}" colspan="3"></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td th:text="${user.userName}" colspan="3"></td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td th:text="${user.email}" colspan="3"></td>
+				</tr>
+				<tr>
+					<td>전화번호</td>
+					<td th:text="${user.phone}" colspan="3"></td>
+				</tr>
+				<tr>
+					<td>생일</td>
+					<td th:text="${user.birth}" colspan="3"></td>
+				</tr>
+				<tr>
+					<td>가입일</td>
+					<td th:text="${#temporals.format(user.regDate, 'yyyy-MM-dd HH:mm:ss')}" colspan="3"></td>
+				</tr>
+
+			</tbody>
+			<tr>
+				<td colspan="4"> <button id="togglebtn" onclick="toggleHistory()">사용내역 펼치기/접기</button></td>
+			</tr>
+			<tbody id="used" style="display: none;">
+				<!-- 사용내역 데이터 -->
+
+				<tr>
+					<th>예약번호</th>
+					<th>테마이름</td>
+					<th>예약날짜</td>
+					<th>예약시간</td>
+				</tr>
+
+				<block th:each="rv:${user.rv}">
+					<tr>
+						<td th:text="${rv.rvNum}"></td>
+						<td th:text="${rv.themaName}"></td>
+						<td th:text="${rv.date}"></td>
+						<td th:text="${rv.time}"></td>
+					</tr>
+				</block>
+
+				<block th:each="rv:${user.rv}" th:if="${rv.date < date}">
+					<tr>
+						<td th:text="${rv.rvNum}"></td>
+						<td th:text="${rv.themaName}"></td>
+						<td th:text="${rv.date}"></td>
+						<td th:text="${rv.time}"></td>
+					</tr>
+				</block>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		var historyVisible = false;
+
+		function toggleHistory() {
+			var used = document.getElementById('used');
+			var toggleBtn = document.getElementById('togglebtn');
+
+			if (historyVisible) {
+				used.style.display = 'none';
+				toggleBtn.textContent = '사용내역 펼치기';
+			} else {
+				used.style.display = 'table-row-group'; // 테이블의 행 그룹으로 표시
+				toggleBtn.textContent = '사용내역 접기';
+			}
+
+			historyVisible = !historyVisible;
+		}
+	</script>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

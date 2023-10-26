@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+
+form {
+	width: 100%;
+    max-width: 500px;
+    margin: 0px auto;
+    padding: 20px 40px;
+ 
+}
+
+h2 {
+	font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+table, td {
+	width: 500px;
+	border: solid 1px #ccc;
+	border-collapse: collapse;
+	color: #3f5856;
+}
+table td {
+    padding: 10px;
+}
+
+input[type="text"] {
+	width: 96%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 16px;
+}
+
+input[type="number"] {
+	width: 100px;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 16px;
+}
+
+input[type="button"],
+input[type="submit"] {
+	width: 100px;
+	height: 30px;
+	padding: 5px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #E09132;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover {
+    background-color: #FFA500;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+textarea {
+    font-size: 14px;
+    padding: 15px;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+/* 에러 메시지 스타일링 */
+.error-message {
+    color: red;
+    /* 다른 스타일 속성 추가 가능 */
+}
+
+/* 텍스트영역에 경계선 추가 */
+textarea {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 8px;
+}
+
+table tr:nth-child(-n+12) td:first-child{
+	padding-left: 60px;
+	width: 120px;
+	font-weight: bold;
+	font-size: 16px;
+	
+}
+
+button{
+	width: 100px;
+	height: 30px;
+	padding: 5px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #E09132;
+}
+
+
+#timeContainer input{
+	margin: 0 5px 5px 0;
+}
+
+/* readonly 상태의 input 요소 커서 스타일 변경 */
+input[readonly] {
+    cursor: default; /* 기본 커서로 변경 (변경하지 않음) */
+}
+
+.notice{
+	font-size: 16px;
+	border-radius: 3px;
+	padding: 10px 5px;
+	background-color: #000;
+	color: gold;
+}

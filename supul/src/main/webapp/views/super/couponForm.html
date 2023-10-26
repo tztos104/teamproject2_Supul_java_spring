@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>쿠폰등록</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/couponForm.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+<script>
+	function validateDiscount(input) {
+		var value = input.value;
+		var remainder = value % 500;
+		var errorSpan = document.getElementById('discountError');
+
+		if (remainder !== 0 || value < 2000 || value > 10000) {
+			errorSpan.textContent = '할인가격은 500의 배수여야 하며, 2000에서 10000 사이여야 합니다.';
+			input.setCustomValidity('Invalid');
+		} else {
+			errorSpan.textContent = '';
+			input.setCustomValidity('');
+		}
+	}
+    function validateCouponName(input) {
+        var couponName = input.value;
+        var errorSpan = document.getElementById('couponNameError');
+        var couponNamePattern = /^[A-Za-z0-9가-힣]{4,20}$/;
+
+        if (!couponNamePattern.test(couponName)) {
+            errorSpan.textContent = '쿠폰 이름은 4자 이상 20자 이하의 문자 또는 숫자여야 합니다.';
+            input.setCustomValidity('Invalid');
+        } else {
+            errorSpan.textContent = '';
+            input.setCustomValidity('');
+        }
+    }
+</script>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<h2>쿠폰 등록</h2>
+		<form action="" method="post">
+			<table>
+				<tr>
+					<td>쿠폰이름:</td>
+					<td>
+                    <input type="text" name="couponName" required
+                        placeholder="4자이상 20자까지,특수문자제외" oninput="validateCouponName(this)" />
+                    <span id="couponNameError" style="color: #E09132; font-weight: bold;"></span>
+                </td>
+				</tr>
+				<tr>
+					<td>할인가격:</td>
+					<td>
+						<input type="number" name="discount" required step="500" min="2000" max="10000"
+							oninput="validateDiscount(this)" placeholder="2000~10000" /><br>
+						<span id="discountError" style="color: #E09132; font-weight: bold;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>제공할 유저ID:</td>
+					<td>
+						<input type="text" name="userId" required />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right" style="padding-right: 70px;">
+						<button type="submit" value="발급">발급</button>
+						<a href="/super/couponManage"><button type="button" value="뒤로">뒤로</button></a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

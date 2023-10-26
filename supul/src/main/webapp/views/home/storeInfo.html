@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>지점 정보</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:if="${admin != null}" th:href="@{/css/home/storeInfo2.css}" rel="stylesheet" type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/home/storeInfo.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<!-- 네이버 지도 API 스크립트 포함 -->
+	<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mftyiifxdb"></script>
+</head>
+
+<body>
+	<!-- 헤더-->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole == null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<div class="section-1">
+			<a class="btn" th:each="branch : ${branches}" th:href="@{'/home/branchInfo/' + ${branch.name}}" >
+				<div class="btnsty" th:text="${branch.name}"></div>
+			</a>
+		</div>
+
+		<div class="section">
+			<div class="left-section">
+				<div th:if="${selectedBranch != null}">
+					<h2 th:text=" ${selectedBranch.name}" >선택된 지점 이름</h2></br></br>
+					<p th:text="'주소: ' + ${selectedBranch.address}" >주소: 선택된 지점 주소</p></br>
+					<p th:text="'전화번호: ' + ${selectedBranch.phone}" >전화번호: 선택된 지점 전화번호</p>
+					<p id="coordhidden" th:text="'좌표: ' + ${selectedBranch.coordinate}">좌표: 선택된 지점 좌표</p>
+				</div>
+			</div>
+			<div class="right-section">
+				<!-- 지도 -->
+				<div id="map"></div>
+			</div>
+		</div>
+		</br>
+		</br>
+		</br>
+		<hr class="fancy-hr">
+
+		<div class="section-themalist">
+			<!-- 테마 정보 -->
+			<h1>테마 정보</h1>
+			<div class="thema-info">
+				<div th:each="thema : ${themas}" style="display: inline-block;">
+					<h4 th:text="${thema.title}" >테마 제목</h4>
+					<p th:text="${thema.type}" >테마 타입</p></br>
+					<!-- 포스터 이미지 -->
+					<a th:if="${thema.img}" th:href="|/thema/intro#thema${thema.themaId}|" >
+						<img width="200px" height="300px" th:src="|/up/thema/${thema.poster}|" alt="테마 포스터">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--푸터-->
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+
+
+	<!-- JavaScript 함수로 뒤로 가기 기능 추가 -->
+	<script th:inline="javascript">
+		function goBack() {
+			// 브라우저의 이전 페이지로 이동
+			window.history.back();
+		}
+
+		// 선택한 Branch의 좌표 정보 가져오기
+		var coordinate = [[${selectedBranch.coordinate}]];
+
+		// 좌표 정보를 배열로 변환
+		var coordinates = coordinate.split(',').map(Number);
+
+		// 지도
+		var mapOptions = {
+			center: new naver.maps.LatLng(coordinates[0], coordinates[1]), // 선택한 지점의 좌표
+			zoom: 16 // 확대 레벨 설정
+		};
+
+		var map = new naver.maps.Map('map', mapOptions);
+
+		// 마커
+		var marker = new naver.maps.Marker({
+			position: new naver.maps.LatLng(coordinates[0], coordinates[1]), // 선택한 지점의 좌표
+			map: map // 마커를 표시할 지도 객체
+		});
+
+		// 정보 창 생성
+		var infowindow = new naver.maps.InfoWindow({
+			content: '<div>' + [[${selectedBranch.name}]] + '</div>', // 정보 창에 표시할 내용 (HTML 형식)
+			backgroundColor: 'rgba(255, 255, 255, 0.7)' // 정보 창의 배경색 설정 (선택 사항)
+		});
+
+		// 마커를 클릭하면 정보 창을 표시
+		naver.maps.Event.addListener(marker, 'click', function () {
+			infowindow.open(map, marker);
+		});
+	</script>
+</body>
+
+</html>

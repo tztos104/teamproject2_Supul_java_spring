@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<meta charset="UTF-8">
+	<title>테마 소개</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/thema/thema.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+	<script  th:inline="javascript">
+		function confirmrv() {
+			if (confirm('정말 예약하시겠습니까?')) {
+				// 예약을 수락한 경우, 예약 페이지로 이동
+				return true;
+			} else {
+				// 예약을 취소한 경우, 이동하지 않음
+				return false;
+			}
+		}
+		function confirmrv2() {
+			alert("회원만 가능합니다.")
+
+		}
+		$(function () {
+
+			var urlParams = new URLSearchParams(window.location.search);
+			var dateParam = urlParams.get('date');
+			var currentDate = new Date(); // 현재 날짜를 가져옵니다.
+
+			// 현재 날짜를 YYYY-MM-DD 형식으로 포맷팅합니다.
+			var formattedDate = currentDate.toISOString().split('T')[0];
+
+			$("#datepicker").datepicker({
+				dateFormat: "yy-mm-dd", // 선택한 날짜 형식
+				closeText: "닫기",
+				currentText: "오늘",
+				showButtonPanel: true,
+				changeMonth: true,      // 월 선택 가능
+				changeYear: true,       // 연도 선택 가능
+				hideIfNoPrevNext: true,
+				prevText: 'Earlier',
+				monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+				dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+				weekHeader: "주",
+				yearSuffix: '년',
+				minDate: "0",
+				maxDate: "+14D",
+			});
+
+		})
+
+		$(document).ready(function () {
+			$('#branchName').change(function () {
+				var selectedName = $(this).val(); // select에서 선택한 값 가져오기
+				// URL 이동
+				console.log(selectedName)
+				window.location.href = '/thema/intro?branchName=' + selectedName+'&date='+[[${date}]];
+
+			});
+		});
+
+
+	</script>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<div class="main-thema">
+			<table>
+				<!-- 선택 버튼 -->
+				<tr>
+					<td colspan="4">
+						<div class="select">
+							<label>
+								<div class="span">
+									<span><span class="material-symbols-outlined">eco</span> 지점</span>
+									<label for="branchName">지점명:</label>
+									<select id="branchName" name="branchName">
+										<option th:value="전체" th:text="전체"></option>
+										<option th:each="brn : ${brnList}" th:value="${brn.name}" th:text="${brn.name}"
+											th:selected="${brn.name == #vars.branchName}" />
+									</select>
+								</div>
+							</label>
+
+							<label>
+								<form  th:action="|/thema/intro?branchName=${branchName}|">
+									<div class="span">
+										<input type="hidden" id="branchName" name="branchName" th:value="${branchName}">
+										<span><span class="material-symbols-outlined">eco</span> 예약날짜</span>
+										<input type="text" name="date" id="datepicker" onchange="submit();" class="date"
+											th:value="${date}" width="150px" readonly="readonly" />
+									</div>
+									<div class="span">
+										<label for="title"><span class="material-symbols-outlined">eco</span>
+											테마검색</label>
+										<input type="text" id="title" name="title" placeholder="검색어를 입력하세요.">
+									</div>
+									<button type="submit">검색</button>
+									<a href="/thema/intro"><button type="button">전체보기</button></a>
+								</form>
+							</label>
+						</div>
+						<hr />
+					</td>
+				</tr>
+
+				<!-- 테마 시작 -->
+				<th:block th:each="thema, status : ${themaList.content}" >
+					<tr class="thema" th:attr="branchId=${thema.branch.branchId}" th:id="|thema${thema.themaId}|">
+
+						<!--테마 포스터-->
+						<td class="poster">
+							<figure th:if="${thema.poster != null}">
+								<img th:src="@{/up/thema/{filename}(filename=${thema.poster})}" alt="테스트사진위치" />
+							</figure>
+						</td>
+
+						<!--테마 내용 시작-->
+						<td th:each="brn : ${brnList}" th:if="${brn.branchId} == ${thema.branch.branchId}"
+							class="thema-content">
+
+							<div class="main-content">
+								<div>
+									<div>
+										<!-- 찜하기 -->
+										<span th:if="${user != null}" class="wish">
+											<block th:if="${thema.wishList.empty}">
+												<form action="/thema/addWishList" method="post">
+													<input type="hidden" name="themaId" th:value="${thema.themaId}">
+													<button type="submit"><i class="fa-regular fa-heart"></i></button>
+												</form>
+											</block>
+
+											<block th:unless="${thema.wishList.empty}">
+
+												<block th:with="aaa=|${thema.themaId}_${user.id}|">
+													<block th:if="${#lists.contains(thema.wChkStrList ,aaa )}">
+														<form action="/thema/minusWishList" method="post">
+															<input type="hidden" name="themaId"
+																th:value="${thema.themaId}">
+															<button type="submit"><i
+																	class="fa-solid fa-heart"></i></button>
+														</form>
+													</block>
+													<block th:unless="${#lists.contains(thema.wChkStrList ,aaa )}">
+														<form action="/thema/addWishList" method="post">
+															<input type="hidden" name="themaId"
+																th:value="${thema.themaId}">
+															<button type="submit"><i
+																	class="fa-regular fa-heart"></i></button>
+														</form>
+													</block>
+												</block>
+											</block>
+										</span>
+
+										<!--테마 제목-->
+										<h2 th:text="| [${brn.name}] ${thema.title}|"></h2>
+
+									</div>
+
+									<!--내용-->
+									<div class="content">
+										<div class="info">
+											<span class="type">장르</span>
+											<span class="type-content" th:text="|${thema.type}|"></span>
+										</div>
+										<div class="info">
+											<span class="type">인원(최대)</span>
+											<span class="type-content" th:text="|${thema.people}명|"></span>
+										</div>
+										<div class="info">
+											<span class="type">이용 시간</span>
+											<span class="type-content" th:text="|${thema.playTime}분|"></span>
+										</div>
+										<div class="info">
+											<span class="type">난이도</span>
+											<span class="type-level">
+												<script>
+													var level = [[${thema.level}]];
+													var levelIcon = '';
+													for (var i = 0; i < level; i++) {
+														levelIcon += '<span class="material-symbols-outlined">vpn_key</span>';
+													}
+													document.write(levelIcon);
+												</script>
+											</span>
+										</div>
+										<div class="info">
+											<span class="type">활동성</span>
+											<span class="type-activity">
+												<script>
+													var activity = [[${thema.activity}]];
+													var activityIcon = '';
+													for (var i = 0; i < activity; i++) {
+														activityIcon += '<span class="material-symbols-outlined">directions_run</span>';
+													}
+													document.write(activityIcon);
+												</script>
+											</span>
+										</div>
+										<div class="info" th:if="${thema.horror!=0}">
+											<span class="type">공포도</span>
+											<span class="type-content">
+												<script>
+													var horror = [[${thema.horror}]];
+													var horrorIcon = '';
+													for (var i = 0; i < horror; i++) {
+														horrorIcon += '<span class="material-symbols-outlined">skull</span>';
+													}
+													document.write(horrorIcon);
+												</script>
+											</span>
+										</div>
+									</div>
+								</div>
+
+								<!--랭킹-->
+								<div class="rank">
+									<table>
+										<h3><i class="fa-solid fa-ranking-star"></i> RANKING</h3>
+										<tr th:each="rank ,a : ${thema.ranking}" th:if="${a.index < 5}">
+											<td colspan="1">
+												<span th:if="${a.index == 0}"><span class="material-symbols-outlined">
+														looks_one
+													</span></span>
+												<span th:if="${a.index == 1}"><span class="material-symbols-outlined">
+														looks_two
+													</span></span>
+												<span th:if="${a.index == 2}"><span class="material-symbols-outlined">
+														looks_3
+													</span></span>
+												<span th:if="${a.index == 3}"><span class="material-symbols-outlined">
+														looks_4
+													</span></span>
+												<span th:if="${a.index == 4}"><span class="material-symbols-outlined">
+														looks_5
+													</span></span>
+											</td>
+											<td class="user" colspan="1" th:text="${rank.user.userId}"></td>
+											<td class="time" colspan="1" th:text="|${rank.minutes}분 ${rank.seconds}초|">
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+
+							<!--테마 내용-->
+							<div class="info-content">
+								<span th:utext="|${thema.content}|"></span>
+							</div>
+
+							<!--예약 시간-->
+							<div class="time">
+								<table>
+									<tr>
+										<td colspan="5" class="time-table">
+											<block th:each="t : ${thema.timetable}">
+												<block th:if="${thema.availabletime(t, date)}">
+													<block th:if="${thema.sale.empty}">
+														<block th:if="${user==null}">
+															<a href="" class="box" onclick="return confirmrv2();">
+																<span th:text="${t}"></span>
+															</a>
+														</block>
+														<block th:unless="${user==null}">
+															<a th:href="@{/reserve/rvForm(picktime=${t},date=${date},themaId=${thema.themaId})}"
+																class="box" onclick="return confirmrv();">
+																<span th:text="${t}"></span>
+															</a>
+														</block>
+													</block>
+														
+													<block th:unless="${thema.sale.empty} ">
+													
+														<block th:with="aaa=|${date}_${t}_${thema.themaId}false|">
+
+															<block th:if="${#lists.contains(thema.reserChkList,aaa )}">
+																<span class="no-box">
+																	<span
+																		th:utext="${#temporals.format(t, 'HH:mm')} + ' &lt;br/&gt;'"></span>
+																	<span>(예약불가)</span>
+																</span>
+															</block>
+
+															<block
+																th:unless="${#lists.contains(thema.reserChkList,aaa )}">
+																<block th:if="${user==null}">
+																	<a href="" class="box"
+																		onclick="return confirmrv2();">
+																		<span th:text="${t}"></span>
+																	</a>
+																</block>
+																<block th:unless="${user==null}">
+																	<a th:href="@{/reserve/rvForm(picktime=${t},date=${date},themaId=${thema.themaId})}"
+																		class="box" onclick="return confirmrv();">
+																		<span th:text="${t}"></span>
+																	</a>
+																</block>
+															
+														</block>
+													</block>
+													</block>
+												</block>
+												<block th:unless="${thema.availabletime(t, date)}">
+													<span class="no-box">
+														<span
+															th:utext="${#temporals.format(t, 'HH:mm')} + ' &lt;br/&gt;'"></span>
+														<span>(예약불가)</span>
+													</span>
+												</block>
+											</block>
+										</td>
+									</tr>
+								</table>
+							</div>
+
+
+						</td>
+					</tr>
+
+
+					<tr>
+						<td colspan="4">
+							<div class="review">
+								<table>
+									<tr>
+										<td class="review-title-grade">평점</td>
+										<td class="review-title-title">제목</td>
+										<td class="review-title-content">내용</td>
+									</tr>
+									<tr th:each="review, a : ${thema.review}" th:if="${a.index < 3}">
+										<td class="grade" colspan="1">
+											<script>
+												// 별점 값을 가져와서 아이콘으로 변환
+												var grade = [[${review.grade}]];
+												var starIcons = '';
+												for (var i = 0; i < 5; i++) {
+													if (grade >= i + 1) {
+														starIcons += '<i class="fa-solid fa-star"></i>'; // 별 아이콘
+													} else if (grade > i) {
+														starIcons += '<i class="fa-solid fa-star-half-stroke"></i>'; // 반 별 아이콘
+													} else {
+														starIcons += '<i class="fa-regular fa-star"></i>'; // 빈 별 아이콘
+													}
+												}
+												document.write(starIcons); // 아이콘을 출력
+											</script>
+										</td>
+										<td class="title" colspan="1" >
+											<a th:href="@{/board/review/detail/{id}(id=${review.reviewId})}"><span th:text="${review.title}" /></a>
+										</td>
+										<td class="content" colspan="1" th:text="${review.content}"></td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+
+					<tr th:if="${status.last == false}" class="thema-hr">
+						<td colspan="4">
+							<hr />
+						</td>
+					</tr>
+
+				</th:block>
+				<!--테마 내용 끝-->
+			</table>
+		</div>
+	</div>
+
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

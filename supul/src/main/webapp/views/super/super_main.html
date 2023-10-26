@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/super/main.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>메인 페이지</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	var selectedName;
+	var selectedTitle;
+
+	$(document).ready(function () {
+		$('#branchName').change(function () {
+			selectedName = $("#branchName option:selected").val();
+			// URL 이동
+			console.log(selectedName)
+			window.location.href = '?branchName=' + selectedName;
+		});
+
+		$('#title').change(function () {
+			selectedTitle = $("#title option:selected").val();
+			$("#branchName").val(selectedName).prop("selected", true);
+			// URL 이동
+			console.log(selectedTitle)
+			window.location.href = '?branchName=' + [[${branchName}]] + '&title=' + selectedTitle;
+		});
+	});
+
+
+</script>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<section class="superMainsection1">
+
+			<h1>매출 통계</h1>
+			<!--	<h2>내가 섹션1이다</h2>
+		<div th:if="${superLoggedIn}">
+			<p>슈퍼 계정으로 로그인되었습니다.</p>
+			<a href="/super/memberList">회원 리스트</a><br>
+			<a href="/super/deleteUser">회원탈퇴 리스트</a><br>
+			<a th:href="@{/super/superlogout}">로그아웃</a>
+		</div>-->
+			<a href="/reserve/tonggye"><canvas id="chart" width="750" height="300"></canvas></a>
+<div class="btn_align">
+			<button class="btn" id="thema">테마별</button>
+			<button class="btn" id="daily">일별</button>
+			<button class="btn" id="weekly">요일별</button>
+			<button class="btn" id="monthly">월별</button>
+</div>
+		</section>
+		<section class="superMainsection2">
+			<h1>매출 1위 테마</h1>
+			<figure th:if="${topThema.poster != null}">
+				<img style="width: 213px;" th:src="@{/up/thema/{filename}(filename=${topThema.poster})}"
+					alt="테스트사진위치" />
+			</figure>
+			<p th:text="${topThema.branch.name}"></p>
+		</section>
+		
+		<section class="superMainsection3">
+
+			<select id="branchName" name="branchName">
+				<option th:value="전체" th:text="전체"></option>
+				<option th:each="brn : ${brnList}" th:value="${brn.name}" th:text="${brn.name}"
+					th:selected="${brn.name == #vars.branchName}" />
+			</select>
+			<select name="title" id="title">
+				<option th:value="전체" th:text="전체"></option>
+				<option th:each="thema : ${themaList}" th:value="${thema.title}" th:text="${thema.title}"
+					th:if="${branchName == '전체' || branchName == thema.branch.name}"
+					th:selected="${thema.title == #vars.title}" />
+			</select>
+			<h1>테마별 매출현황</h1>
+			<table class="custom-table">
+				<tr>
+					<td th:text="테마명"></td>
+					<td th:text="매출총액"></td>
+
+				</tr>
+				<tr th:each="rv:${themaTotal}">
+					<td th:text="${rv.key}"></td>
+					<td th:text="${#numbers.formatInteger(rv.value, 3, 'COMMA') + '원'}" style="width: 110px;"></td>
+				</tr>
+			</table>
+
+		</section>
+		
+		<section class="superMainsection4">
+			<div class="canvas-container">
+
+				
+				
+				
+				
+			</div>
+			<div class="canvas-container">
+				<div>
+				<h1>=======지점별=======</h1>
+				<canvas id="chart2" width="300" height="300"></canvas>
+				</div><div>
+				<h1>=======테마별=======</h1>
+				<canvas id="chart3" width="300" height="300"></canvas>
+				</div><div>
+				<h1>=======예약현황=======</h1>
+				<canvas id="chart4" width="300" height="300"></canvas>
+				</div><div>
+				<h1>=======노쇼현황=======</h1>
+				<canvas id="chart5" width="300" height="300"></canvas>
+				</div>
+			</div>
+
+		</section>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+<script th:inline="javascript">
+	var dailyStats = [[${dailyStats}]]
+	var weeklyStats = [[${weeklyStats}]]
+	var MonthlyStats = [[${MonthlyStats}]]
+	var themaTotal = [[${themaTotal}]]
+	var themaRvTotal = [[${themaRvTotal}]]
+	var chart = null;
+	function createChart(data, chartTitle, typename, chartId) {
+		if (chart) {
+			chart.destroy();
+		}
+
+		var ctx = document.getElementById(chartId).getContext('2d');
+		chart = new Chart(ctx, {
+			type: typename,
+			data: {
+				labels: Object.keys(data),
+				datasets: [{
+					label: chartTitle,
+					data: Object.values(data),
+					backgroundColor: 'rgba(168, 141, 110)',
+					borderColor: 'rgba(63, 88, 86, 0.8)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: false,
+				maintainAspectRatio: false,
+				scales: {
+					x: {
+						beginAtZero: true,
+						ticks: {
+							color: ' rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+						},
+						grid: {
+							color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+						}
+					},
+					y: {
+						beginAtZero: true,
+						ticks: {
+							color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+						},
+						grid: {
+							color: 'rgba(63, 88, 86, 0.2)' // X 축 선 색상을 빨간색으로 설정
+						}
+					}
+				}
+			}
+		});
+	}
+	createChart(dailyStats, '일별 매출', 'line', 'chart')
+
+var colors = [
+  'rgb(214, 175, 20)',
+  'rgb(66, 92, 90)',
+  'rgb(24, 179, 167)',
+  'rgb(24, 144, 179)',
+  'rgb(202, 223, 222)',
+ 'rgb(180, 124, 73)'
+];
+
+// 중복되지 않는 무작위 색상을 선택하는 함수
+function getRandomColor() {
+  if (colors.length === 0) {
+    // 모든 색상을 이미 사용한 경우, colors 배열을 초기화합니다.
+    colors = [
+      'rgb(214, 175, 20)',
+      'rgb(66, 92, 90)',
+      'rgb(24, 179, 167)',
+      'rgb(24, 144, 179)',
+      'rgb(202, 223, 222)'
+    ];
+  }
+
+  var randomIndex = Math.floor(Math.random() *colors.length);
+  var selectedColor = colors.splice(randomIndex, 1)[0];
+  return selectedColor;
+}
+var randomColor = getRandomColor();
+console.log(randomColor);
+
+	// 버튼 클릭 이벤트 핸들러
+	document.getElementById('daily').addEventListener('click', function () {
+		createChart(dailyStats, '일별 매출', 'line', 'chart');
+	});
+	document.getElementById('monthly').addEventListener('click', function () {
+		createChart(MonthlyStats, '월별 매출', 'bar', 'chart');
+	});
+	document.getElementById('weekly').addEventListener('click', function () {
+		createChart(weeklyStats, '요일별 매출', 'bar', 'chart');
+	});
+	document.getElementById('thema').addEventListener('click', function () {
+		createChart(themaTotal, '테마별 매출', 'bar', 'chart');
+	});
+	<!--원형 차트-->
+	var banchSales = [[${banchSales}]]
+	var themaSales = [[${themaSales}]]
+	var ReservationCount = [[${ReservationCount}]]
+	var banchNoShowCount = [[${banchNoShowCount}]]
+	
+
+
+	var ctx2 = document.getElementById('chart2').getContext('2d');
+	new Chart(ctx2, {
+		type: 'pie',
+		data: {
+			labels: Object.keys(banchSales),
+			datasets: [{
+				label: '지점별 매출현황',
+				data: Object.values(banchSales),
+				backgroundColor: Object.values(banchSales).map(function (key) {
+					return getRandomColor();
+				}),
+				borderColor: 'rgba(63, 88, 86, 0.8)',
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: false,
+			maintainAspectRatio: false,
+			scales: {
+				x: {
+					beginAtZero: true,
+					ticks: {
+						color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				},
+				y: {
+					beginAtZero: true,
+					ticks: {
+						color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				}
+			}
+		}
+	});
+	var ctx3 = document.getElementById('chart3').getContext('2d');
+	new Chart(ctx3, {
+		type: 'bar',
+		data: {
+			labels: Object.keys(themaSales),
+			datasets: [{
+				label: '테마별',
+				data: Object.values(themaSales),
+				backgroundColor: Object.values(banchSales).map(function (key) {
+					return getRandomColor();
+				}),
+				borderColor: 'rgba(63, 88, 86, 0.8)',
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: false,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					display: false, // 레전드(범례)를 비활성화
+
+				}
+			},
+			scales: {
+				x: {
+					beginAtZero: true,
+					ticks: {
+						color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				},
+				y: {
+					beginAtZero: true,
+					ticks: {
+						color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				}
+			}
+		}
+	});
+	var ctx4 = document.getElementById('chart4').getContext('2d');
+	new Chart(ctx4, {
+		type: 'line',
+		data: {
+			labels: Object.keys(ReservationCount),
+			datasets: [{
+				label: '테마별 예약현황',
+				data: Object.values(ReservationCount),
+				backgroundColor: Object.values(banchSales).map(function (key) {
+					return getRandomColor();
+				}),
+				borderColor: 'rgba(63, 88, 86, 0.8)',
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: false,
+			maintainAspectRatio: false,
+			scales: {
+				x: {
+					beginAtZero: true,
+					ticks: {
+						color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				},
+				y: {
+					beginAtZero: true,
+					ticks: {
+						color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				}
+			}
+		}
+	});
+
+var ctx5 = document.getElementById('chart5').getContext('2d');
+	new Chart(ctx5, {
+		type: 'doughnut',
+		data: {
+			labels: Object.keys(banchNoShowCount),
+			datasets: [{
+				label: '지점별 노쇼현황',
+				data: Object.values(banchNoShowCount),
+				backgroundColor: Object.values(banchSales).map(function (key) {
+					return getRandomColor();
+				}),
+				borderColor: 'rgba(63, 88, 86, 0.8)',
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: false,
+			maintainAspectRatio: false,
+			scales: {
+				x: {
+					beginAtZero: true,
+					ticks: {
+						color: ' rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				},
+				y: {
+					beginAtZero: true,
+					ticks: {
+						color: 'rgba(63, 88, 86, 0.8)' // 원하는 라벨 색상으로 설정
+					},
+					grid: {
+						color: 'rgba(63, 88, 86, 0.3)' // X 축 선 색상을 빨간색으로 설정
+					}
+				}
+			}
+		}
+	});
+
+</script>
+
+
+</html>

@@ -1,0 +1,293 @@
+* {
+	box-sizing: border-box;
+}
+
+/*=====전체=====*/
+.container {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.main-thema {
+	color: #f3e7db;
+}
+
+.main-thema li {
+	list-style: none;
+}
+
+/*===== 선택, 검색 부분 (시작) =====*/
+.main-thema label {
+	display: inline-block;
+}
+
+.main-thema .select {
+	text-align: center;
+	padding: 30px 0 10px 0;
+}
+
+/* 아이콘 */
+.material-symbols-outlined {
+	vertical-align: middle;
+	margin-bottom: 7px;
+}
+
+.main-thema .select .span {
+	padding: 0 5px;
+	display: inline-block;
+}
+
+.main-thema .select select,
+.main-thema .select input {
+	padding: 5px;
+	font-size: 14px;
+	border: 1px solid #a88d6e;
+	background-color: transparent;
+	color: #f3e7db;
+	width: 180px;
+}
+
+.main-thema .select button {
+	background-color: #a88d6e;
+	color: #fff;
+	border: none;
+	padding: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	text-decoration: none;
+	border-radius: 3px;
+}
+
+.main-thema .select select option {
+	background-color: #22241c;
+	border: 1px solid #f3e7db;
+	color: #f3e7db;
+}
+
+.main-thema hr {
+	margin-bottom: 30px;
+}
+
+/*===== 선택, 검색 부분 (끝) =====*/
+
+
+
+/*===== 테마 내용 (시작) =====*/
+/* 구분선 및 포스터 이미지 */
+.main-thema .thema-hr hr {
+	margin: 30px 0;
+}
+
+.main-thema .thema>td {
+	vertical-align: top;
+}
+.main-thema .thema .poster {
+	padding-left: 10px;
+}
+.main-thema .thema .poster img {
+	width: 400px;
+	height: 550px;
+	border: 1px solid #f3e7db;
+}
+
+/* 테마 내용 */
+.main-thema .thema .thema-content {
+	padding: 0 20px;
+}
+
+.main-thema .thema .thema-content .wish {
+	display: inline-block;
+}
+
+.main-thema .thema .thema-content .wish button {
+	background-color: transparent;
+	border: none;
+	color: red;
+	cursor: pointer;
+	/* 커서를 손가락 아이콘으로 변경 */
+	font-size: 20px;
+	/* 아이콘 크기 조정 (예: 32px로 설정) */
+}
+
+.main-thema .thema .thema-content h2 {
+	display: inline-block;
+	font-size: 30px;
+	margin-bottom: 30px;
+}
+
+.main-thema .thema .thema-content .content {
+	font-size: 18px;
+	display: inline-block;
+
+}
+
+.main-thema .thema .thema-content .content .info .type {
+	width: 120px;
+	display: inline-block;
+	color: #a88d6e;
+	padding: 3px 0;
+}
+
+.main-thema .thema .thema-content .content .info div {
+	color: #a88d6e;
+}
+
+.main-thema .thema .thema-content .info-content {
+	white-space: pre-line;
+	margin: 20px 0 30px 0;
+}
+
+.main-thema .thema .thema-content .info-content span {
+	line-height: 1.7;
+}
+
+.main-thema .thema .thema-content .main-content {
+	display: flex;
+	justify-content: space-between;
+}
+
+
+/*랭킹*/
+.main-thema .thema .thema-content .rank {
+	display: inline-block;
+	vertical-align: top;
+
+}
+
+.main-thema .thema .thema-content .main-content .rank tr {
+	display: flex;
+	justify-content: space-between;
+}
+
+.main-thema .thema .thema-content .main-content .rank tr .user {
+	width: 100px;
+	text-align: center;
+}
+
+/*리뷰*/
+.main-thema .review {
+	width: 100%;
+	margin: 0 auto;
+}
+.main-thema .review table{
+	width: 100%;
+}
+
+.main-thema .review .review-title-grade {
+	min-width: 120px;
+	text-align: left;
+	padding: 0 10px;
+	color: #a88d6e;
+	border-bottom: 5px solid rgba(168, 141, 110, 0.2);
+}
+
+.main-thema .review .review-title-title {
+	min-width: 300px;
+	text-align: left;
+	padding: 0 10px;
+	color: #a88d6e;
+	border-bottom: 5px solid rgba(168, 141, 110, 0.2);
+}
+
+.main-thema .review .review-title-content {
+	min-width: 748px;
+	text-align: left;
+	padding: 0 10px;
+	color: #a88d6e;
+	border-bottom: 5px solid rgba(168, 141, 110, 0.2);
+}
+
+.main-thema .review .grade {
+	width: 100px;
+	padding: 5px 0;
+	text-align: center;
+}
+
+.main-thema .review .title {
+	width: 300px;
+	padding: 0 10px;
+}
+
+.main-thema .review .title a {
+	text-decoration: none;
+	color: #a88d6e;
+}
+
+.main-thema .review .title a:hover{
+	color: #E09132;
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+
+.main-thema .review .content {
+	display: inline-block;
+	max-width: 776px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/*시간*/
+.main-thema .thema .thema-content .time .box {
+	width: 123px;
+	height: 80px;
+	vertical-align: middle;
+	border: 1px solid #ce9178;
+	/*box-shadow: 0 3px 3px rgba(208, 126, 17, 0.5);*/
+	box-shadow: 0 3px 3px rgba(224, 145, 50, 0.5);
+	border-radius: 10px;
+	text-decoration: none;
+	padding: 7px 8px;
+	margin: 9px;
+	display: inline-block;
+	text-align: center;
+	color: #f3e7db;
+	line-height: 60px;
+}
+
+.main-thema .thema .thema-content .time .box:hover {
+	background-color: #E09132;
+	box-shadow: none;
+}
+
+.main-thema .thema .thema-content .time .no-box {
+	width: 123px;
+	height: 80px;
+	vertical-align: middle;
+	border: 1px solid rgb(84, 68, 50);
+	/*box-shadow: 0 3px 3px rgba(208, 126, 17, 0.5);*/
+	border-radius: 10px;
+	text-decoration: none;
+	padding: 10px 8px;
+	margin: 9px;
+	display: inline-block;
+	text-align: center;
+	color: #f3e7db;
+
+}
+
+.main-thema .thema .thema-content .time .no-box span:nth-of-type(1) {
+	text-decoration: line-through;
+	color: #555;
+	opacity: 0.7;
+}
+
+.main-thema .thema .thema-content .time .no-box span:nth-of-type(2) {
+	font-size: 12px;
+}
+
+
+
+.main-thema .time-table {
+	font-size: 18px;
+}
+
+.main-thema .thema .thema-content .time .no-box span {
+	margin-top: 10px;
+	vertical-align: middle;
+}
+
+/*난이도 아이콘 회전*/
+.content .type-level .material-symbols-outlined {
+	transform: rotate(225deg);
+}

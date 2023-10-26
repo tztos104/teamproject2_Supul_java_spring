@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>후기 작성</title>
+
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/board/board_review.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<script>
+		// 이미지 파일 확장자 배열
+		var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+
+		// 파일 업로드 필드가 변경될 때 호출되는 함수
+		function validateImageFile(inputElement) {
+			var fileName = inputElement.value.toLowerCase();
+			var fileExtension = fileName.split('.').pop();
+
+			// 파일 확장자가 허용된 확장자 배열에 있는지 확인
+			if (allowedExtensions.indexOf(fileExtension) === -1) {
+				alert("이미지 파일 (jpg, jpeg, png, gif) 만 업로드 가능합니다.");
+				inputElement.value = ''; // 파일 필드 초기화
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<!-- 후기 쓰기-->
+	<div class="container">
+		<div class="review-write">
+			<h1>후기 작성</h1>
+
+			<!-- 후기 쓰기 테이블 -->
+			<div class="section">
+				<form th:action="|/board/review/write?branchName=${branchName}|" method="post" enctype="multipart/form-data">
+					<table class="reviewWriteTable" border="">
+						<tr>
+							<th width="150px">매장</th>
+							<td width="700px">
+								<span class="branchName" th:text="${branch.name}" th:name="branchName"></span>
+								<input type="hidden" th:value="${branch.branchId}" th:name="branchId" />
+							</td>
+						</tr>
+						<tr>
+							<th>테마</th>
+							<td>
+								<span class="themaName" th:text="${thema.title}" th:name="themaName"></span>
+								<input type="hidden" th:value="${thema.themaId}" th:name="themaId" />
+							</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td>
+								<span class="userName" th:text="${user.userName}" th:name="userName"></span>
+								<input type="hidden" name=id th:value="${user.Id}" />
+							</td>
+						</tr>
+						<tr>
+							<th>탈출여부</th>
+							<td>
+								<input type="radio" id="clear" name="clear" value="true" required>
+								<label for="clear">탈출</label>
+								<input type="radio" id="not_clear" name="clear" value="false" required>
+								<label for="not_clear">타임오버</label>
+							</td>
+						</tr>
+						<tr>
+							<th>클리어 시간</th>
+							<td><input id="escTime" type="text" name="escTime" placeholder="00분 00초" />
+							<div th:if="${escTimeerror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${escTimeerror.defaultMessage}"></li>
+									</ul>
+								</div>
+							
+							</td>
+						
+						</tr>
+						<tr>
+							<th>평점</th>
+							<td>
+								<select id="grade" name="grade">
+									<option th:each="i : ${#numbers.sequence(0, 10, 1)}" th:value="${i * 0.5}"
+										th:text="${i * 0.5}"></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th>제목</th>
+							<td>
+								<div th:if="${titleerror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${titleerror.defaultMessage}"></li>
+									</ul>
+								</div>
+								<input type="text" id="title" name="title" placeholder="제목을 입력해 주세요.">
+
+							</td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th>내용</th>
+							<td>
+								<div th:if="${contenterror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${contenterror.defaultMessage}"></li>
+									</ul>
+								</div>
+								<textarea id="content" name="content" placeholder="내용을 입력해 주세요."></textarea>
+
+							</td>
+						</tr>
+						<tr>
+							<th>파일</th>
+							<td><input type="file" id="file" name="file" accept="image/*" onchange="validateImageFile(this)"></td>
+						</tr>
+						<input type="hidden" name="rvId" th:value="${rvId}" />
+						<!-- 후기 쓰기 버튼 -->
+						<tr class="reviewWriteBtn">
+							<td colspan="2">
+								<button type="submit">작성</button>
+								<button type="button" class="reviewListBtn" value="목록">
+									<a th:href="@{/board/review/list}">목록</a>
+								</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>비밀번호 변경</title>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/header :: headerMenu}"></div>
+	</header>
+	<h2>비밀번호 변경</h2>
+	<form th:action="@{/user/password-change}" method="post" th:object="${passwordChange}">
+		<table border="">
+			<tr>
+				<td>현재 비밀번호:</td>
+				<td>
+					<input type="password" th:field="*{currentPassword}" required>
+					<div th:if="${#fields.hasErrors('currentPassword')}" th:errors="*{currentPassword}" />
+
+				</td>
+			</tr>
+			<tr>
+				<td>새 비밀번호:</td>
+				<td>
+					<input type="password" th:field="*{newPassword}" required>
+					<div th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}" />
+				</td>
+			</tr>
+			<tr>
+				<td>새 비밀번호 확인:</td>
+				<td>
+					<input type="password" th:field="*{confirmNewPassword}" required>
+					<div th:if="${#fields.hasErrors('confirmNewPassword')}" th:errors="*{confirmNewPassword}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit">비밀번호 변경</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>관리자 목록</title>
+	<link th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link th:href="@{/css/super/branch/branchList.css}" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+	</header>
+	<div class="container">
+		<h2>지점장 리스트</h2>
+		<table style="text-align: center;">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>이름</th>
+					<th>email</th>
+					<th>birth</th>
+					<th>phone</th>
+					<th>지점명</th>
+					<th>수정</th>
+					<!-- 필요한 다른 관리자 정보 컬럼 추가 -->
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 관리자 목록을 반복해서 표시 -->
+				<tr th:each="admin : ${admins}">
+					<td th:text="${admin.adminId}"></td>
+					<td th:text="${admin.name}"></td>
+					<td th:text="${admin.email}"></td>
+					<td th:text="${admin.birth}"></td>
+					<td th:text="${admin.phone}"></td>
+					<td th:text="${admin.branchName}"></td>
+					<td><a th:href="@{'/super/adminModify/' + ${admin.adminId}}">수정</a></td>
+					<!-- 필요한 다른 관리자 정보 컬럼 추가 -->
+				</tr>
+			</tbody>
+		</table>
+		<div class="button">
+			<a th:href="@{/super/admindelete}"><button class="btn" type="button">지점장 삭제</button></a>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

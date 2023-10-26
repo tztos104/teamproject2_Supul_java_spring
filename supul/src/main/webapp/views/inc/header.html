@@ -1,0 +1,37 @@
+<div th:fragment="headerMenu" id="userHeader">
+	<div class="header-logo">
+		<div class="logo"><a href="/main"><img src="/images/supul4.png" alt="로고" style="width: 200px;" /></a></div>
+		<div class="login">
+			<!--<li><a href="/admin" class="go">[관리자페이지로 이동]</a></li>-->
+			<li th:unless="${user!=null}"><a href="/user/login">로그인 및 회원가입 <i
+						class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+			<li th:if="${user!=null}" th:text="|${user.userName} 님|"></li>
+			<li th:if="${user!=null}"><a href="/user/logout">로그아웃 <i
+						class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+		</div>
+	</div>
+	<div class="menu">
+		<div class="menuTab">
+			<li>
+				SUPUL
+				<ul class="subMenu">
+					<a href="/home/intro"><li>홈페이지 소개</li></a>
+					<a th:href="@{/home/branchInfo/전체}"><li>매장 소개</li></a>
+				</ul>
+			</li>
+
+			<a href="/thema/intro"><li>THEMA</li></a>
+			<a href="/reserve/checkRv"><li>RESERVATION</li></a>
+			<li>
+				COMMUNITY
+				<ul class="subMenu">
+					<a th:href="@{/board/notice/list}"><li>공지게시판</li></a>
+					<a th:href="@{/board/qna/list}"><li>문의게시판</li></a>
+					<a th:href="@{/board/review/list}"><li>후기게시판</li></a>
+				</ul>
+			</li>
+			</li>
+			<a th:href="@{/user/mypage}"><li th:if="${user!=null}">MYPAGE</li></a>
+		</div>
+	</div>
+</div>

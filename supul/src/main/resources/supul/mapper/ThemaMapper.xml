@@ -1,0 +1,191 @@
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="supul.mapper.ThemaMapper">
+	<!-- 테마 데이터 조회 -->
+	<select id="tmList" resultType="supul.model.Thema"
+		parameterType="supul.model.Thema">
+		select * from thema
+	</select>
+
+	<!-- 매장 데이터 조회 -->
+	<select id="brList" resultType="supul.model.Branch"
+		parameterType="supul.model.Branch">
+		select * from branch
+	</select>
+
+	<!-- 매장데이터 안에 테마리스트 넣을때 사용 -->
+	<select id="brnList" resultType="supul.model.Thema"
+		parameterType="Integer">
+		select * from thema where branch_id = #{branchId}
+	</select>
+
+	<!-- 테마 이름 가져오기 -->
+	<select id="tmTitle" resultType="String" parameterType="Integer">
+		select
+		title from thema where thema_id = #{themaId}
+	</select>
+
+	<!-- 매장명 가져오기 -->
+	<select id="brName" resultType="String" parameterType="Integer">
+		select
+		name from branch where branch_id = #{branchId}
+	</select>
+
+
+	<!-- 테마 조회 -->
+	<select id="selectList" resultType="supul.model.Thema">
+		SELECT * FROM thema
+	</select>
+
+	<select id="listCnt" resultType="Integer">
+		select count(*) from thema
+	</select>
+
+	<select id="selectById" resultType="supul.model.Thema"
+		parameterType="int">
+		SELECT * FROM thema
+		WHERE thema_id = #{themaId}
+	</select>
+
+	<update id="addCount" parameterType="Integer">
+		UPDATE thema SET cnt = cnt +
+		1 WHERE thema_id = #{themaId}
+	</update>
+
+	<select id="detail" resultType="supul.model.Thema"
+		parameterType="Integer">
+		select * from thema where thema_id = #{themaId}
+	</select>
+
+	<!-- 테마 추가 -->
+	<insert id="insertThema" parameterType="supul.model.Thema">
+		INSERT INTO thema
+		(branch_id, type, level, title, content, people, poster,
+		horror,
+		activity, play_time, price)
+		VALUES (#{branch.branchId}, #{type},
+		#{level}, #{title}, #{content},
+		#{people}, #{poster}, #{horror},
+		#{activity}, #{playTime}, #{price})
+	</insert>
+
+	<!-- 테마 수정 -->
+	<update id="updateThema" parameterType="supul.model.Thema">
+		UPDATE thema
+		SET
+		branch_id=#{branch.branchId}, type=#{type}, level=#{level},
+		title=#{title}, content=#{content}, people=#{people},
+		poster=#{poster}, horror=#{horror}, activity=#{activity},
+		play_time=#{playTime}, price=#{price}
+		WHERE thema_id=#{themaId}
+	</update>
+	<select id="timeId" resultType="int">
+		SELECT MAX(thema_id) FROM thema
+	</select>
+
+	<!-- 테마 삭제 -->
+	<delete id="deleteThema" parameterType="int">
+		DELETE FROM thema
+		WHERE
+		thema_id=#{themaId}
+	</delete>
+
+	<!-- 파일 삭제 -->
+	<update id="fileDelete" parameterType="int">
+		update thema set poster =
+		null where thema_id=#{themaId}
+	</update>
+	<!-- 아이디 체크 -->
+	<select id="idPwChk" parameterType="supul.model.Thema"
+		resultType="Integer">
+		select count(*) from thema where thema_id = #{themaId}
+	</select>
+
+	<!--타임테이블 조회 -->
+	<select id="timetablebyId" parameterType="int">
+		SELECT time_slot FROM
+		timetable_times
+		WHERE timetable_id = #{themaId}
+	</select>
+	<!-- 타임테이블 시간 추가 -->
+	<insert id="insertTimetable" parameterType="map">
+		INSERT INTO
+		timetable_times (timetable_id, time_slot)
+		VALUES (#{themaId}, #{time})
+	</insert>
+
+	<!-- 타임테이블 삭제 -->
+	<delete id="deleteTimetable" parameterType="int">
+		DELETE FROM
+		timetable_times
+		WHERE timetable_id=#{themaId}
+	</delete>
+
+	<!-- ================== 정현 ========================== -->
+
+
+	<!-- 예약 시간 조회 -->
+	<select id="timetableList" resultType="java.time.LocalTime">
+		SELECT time_slot
+		FROM
+		timetable_times
+		WHERE timetable_id = #{themaId}
+	</select>
+	<!-- 예약 존재여부 확인 -->
+	<select id="chkrvstatus" resultType="String"
+		parameterType="java.time.LocalDate">
+		<!-- 현재 달력에 있는 date의 값의 db의 시간들을 다 가져와서 결과값을 String으로 받고 그 결과값을 ArrayList에 
+			넣어줌 -->
+		select date_format(time,'%H:%i') from reservation where date = #{date}
+		and thema_id=#{themaId}
+	</select>
+
+	<!-- 오늘 날짜의 예약 보기 -->
+	<select id="todayRv" resultType="rvDTO"
+		parameterType="java.time.LocalDate">
+		select * from reservation where date = #{today}
+	</select>
+
+	<!-- 예약번호 중복확인 -->
+	<select id="chkrvnum" resultType="Integer"
+		parameterType="String">
+		select count(*) from reservation where rv_id = #{rvId}
+	</select>
+	<!-- 예약하기 -->
+	<insert id="reserve" parameterType="rvDTO">
+		insert into
+		reservation
+		(rv_id, date, price, rv_num, time, rv_people, rv_price,
+		user_name,
+		thema_name, rv_date, branch_id, thema_id, no_show, paid)
+		values
+		(#{rvId}, #{date}, #{price}, #{rvNum}, #{time}, #{rvPeople},
+		#{rvPrice},
+		#{userName}, #{themaName}, #{rvDate}, #{branch.branch_id},
+		#{thema.themaId}, false
+		, false)
+	</insert>
+
+	<!-- 예약자 확인 -->
+	<select id="confirmRv" resultType="rvDTO" parameterType="rvDTO">
+		select * from reservation where user_name = #{userName} and rv_num =
+		#{rvNum}
+	</select>
+
+	<!-- 예약 취소 하기 -->
+	<delete id="cancleRv" parameterType="rvDTO">
+		delete from reservation where user_name = #{userName} and rv_num = ${rvNum}
+	</delete>
+
+	<!-- 테이블 조인 -->
+	<select id="tmBranch" resultType="supul.model.Thema">
+		SELECT t.*, b.name
+		FROM thema t
+		JOIN branch b ON t.branch_id = b.branch_id
+		where thema_id = #{themaId}
+	</select>
+
+
+</mapper>

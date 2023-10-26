@@ -1,0 +1,1008 @@
+@font-face {
+	font-family: 'ChosunCentennial';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* ======================================= 공지사항 목록 공통 ======================================= */
+/* 공지사항 리스트 */
+.notice #searchForm {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.notice h1 {
+	text-align: center;
+	color: #3f5856;
+	margin: 50px 0 50px 0;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.notice .noticeList {
+	margin: 10px auto 30px;
+	text-align: center;
+}
+.notice .noticeList .title {
+	max-width: 450px;
+}
+.notice .noticeList td a{
+	display: inline-block;
+	max-width: 450px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.notice .noticeList,
+.noticeList th,
+.noticeList td {
+	border: 1px solid #3f5856;
+	border-collapse: collapse;
+	color: #3f5856;
+	padding: 12px 20px;
+}
+
+.notice .noticeList tr:first-child {
+	background-color: rgba(63, 88, 86, 0.7);
+	font-size: 17px;
+
+}
+.notice .noticeList tr th {
+	color: #f3e7db;
+}
+
+.notice .noticeList tr td:nth-child(3) {
+	text-align: left;
+}
+
+.notice .noticeList a {
+	color: #3f5856;
+	text-decoration: none;
+}
+
+.notice .noticeList a:hover {
+	color: #E09132;
+	font-weight: bold;
+}
+
+/*글쓰기 버튼*/
+.notice .write-button {
+	text-align: right;
+
+}
+
+.notice .write-button button {
+	margin: 5px 0px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 3px;
+	background-color: rgba(63, 88, 86, 0.8);
+	cursor: pointer;
+	border: none;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.notice .noticeListPaging {
+	margin: 0 auto;
+}
+
+.noticeListPaging .pagination .active a {
+	background-color: #3f5856;
+}
+
+/* ======================================= 공지사항 상세 ======================================= */
+.noticeDetail h2 {
+	text-align: left;
+	color: #3f5856;
+	margin: 120px 0 20px 50px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 42px;
+}
+
+.noticeDetail .detail-content {
+	color: #3f5856;
+	margin: 50px 50px 0 50px;
+	text-align: right;
+}
+
+.bar {
+	margin: 5px;
+}
+
+.detail-hr {
+	margin: 20px;
+	border: 1px solid #3f5856;
+}
+
+.noticeDetail .content {
+	margin: 50px;
+	color: #3f5856;
+	font-size: 20px;
+	line-height: 2;
+}
+
+.noticeDetail .filename {
+	text-align: right;
+	margin-right: 50px;
+	color: #3f5856;
+	font-size: 16px;
+}
+
+.noticeDetail .tr_btn {
+	text-align: right;
+}
+
+.noticeDetail img {
+	max-width: 1000px;
+	height: auto;
+	display: block;
+	margin: 10px auto;
+}
+
+.noticeDetail button {
+	margin: 5px 5px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #3f5856;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+	color: #f3e7db;
+}
+
+.noticeDetail button a {
+	text-decoration: none;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+
+/*=============공지사항 쓰기 / 수정==============*/
+.notice-write h1 {
+	text-align: center;
+	color: #3f5856;
+	margin: 50px 0 50px 0;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.notice-write .noticeWriteTable {
+	margin: 0 auto;
+}
+
+.notice-write .noticeWriteTable,
+.notice-write .noticeWriteTable th,
+.notice-write .noticeWriteTable td {
+	border: 1px solid #3f5856;
+	border-collapse: collapse;
+	color: #3f5856;
+	padding: 15px 20px;
+}
+
+.notice-write .noticeWriteTable tr th:first-child {
+	background-color: rgba(63, 88, 86, 0.7);
+	font-size: 17px;
+	color: #f3e7db;
+}
+
+.notice-write .noticeWriteTable select {
+	height: 25px;
+	width: 120px;
+	background-color: transparent;
+	color: #3f5856;
+	border: 1px solid #3f5856;
+	font-size: 16px;
+}
+
+.notice-write .noticeWriteTable select option {
+	background-color: rgba(63, 88, 86, 0.7);
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.notice-write .noticeWriteTable input[type=text] {
+	background-color: transparent;
+	border: none;
+	color: #3f5856;
+	font-size: 16px;
+	height: 25px;
+	width: 700px;
+}
+
+.notice-write .noticeWriteTable textarea {
+	width: 700px;
+	height: 500px;
+	background-color: transparent;
+	border: none;
+	color: #3f5856;
+	font-size: 16px;
+	resize: none;
+}
+
+.notice-write .noticeWriteTable button {
+	margin: 5px 5px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #3f5856;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.notice-write .noticeWriteTable button a {
+	text-decoration: none;
+	color: #f3e7db;
+
+}
+
+.notice-write .noticeWriteTable .noticeWriteBtn {
+	text-align: right;
+}
+
+/* **************************************************************************** */
+/* 공지사항 검색창 */
+.notice-search-form {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.search-select {
+	height: 42px;
+	width: 120px;
+	font-size: 16px;
+	border-radius: 4px 0 0 4px;
+	background-color: rgba(63, 88, 86, 0.7);
+	color: #f3e7db;
+	padding: 0 15px;
+	line-height: 16px;
+	/* -webkit-appearance: none; */
+}
+
+.search-input {
+	background: transparent;
+	height: 42px;
+	width: 327px;
+	color: #3f5856;
+	border: 1px solid #3f5856;
+	border-radius: 0 4px 4px 0;
+	/* -webkit-appearance: none; */
+	font-size: 16px;
+	font-weight: 500;
+	padding: 0 15px;
+	line-height: 16px;
+}
+
+.search-all {
+	background: rgba(63, 88, 86, 0.7);
+	color: #f3e7db;
+	font-size: 16px;
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	border: 0;
+	border-radius: 0 4px 4px 0;
+	height: 42px;
+	padding: 0 20px;
+	text-decoration: none;
+	line-height: 16px;
+}
+
+.search-all:hover {
+	background: #3f5856;
+}
+
+/* 반응형 스타일 */
+@media only screen and (max-width: 680px) {
+
+	.search-select,
+	.search-input,
+	.search-button,
+	.search-all {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+}
+
+/* *************************************************************** */
+/* 공지사항 페이징 */
+.noticeListPaging {
+	text-align: center;
+	margin: 20px auto 0 auto;
+}
+
+.noticeListPaging .pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.noticeListPaging .pagination a {
+	margin: 0 5px 0 0;
+	padding: 6px 12px;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-color: rgba(63, 88, 86, 0.5);
+	color: #f3e7db;
+	outline: 0;
+	text-decoration: none;
+	transition: all 0.2s linear;
+
+	&:hover {
+		background-color: lighten(#2c3840, 10%);
+	}
+}
+
+/* 버튼 선택 됐을 때 */
+.noticeListPaging .pagination .active a {
+	background-color: #3f5856;
+
+}
+
+/* 다음 페이지 */
+.noticeListPaging .pagination .pagination-next a {
+	border-radius: 10px 0 0 10px;
+	margin-right: 18px;
+
+	&:hover::after {
+		border-left: 17px solid lighten(#2c3840, 10%);
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		right: -16px;
+		width: -2px;
+		height: 0;
+		border-top: 18.5px solid transparent;
+		border-bottom: 17.3px solid transparent;
+		border-left: 15px solid rgba(63, 88, 86, 0.5);;
+		transition: all 0.2s linear;
+	}
+}
+
+/* 이전 페이지 */
+.noticeListPaging .pagination .pagination-previous a {
+	border-radius: 0 10px 10px 0;
+	margin-left: 18px;
+
+	&:hover::after {
+		border-right: 30px solid lighten(#2c3840, 10%);
+	}
+
+	&::before {
+		content: "";
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		left: -16px;
+		width: -2px;
+		height: 0;
+		border-bottom: 17.3px solid transparent;
+		border-top: 18.5px solid transparent;
+		border-right: 15px solid rgba(63, 88, 86, 0.5);;
+		transition: all 0.2s linear;
+	}
+}
+
+
+
+/*=============문의사항 리스트 / 디테일==============*/
+/* ======================================= 문의 목록 공통 ======================================= */
+/* 문의 리스트 */
+.qna #searchForm {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.qna h1 {
+	text-align: center;
+	color: #3f5856;
+	margin: 50px 0 50px 0;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.qna .qnaList {
+	margin: 10px auto 30px;
+	text-align: center;
+}
+
+.qna .qnaList,
+.qnaList th,
+.qnaList td {
+	border: 1px solid #3f5856;
+	border-collapse: collapse;
+	color: #3f5856;
+	padding: 12px 20px;
+}
+
+.qna .qnaList tr th {
+	color: #f3e7db;
+}
+
+.qna .qnaList tr:first-child {
+	background-color: rgba(63, 88, 86, 0.7);
+	font-size: 17px;
+
+}
+.qna .qnaList .title {
+	max-width: 450px;
+}
+.qna .qnaList td a{
+	display: inline-block;
+	max-width: 450px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.qna .qnaList tr td:nth-child(4) {
+	text-align: left;
+}
+
+.qna .qnaList a {
+	color: #3f5856;
+	text-decoration: none;
+}
+
+.qna .qnaList a:hover {
+	color: #E09132;
+	font-weight: bold;
+}
+
+/*글쓰기 버튼*/
+.qna .write-button {
+	text-align: right;
+
+}
+
+.qna .write-button button {
+	margin: 5px 28px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 3px;
+	background-color: rgba(63, 88, 86, 0.8);
+	cursor: pointer;
+	border: none;
+	color: #3f5856;
+	font-size: 16px;
+}
+
+
+.qna .qnaListPaging {
+	margin: 0 auto;
+}
+
+.qnaListPaging .pagination .active a {
+	background-color: #3f5856;
+}
+
+/*==============================================*/
+
+
+/* ======================================= 문의 상세 ======================================= */
+.qnaDetail h2 {
+	text-align: left;
+	color: #3f5856;
+	margin: 120px 0 20px 50px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 42px;
+}
+
+.qnaDetail .detail-content {
+	color: #3f5856;
+	margin: 50px 50px 0 50px;
+	text-align: right;
+}
+
+.qnaDetail .content {
+	margin: 50px;
+	color: #3f5856;
+	font-size: 20px;
+	line-height: 2;
+}
+
+.qnaDetail .filename {
+	text-align: right;
+	margin-right: 50px;
+	color: #3f5856;
+	font-size: 16px;
+}
+
+.qnaDetail .tr_btn {
+	text-align: right;
+}
+
+.qnaDetail img {
+	max-width: 1000px;
+	height: auto;
+	display: block;
+	margin: 10px auto;
+}
+
+.qnaDetail button {
+	margin: 5px 5px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #3f5856;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+}
+
+.qnaDetail button a {
+	text-decoration: none;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.qnaDetail button:hover {
+	background-color: #3f5856;
+}
+
+
+/* 문의 답글 */
+.qnaDetail #comments .section {
+	margin: 30px 10px;
+	background-color: rgba(63, 88, 86, 0.2);
+	border-radius: 5px;
+	color: #3f5856;
+	padding: 20px;
+}
+
+.qnaDetail #comments tr {
+	vertical-align: baseline;
+}
+
+.qnaDetail #comments .comment-writer {
+	font-size: 20px;
+	width: 150px;
+}
+
+.qnaDetail #comments .comment-writer .writer {
+	color: #3f5856;
+	font-weight: bold;
+}
+.qnaDetail #comments .comment-writer .date {
+	font-size: 15px;
+}
+
+.qnaDetail #comments .comment-writer span {
+	margin: 0 5px;
+}
+
+.qnaDetail #comments .comment-content {
+	display: block;
+	margin: 20px 30px;
+	width: 1060px;
+	font-size: 18px;
+}
+.qnaDetail #commSection .commSectionTable tbody{
+	vertical-align: bottom;
+}
+.qnaDetail #commSection textarea{
+	border: 1px solid #3f5856;
+	border-radius: 5px;
+	background-color: transparent;
+	width: 1060px;
+	margin: 5px 10px;
+	resize: none;
+	color: #3f5856;
+	height: 100px;
+	padding: 7px;
+	font-size: 16px;
+}
+.qnaDetail #commSection button {
+	width: 90px;
+	margin-bottom: 10px;
+	font-size: 16px;
+	color: #f3e7db;
+}
+
+
+/* **************************************************************************** */
+/* 문의 검색창 */
+.qna-search-form {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+/* *************************************************************** */
+/* 문의 페이징 */
+.qnaListPaging {
+	text-align: center;
+	margin: 20px auto 0 auto;
+}
+
+.qnaListPaging .pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.qnaListPaging .pagination a {
+	margin: 0 5px 0 0;
+	padding: 6px 12px;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-color: rgba(63, 88, 86, 0.5);
+	color: #f3e7db;
+	outline: 0;
+	text-decoration: none;
+	transition: all 0.2s linear;
+
+	&:hover {
+		background-color: lighten(#2c3840, 10%);
+	}
+}
+
+/* 버튼 선택 됐을 때 */
+.qnaListPaging .pagination .active a {
+	background-color: #3f5856;
+
+}
+
+/* 다음 페이지 */
+.qnaListPaging .pagination .pagination-next a {
+	border-radius: 10px 0 0 10px;
+	margin-right: 18px;
+
+	&:hover::after {
+		border-left: 17px solid lighten(#2c3840, 10%);
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		right: -16px;
+		width: -2px;
+		height: 0;
+		border-top: 18.5px solid transparent;
+		border-bottom: 17.3px solid transparent;
+		border-left: 15px solid rgba(63, 88, 86, 0.5);;
+		transition: all 0.2s linear;
+	}
+}
+
+/* 이전 페이지 */
+.qnaListPaging .pagination .pagination-previous a {
+	border-radius: 0 10px 10px 0;
+	margin-left: 18px;
+
+	&:hover::after {
+		border-right: 30px solid lighten(#2c3840, 10%);
+	}
+
+	&::before {
+		content: "";
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		left: -16px;
+		width: -2px;
+		height: 0;
+		border-bottom: 17.3px solid transparent;
+		border-top: 18.5px solid transparent;
+		border-right: 15px solid rgba(63, 88, 86, 0.5);;
+		transition: all 0.2s linear;
+	}
+}
+
+
+
+/* ======================================= 리뷰 목록 공통 ======================================= */
+/* 리뷰 리스트 */
+.review #searchForm {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.review h1 {
+	text-align: center;
+	color: #3f5856;
+	margin: 50px 0 50px 0;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.review .reviewList {
+	margin: 10px auto 30px;
+	text-align: center;
+}
+.review .reviewList .title {
+	max-width: 400px;
+}
+.review .reviewList td a{
+	display: inline-block;
+	max-width: 400px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.review .reviewList,
+.reviewList th,
+.reviewList td {
+	border: 1px solid #3f5856;
+	border-collapse: collapse;
+	color: #3f5856;
+	padding: 12px 10px;
+}
+.review .reviewList tr th {
+	color: #f3e7db;
+}
+
+.review .reviewList tr:first-child {
+	background-color: rgba(63, 88, 86, 0.7);
+	font-size: 17px;
+
+}
+
+.review .reviewList tr td:nth-child(5) {
+	text-align: left;
+	padding-left: 20px;
+}
+
+.review .reviewList a {
+	color: #3f5856;
+	text-decoration: none;
+}
+
+.review .reviewList a:hover {
+	color: #E09132;
+	font-weight: bold;
+}
+
+.review .reviewListPaging {
+	margin: 0 auto;
+}
+
+.reviewListPaging .pagination .active a {
+	background-color: #3f5856;
+}
+
+/*==============================================*/
+
+
+/* ======================================= 리뷰 상세 ======================================= */
+
+.reviewDetail h3 {
+	text-align: left;
+	color: #3f5856;
+	margin: 120px 0 10px 50px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 35px;
+}
+
+.reviewDetail h2 {
+	text-align: left;
+	color: #3f5856;
+	margin: 30px 0 0px 50px;
+	font-family: 'ChosunCentennial';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 42px;
+}
+
+.reviewDetail .detail-content {
+	color: #3f5856;
+	margin: 50px 50px 0 50px;
+	text-align: right;
+}
+
+.reviewDetail .thema-content {
+	color: #3f5856;
+	margin: 0px 50px 0 55px;
+	font-size: 18px;
+}
+
+
+.reviewDetail .content {
+	margin: 50px;
+	color: #3f5856;
+	font-size: 20px;
+	line-height: 2;
+}
+
+.reviewDetail .filename {
+	text-align: right;
+	margin-right: 50px;
+	color: #3f5856;
+	font-size: 16px;
+}
+
+.reviewDetail .tr_btn {
+	text-align: right;
+}
+
+.reviewDetail img {
+	max-width: 1000px;
+	height: auto;
+	display: block;
+	margin: 10px auto;
+}
+
+.reviewDetail button {
+	margin: 5px 5px 0 0;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #3f5856;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none;
+	margin-right: 10px;
+}
+
+.reviewDetail button a {
+	text-decoration: none;
+	color: #f3e7db;
+	font-size: 16px;
+}
+
+.reviewDetail button:hover {
+	background-color: #3f5856;
+}
+
+/* **************************************************************************** */
+/* 리뷰 검색창 */
+.review-search-form {
+	text-align: center;
+	margin-bottom: 30px;
+}
+/* *************************************************************** */
+/*리뷰페이징*/
+.reviewListPaging {
+	text-align: center;
+	margin: 20px auto 0 auto;
+}
+
+.reviewListPaging .pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.reviewListPaging .pagination a {
+	margin: 0 5px 0 0;
+	padding: 6px 12px;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-color: rgba(63, 88, 86, 0.5);
+	color: #f3e7db;
+	outline: 0;
+	text-decoration: none;
+	transition: all 0.2s linear;
+
+	&:hover {
+		background-color: lighten(#2c3840, 10%);
+	}
+}
+
+/* 버튼 선택 됐을 때 */
+.reviewListPaging .pagination .active a {
+	background-color: #3f5856;
+
+}
+
+/* 다음 페이지 */
+.reviewListPaging .pagination .pagination-next a {
+	border-radius: 10px 0 0 10px;
+	margin-right: 18px;
+
+	&:hover::after {
+		border-left: 17px solid lighten(#2c3840, 10%);
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		right: -16px;
+		width: -2px;
+		height: 0;
+		border-top: 18.5px solid transparent;
+		border-bottom: 17.3px solid transparent;
+		border-left: 15px solid rgba(63, 88, 86, 0.5);;
+		transition: all 0.2s linear;
+	}
+}
+
+/* 이전 페이지 */
+.reviewListPaging .pagination .pagination-previous a {
+	border-radius: 0 10px 10px 0;
+	margin-left: 18px;
+
+	&:hover::after {
+		border-right: 30px solid lighten(#2c3840, 10%);
+	}
+
+	&::before {
+		content: "";
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -1px;
+		left: -16px;
+		width: -2px;
+		height: 0;
+		border-bottom: 17.3px solid transparent;
+		border-top: 18.5px solid transparent;
+		border-right: 15px solid rgba(63, 88, 86, 0.5);;
+		transition: all 0.2s linear;
+	}
+}
+
+.review-write .reviewWriteTable li {
+	color: red;
+	list-style: none;
+	padding: 5px 0;
+}
+
+.notice-write .noticeWriteTable li {
+	color: red;
+	list-style: none;
+	padding: 5px 0;
+}
+
+.qna-write .qnaWriteTable li {
+	color: red;
+	list-style: none;
+	padding: 5px 0;
+}

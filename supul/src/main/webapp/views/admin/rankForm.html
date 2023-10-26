@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>랭크등록</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">	
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null}" th:href="@{/css/admin/rankForm.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<block th:if="${userRole!=null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:unless="${userRole!=null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+	</header>
+	<h2>랭크 등록</h2>
+	<form method="post" th:object="${ranking}">
+		<table border="">
+			<tr>
+				<td>날짜</td>
+				<td><input type="date" th:value="${rv.date}" name="date" readonly /></td>
+			</tr>
+			<tr>
+				<td>지점명</td>
+				<td>
+					<input type="text" th:value="${rv.branch.name}" name="branchName" readonly />
+
+				</td>
+			</tr>
+			<tr>
+				<td>테마명</td>
+				<td>
+					<input type="text" th:value="${rv.themaName}" name=tdTitle readonly />
+					<input type="hidden" th:value="${rv.thema.themaId}" name=themaId readonly />
+				</td>
+			</tr>
+			<tr>
+				<td>아이디</td>
+				<td><input type="text" th:value="${rv.user.userId}" name="userId" readonly /></td>
+			</tr>
+			<tr>
+				<td>남은 시간</td>
+				<td>
+					<label for="minutes">분:</label>
+					<input type="number" name="minutes" min="0" max="59" required />
+
+					<label for="seconds">초:</label>
+					<input type="number" name="seconds" min="0" max="59" required />
+
+				</td>
+			</tr>
+			<tr>
+				<td>인원수</td>
+				<td><input type="number" th:field="*{people}" min="1" max="10" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right">
+					<input type="submit" value="등록" />
+					<input type="button" onclick="goBack()" value="이전으로" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<script>
+		function goBack() {
+			window.history.back(); // 브라우저의 이전 페이지로 이동
+		}
+	</script>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

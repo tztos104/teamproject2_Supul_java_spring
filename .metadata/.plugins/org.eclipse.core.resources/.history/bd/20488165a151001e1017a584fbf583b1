@@ -1,0 +1,30 @@
+ 
+<div th:fragment="headerMenu" id="header">
+    <ul class="menu">
+        <li>로고</li>
+        <li><a href="/">홈</a></li>
+        <li>
+            소개
+            <ul class="subMenu">
+                <li><a href="/home/intro">홈페이지 소개</a></li>
+                <li><a href="/home/info">매장 소개</a></li>
+            </ul>
+        </li>
+        <li><a href="/thema/intro">테마</a></li>
+        <li><a href="#">예약확인</a></li>
+        <li>
+            게시판
+            <ul class="subMenu">
+                <li><a th:href="@{/board/nList}">공지게시판</a></li>
+                <li><a th:href="@{/board/qList}">문의게시판</a></li>
+                <li><a th:href="@{/board/rList}">후기게시판</a></li>
+            </ul>
+        </li>
+        <th:block th:if="${user ==null}">
+           <li><a href="/user/login">로그인</a></li>
+        </th:block>
+        <th:block th:unless="${user ==null}">
+           <li><a href="/mypage/main">마이페이지</a></li>
+       </th:block>
+    </ul>
+</div>

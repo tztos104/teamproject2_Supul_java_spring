@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>공지사항 수정</title>
+	<link th:if="${userRole != null}" th:href="@{/css/inc/superHeader.css}" rel="stylesheet" type="text/css">
+	<link th:if="${admin != null && userRole ==null}" th:href="@{/css/inc/adminHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/inc/userHeader.css}" rel="stylesheet"
+		type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+	<link th:if="${userRole == null and admin == null}" th:href="@{/css/board/board_Qna.css}" rel="stylesheet"
+		type="text/css">
+</head>
+
+<body>
+	<!-- 헤더 -->
+	<header>
+		<block th:if="${userRole != null}">
+			<div th:replace="~{inc/superHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${admin != null && userRole ==null}">
+			<div th:replace="~{inc/adminHeader :: headerMenu}"></div>
+		</block>
+		<block th:if="${userRole == null and admin == null}">
+			<div th:replace="~{inc/header :: headerMenu}"></div>
+		</block>
+	</header>
+	<div class="container">
+		<div class="qna-write">
+			<h1>문의사항 수정</h1>
+
+			<!-- 문의 수정 테이블 -->
+			<div class="section">
+				<form th:action="@{/board/qna/modify/{id}(id=${qnaBoard.qnaId})}" method="post">
+
+					<table class="qnaWriteTable" border="">
+						<tr>
+							<th width="150px">매장</th>
+							<td width="700px">
+								<select id="branchId" name="branchId" required>
+									<option value="">매장선택</option>
+									<option th:each="branch : ${branchlist}" th:value="${branch.branchId}"
+										th:text="${branch.name}"
+										th:selected="${branch.branchId == qnaBoard.branch.branchId}">
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>구분</th>
+							<td>
+								<select name="type" id="type">
+									<option value="예약문의">예약문의</option>
+									<option value="취소문의">취소문의</option>
+									<option value="기타문의">기타문의</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th><label for="title">제목</label></th>
+							<td><input type="text" name="title" th:value="${qnaBoard.title}" />
+								<div th:if="${titleerror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${titleerror.defaultMessage}"></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<!--유효성 에러 메세지-->
+							<th><label for="content">내용</label></th>
+							<td><textarea id="content" name="content" th:text="${qnaBoard.content}"></textarea>
+								<div th:if="${contenterror}" class="alert alert-danger">
+									<ul>
+										<li th:text="${contenterror.defaultMessage}"></li>
+									</ul>
+								</div>
+							</td>
+							<input type="hidden" name="regDate" th:value="${qnaBoard.regDate}" />
+						</tr>
+						<!-- 수정, 삭제, 뒤로 버튼-->
+						<tr class="qnaWriteBtn">
+							<td colspan="2">
+								<button type="submit" name="action" value="수정"
+									onclick="return confirm('수정하시겠습니까?')">수정</button>
+								<!--뒤로가짐-->
+								<a th:href="@{/board/qna/list}"><button type="button" value="목록" name="action">뒤로</button></a>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

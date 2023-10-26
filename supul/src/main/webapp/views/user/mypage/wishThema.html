@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>테마 찜 목록</title>
+	<link th:href="@{/css/inc/userHeader.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/inc/footer.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/user/mypage/wishThema.css}" rel="stylesheet" type="text/css">
+	<script th:src="@{/js/inc/footer.js}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<!-- 헤더-->
+		<header>
+			<div th:replace="inc/header :: headerMenu"></div>
+		</header>
+
+		<div class="section1">
+			<br />
+			<h2>찜한 테마 목록</h2>
+			</br>
+		</div>
+
+		<div class="section2">
+			<table border="">
+				<thead>
+					<tr class="thema-list">
+						<th>번호</th>
+						<th>매장명</th>
+						<th>테마명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="thema-whishList" th:each="wish, a : ${wishThemes}">
+						<td th:text="${a.count}"></td>
+						<td th:text="${wish.thema.branch.name}" ></td>
+						<td ><a th:href="|/thema/intro#thema${wish.thema.themaId}|">[[${wish.thema.title}]]</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--푸터-->
+	<footer>
+		<div th:replace="~{inc/footer :: footer}"></div>
+	</footer>
+</body>
+
+</html>

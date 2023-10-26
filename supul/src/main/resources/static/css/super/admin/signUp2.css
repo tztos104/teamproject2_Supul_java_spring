@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+.container {
+	margin: 20px auto;
+}
+
+h2 {
+	font-size: 35px;
+	margin: 50px;
+	font-weight: 600;
+	text-align: center;
+	padding-bottom: 20px;
+	border-bottom: 4px solid #3f5856;
+	color: #f3e7db;
+}
+
+form {
+	color: #f3e7db;
+	padding: 20px 0px;
+	border-radius: 5px;
+	width: 100%;
+	max-width: 650px;
+	margin: 0 auto;
+}
+
+table{
+	margin: 0 auto;
+}
+
+td{
+	padding: 10px;
+}
+
+form tr td:first-of-type{
+	width: 25%;
+	padding-right: 10px;
+	text-align: right;
+	font-weight: bold;
+}
+
+select{
+	font-size: 16px;
+	padding: 2px;
+}
+
+button{
+	padding: 5px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	background-color: #f3e7db;
+}
+
+#erer, #emailError{
+	color: #E09132;
+	font-size: 14px;
+}
+
+#phoneErrorMessage{
+	color: #E09132;
+	font-size: 14px;
+}
+
+input[type="text"], input[type="password"] {
+
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 16px;
+	background-color: #f9f9f9;
+}
+
+#signupButton{
+	margin-top: 10px;
+	padding: 10px 15px;
+}
+
+.emailDomain{
+	display: inline;
+}
