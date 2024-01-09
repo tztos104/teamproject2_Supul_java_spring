@@ -10,7 +10,7 @@
   > 방탈출은 16년부터 지금까지 지속적으로 인기가 있는 실내놀이로 언제든지 즐길 수 있고
   > 짜임새 있는 스토리와 제한적인 시간으로 게임 몰입도를 높일 수 있는 이점으로 많은 사람들에게 인기가 있습니다.
   > 기존 방탈출 사이트인 넥스트 에디션 사이트를 이용하는 과정에서 몇가지 불편한 점들을 발견했고, 이러한 문제점들을 개선하고자 방탈출 사이트  'Supul'을 개발하게 되었습니다. 
-  > <br>**Figma**: <a href="https://www.figma.com/file/zffQCT0SZ5TDC3JORNaqUA/Project_Django_Team-3?type=whiteboard&node-id=0-1&t=Q6DA7FvR7HepJfcw-0">집집 설계</a>
+
   > <br>**PDF**: [수풀 프로젝트.pdf](https://github.com/pshho/team3_django_project/files/12905354/default.pdf)
 
 ### :mantelpiece_clock: 개발 기간
