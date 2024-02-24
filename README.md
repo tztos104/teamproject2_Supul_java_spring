@@ -21,7 +21,7 @@
 - `HTML | CSS | JavaScript`
 - **Framework**: spring boot 3.2
 - **Database**: MySql
-- **개발 Tool**: Springtool, Figma, naver API. 포트원 API, chart.js
+- **개발 Tool**: Springtool, Figma, naver API. 포트원 API, chart.js, JPA
 
 ### :gear: 주요 기능
 #### 1. 로그인/회원가입/마이페이지
